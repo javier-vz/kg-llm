@@ -1,86 +1,110 @@
-## Uso de Protégé Web con `grafo.ttl`
+# Flujo completo: Protégé Desktop (PC) → GitHub → Raspberry Pi (kg-llm)
 
-Puedes usar **Protégé Web** para visualizar y editar tu grafo RDF antes de pasarlo al pipeline `kg-llm`.
+El principio es simple:
 
-### 1. Abrir Protégé Web
-
-- Entra a: <https://webprotege.stanford.edu>  
-- Crea una cuenta o inicia sesión.
-
-### 2. Crear un nuevo proyecto
-
-1. Clic en **Create new project**.  
-2. Elige **Blank project**.  
-3. Asigna un nombre (por ejemplo, `Festividades-Andinas-KG`).  
-4. Clic en **Create**.
-
-### 3. Importar tu archivo `grafo.ttl`
-
-1. En el panel izquierdo, ve a **Settings**.  
-2. Abre la sección **Imports**.  
-3. Clic en **Add import**.  
-4. Selecciona **Upload file**.  
-5. Sube tu archivo TTL (el mismo que usas en `data/grafo.ttl`).  
-6. Guarda los cambios para que la ontología quede importada en el proyecto.
-
-### 4. Explorar el grafo en Protégé Web
-
-Una vez importado:
-
-- En **Classes** podrás ver las clases principales de tu ontología (por ejemplo, `Festividad`, `Comunidad`, `PersonajeRitual`, `Danza`, etc.).
-- En **Object properties** verás las propiedades de relación (por ejemplo, `interpreta`, `representa`, `realizaDanza`).
-- En **Data properties** verás atributos literales (fechas, nombres, descripciones, etc.).
-- En **Individuals** podrás inspeccionar instancias concretas (por ejemplo, individuos como `Ukuku`, festividades específicas, comunidades, etc.).
-
-### 5. Editar la ontología
-
-En Protégé Web puedes:
-
-- Crear nuevas clases y jerarquías (subclases de `Festividad`, `Comunidad`, etc.).
-- Ajustar propiedades (`domain`, `range`, axiomas `subPropertyOf`, restricciones de cardinalidad).
-- Añadir o modificar individuos y sus relaciones.
-- Verificar consistencia lógica con el reasoner disponible.
-
-Usa estos cambios para refinar tu modelo conceptual antes de extraer entidades para el índice vectorial.
-
-### 6. Exportar nuevamente el TTL para `kg-llm`
-
-Cuando termines de editar:
-
-1. En el proyecto, ve a **Settings**.  
-2. Usa la opción **Download** o **Export** (dependiendo de la versión de WebProtégé).  
-3. Elige el formato **Turtle (.ttl)**.  
-4. Descarga el archivo y guárdalo en tu proyecto local como:
-
-        data/grafo.ttl
-
-5. Vuelve a generar el índice:
-
-        python scripts/extract_entities.py
-        python scripts/build_index.py
-
-Con esto, `kg-llm` trabajará con la versión actualizada de tu grafo.
+- La **Raspberry nunca edita** el grafo, solo recibe cambios.
+- El **PC con Protégé Desktop** es tu “editor oficial” de la ontología.
 
 ---
 
-## Subir el proyecto a GitHub
+## 🔵 1. Instalar y usar Protégé Desktop en tu PC
 
-    git init
-    git add .
-    git commit -m "Initial kg-llm pipeline"
-    git branch -M main
-    git remote add origin https://github.com/andesgraph/kg-llm.git
-    git push -u origin main
+1. Descarga Protégé Desktop desde:  
+   https://protege.stanford.edu/software.php
+
+2. Abre tu ontología en Protégé:
+
+    File → Open  
+    Selecciona el archivo: `kg-llm/data/grafo.ttl`
+
+3. Edita lo que necesites:
+
+   - Clases  
+   - Propiedades  
+   - Individuos  
+   - Axiomas y restricciones  
+   - Jerarquías
+
+4. Guarda los cambios:
+
+    File → Save
+
+Ese `grafo.ttl` actualizado será el que sincronices con GitHub.
 
 ---
 
-## Licencia
+## 🟣 2. Subir el TTL editado a GitHub (desde tu PC)
 
-MIT License. Puedes usarlo y modificarlo libremente.
+En tu PC donde editaste con Protégé:
+
+    cd kg-llm
+    git add data/grafo.ttl
+    git commit -m "Ontología actualizada desde Protégé Desktop"
+    git push
+
+Con esto, el repositorio remoto ya tiene la nueva versión de la ontología.
 
 ---
 
-## Contribuciones
+## 🟢 3. Actualizar la Raspberry Pi (donde vive kg-llm)
 
-Pull requests y mejoras son bienvenidas.  
-Si deseas reportar errores, usa los Issues del repositorio.
+La Raspberry **no edita** el grafo, solo baja la última versión.
+
+En la Raspberry Pi:
+
+    cd kg-llm
+    git pull
+
+Ahora `data/grafo.ttl` está actualizado también en la Raspberry.
+
+---
+
+## 🟡 4. Regenerar los índices en la Raspberry
+
+Cada vez que cambias la ontología, debes regenerar:
+
+- `data/index_entities.json`
+- `index/entity_vectors.npz`
+
+En la Raspberry:
+
+    python scripts/extract_entities.py
+    python scripts/build_index.py
+
+Después de esto, puedes hacer consultas con el grafo actualizado, por ejemplo:
+
+    python scripts/answer.py "¿Quiénes son los personajes de Qoyllur Rit'i?"
+
+---
+
+## 🟤 5. (Opcional) Script para automatizar la actualización en Raspberry
+
+Puedes crear un script llamado `update_kg.sh` que haga todo junto.
+
+Contenido sugerido:
+
+    #!/bin/bash
+    cd /home/pi/kg-llm
+    git pull
+    source llm-env/bin/activate
+    python scripts/extract_entities.py
+    python scripts/build_index.py
+    echo "✓ KG actualizado"
+
+Luego le das permisos de ejecución:
+
+    chmod +x update_kg.sh
+
+Y cuando quieras actualizar todo:
+
+    ./update_kg.sh
+
+---
+
+## 🔥 Resumen ultra claro
+
+- **En tu PC con Protégé Desktop:**  
+  Editas la ontología → Guardas (`File → Save`) → `git add` → `git commit` → `git push`
+
+- **En la Raspberry Pi:**  
+  `git pull` → regeneras índices (`extract_entities.py` y `build_index.py`) → usas `kg-llm` normalmente.
