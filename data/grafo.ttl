@@ -35,7 +35,8 @@
 
 :nivelEmbeddings a owl:AnnotationProperty ;
   rdfs:label "Nivel de embeddings"@es ;
-  rdfs:comment "A = central, B = contextual, C = estructural."@es .
+  rdfs:comment "Clasificación para embeddings y RAG: A = entidades centrales (si faltan, el sistema no entiende el dominio); B = entidades contextuales (aportan contexto, pero no son protagonistas); C = entidades estructurales o técnicas (ordenan el grafo y no deben aparecer en respuestas ni generar embeddings)."@es .
+
 
 :codigoRecurso a owl:AnnotationProperty ;
   rdfs:label "Código de recurso"@es ;
