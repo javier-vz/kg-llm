@@ -16,6 +16,175 @@
   rdfs:comment "Ontología para describir festividades, eventos rituales, lugares, comunidades y recursos mediales asociados a Qoyllur Rit’i y la Virgen del Carmen."@es .
 
 #################################################################
+### GUÍA RÁPIDA PARA EL EQUIPO (LEER ANTES DE EDITAR)
+### Este TTL es “esencial”: contiene lo mínimo profesional para
+### (1) tener un grafo navegable y consistente, y (2) alimentar RAG.
+###
+### En este archivo verás:
+### - CLASES: tipos generales (Festividad, Lugar, EventoRitual, etc.)
+### - PROPIEDADES: relaciones (object properties) y datos simples (datatype)
+### - INDIVIDUOS: cosas concretas del mundo real (Paucartambo, Colque Punku, etc.)
+###
+### Nota: rdfs:label y descripciones están en español (@es).
+#################################################################
+
+#################################################################
+### ¿QUÉ ES UNA CLASE?
+### Una clase (owl:Class) es un “tipo de cosa”.
+### Ej: :Festividad, :Lugar, :EventoRitual, :Foto.
+###
+### ¿QUÉ ES UNA SUBCLASE?
+### Una subclase (rdfs:subClassOf) hereda características del tipo “padre”.
+### Ej: :Procesion rdfs:subClassOf :EventoRitual.
+### Significa: “toda Procesión es un EventoRitual”.
+#################################################################
+
+#################################################################
+### ¿QUÉ ES UN INDIVIDUO?
+### Un individuo (owl:NamedIndividual o “a :Clase”) es una entidad concreta:
+### Ej: :Paucartambo a :Localidad ;  :ColquePunku a :Glaciar ; etc.
+###
+### REGLA PRÁCTICA:
+### - Clases: conceptos generales (tipos).
+### - Individuos: instancias reales (cosas específicas del dominio).
+#################################################################
+
+#################################################################
+### REGLAS DE MODELADO (MUY IMPORTANTES)
+###
+### 1) EVENTO vs TIEMPO (NO CONFUNDIR)
+### - :EventoRitual = “algo que pasa” (acción/actividad) y suele poder ubicarse.
+###   Ej: “Bajada desde Colque Punku”, “Entrada de Naciones”, “Procesión principal”.
+###
+### - :TiempoRitual / :SegmentoRitual = “cuándo” (franja temporal significativa).
+###   Ej: “Alba”, “Noche”, “Víspera”, “Día central”.
+###
+### RELACIONES CORRECTAS:
+### - Un EventoRitual se conecta a un Lugar con :estaEnLugar.
+### - Un EventoRitual puede (si aplica) conectarse a un Tiempo con :ocurreDurante.
+###
+### ANTI-PATRÓN (EVITAR):
+### - No usar :ocurreDurante para decir “la festividad ocurre durante el alba”.
+###   La festividad contiene muchos eventos y tiempos; el “alba” es de eventos,
+###   no del concepto completo de festividad.
+###
+### 2) FESTIVIDAD: DÓNDE SE CELEBRA
+### - La Festividad se conecta a Lugar(es) con :SeCelebraEn.
+###   Ej: Virgen del Carmen -> Paucartambo + Iglesia.
+###       Qoyllur Rit’i -> Sinakara + Santuario.
+###
+### 3) RECURSO MEDIAL (FOTO/VIDEO/AUDIO/DOC)
+### - Un recurso “documenta” algo con :documentaA (evento, lugar o festividad).
+### - Debe tener código estable (:codigoRecurso) y ruta/url (:rutaArchivo).
+### - Debe tener fecha de captura si se conoce (:fechaCaptura).
+#################################################################
+
+#################################################################
+### CONVENCIONES DE NOMBRES (CONGELADAS)
+###
+### 1) Clases (Tipos)
+### - PascalCase, sin tildes ni espacios:
+###   :Festividad, :EventoRitual, :EntidadVenerada, :RecursoMedial, :DocumentoTexto
+###
+### 2) Propiedades
+### - camelCase, verbos claros:
+###   :SeCelebraEn, :incluyeEvento, :estaEnLugar, :ocurreDurante, :documentaA
+###
+### 3) Individuos (Entidades reales)
+### - PascalCase o NombreConGuionesBajos si es necesario, sin tildes:
+###   :Paucartambo, :Sinakara, :ColquePunku, :IglesiaPaucartambo
+###
+### 4) Recursos mediales (IDs + código)
+### - IRI del individuo: usar prefijo + tipo + año + correlativo con guiones bajos:
+###   :QOY_FOTO_2025_001, :PAU_AUD_2024_003, :QOY_VID_2023_002
+###
+### - Código humano-legible (annotation):
+###   :codigoRecurso "QOY-FOTO-2025-001" .
+###
+### FORMATO DEL CÓDIGO:
+###   {FEST}-{TIPO}-{AÑO}-{NRO}
+###   FEST: QOY (Qoyllur Rit’i), PAU (Paucartambo)
+###   TIPO: FOTO, VID, AUD, DOC
+###   NRO: 001, 002, 003...
+###
+### 5) Nombres consistentes (IMPORTANTE)
+### - No mezclar :seCelebraEn con :SeCelebraEn.
+### - En este TTL la propiedad oficial es :SeCelebraEn (S mayúscula).
+#################################################################
+
+#################################################################
+### QUÉ EDITAR / QUÉ NO EDITAR (PARA EVITAR CAOS)
+###
+### SE EDITA (equipo de anotación):
+### - rdfs:label (obligatorio)
+### - :descripcionBreve (obligatorio en entidades principales)
+### - :descripcionEtnografica (obligatorio en Nivel A)
+### - :fuenteTexto (obligatorio en Nivel A)
+### - :codigoRecurso, :rutaArchivo, :fechaCaptura (en recursos)
+### - relaciones entre individuos (documentaA, incluyeEvento, SeCelebraEn, etc.)
+### - geo:lat / geo:long en lugares (cuando haya dato)
+###
+### SE EDITA CON CUIDADO (equipo técnico):
+### - definiciones de clases
+### - domain/range de propiedades
+### - creación de nuevas propiedades
+###
+### NO SE EDITA SIN ACUERDO DEL EQUIPO (congelado):
+### - nombres de propiedades ya usadas (rompe scripts y consistencia)
+### - el patrón de códigos de recursos
+### - el significado de A/B/C en :nivelEmbeddings
+#################################################################
+
+#################################################################
+### DEFINITION OF DONE (DoD) POR NIVEL A/B/C
+###
+### OBJETIVO:
+### - Nivel A: siempre entra a embeddings y al RAG con texto de calidad.
+### - Nivel B: útil para contexto; puede entrar a embeddings si aporta.
+### - Nivel C: estructura/técnico; NO debe generar embeddings ni aparecer en respuestas.
+###
+### NIVEL A (CENTRAL)
+### “Si pregunto en lenguaje natural, debería salir en la respuesta”.
+### Ejemplos: Festividades, Entidades veneradas, lugares centrales, eventos clave,
+### recursos mediales importantes, personajes rituales clave.
+###
+### DoD mínimo (obligatorio):
+### - rdfs:label
+### - :descripcionBreve
+### - :descripcionEtnografica
+### - :fuenteTexto
+### - relaciones clave (según el tipo)
+###   * Festividad: :SeCelebraEn (+ ideal :incluyeEvento)
+###   * EventoRitual: :estaEnLugar (+ opcional :ocurreDurante)
+###   * Lugar: (si aplica) geo:lat geo:long
+###   * RecursoMedial: :codigoRecurso :rutaArchivo :fechaCaptura :documentaA
+###
+### NIVEL B (CONTEXTUAL)
+### “Enriquece, pero rara vez es protagonista”.
+### Ejemplos: comunidades, comparsas específicas, lugares de paso, eventos secundarios.
+###
+### DoD mínimo:
+### - rdfs:label
+### - :descripcionBreve
+### - al menos 1 relación hacia un nodo A (para no quedar huérfano)
+### Opcional:
+### - :descripcionEtnografica si hay buen material
+###
+### ⚪ NIVEL C (ESTRUCTURAL / TÉCNICO)
+### “Ordena el grafo, pero no quiero que el LLM hable de esto”.
+### Ejemplos: clases, nodos puente técnicos, tiempos genéricos sin contenido.
+###
+### DoD mínimo:
+### - rdfs:label
+### Opcional:
+### - rdfs:comment técnico
+###
+### REGLA:
+### - Nivel C NO genera embeddings.
+#################################################################
+
+
+#################################################################
 ### PROPIEDADES DE ANOTACIÓN
 ### Sirven SOLO para texto descriptivo.
 ### Estas propiedades alimentan los embeddings del RAG.
