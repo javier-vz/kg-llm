@@ -240,6 +240,14 @@
   rdfs:label "Evento ritual"@es ;
   rdfs:comment "Actividad concreta que ocurre dentro de una festividad."@es .
 
+:Danza a owl:Class ;
+  rdfs:label "Danza ritual"@es ;
+  rdfs:comment "Práctica ritual codificada (coreografía, vestimenta, música y roles) que se ejecuta dentro de una festividad. No es un evento puntual: puede aparecer en varios eventos y años."@es .
+
+:PersonajeRitual a owl:Class ;
+  rdfs:label "Personaje ritual"@es ;
+  rdfs:comment "Figura simbólica o rol ritual asociado a una danza o comparsa (p. ej., Ukuku, Qhapaq Qolla). Puede modelarse como individuo o como clase, según el nivel de detalle."@es .
+
 :Procesion a owl:Class ;
   rdfs:subClassOf :EventoRitual ;
   rdfs:label "Procesión"@es ;
@@ -311,6 +319,24 @@
   rdfs:domain :Festividad ;
   rdfs:range :EventoRitual ;
   rdfs:label "incluye evento"@es .
+
+:seInterpretaEnFestividad a owl:ObjectProperty ;
+  rdfs:domain :Danza ;
+  rdfs:range :Festividad ;
+  rdfs:label "se interpreta en festividad"@es ;
+  rdfs:comment "Relaciona una danza con la(s) festividad(es) donde se interpreta."@es .
+
+:seEjecutaDurante a owl:ObjectProperty ;
+  rdfs:domain :Danza ;
+  rdfs:range :EventoRitual ;
+  rdfs:label "se ejecuta durante"@es ;
+  rdfs:comment "Relaciona una danza con un evento ritual concreto (p. ej. bajada del glaciar, entrada, procesión)."@es .
+
+:incluyePersonaje a owl:ObjectProperty ;
+  rdfs:domain :Danza ;
+  rdfs:range :PersonajeRitual ;
+  rdfs:label "incluye personaje"@es ;
+  rdfs:comment "Indica que una danza involucra uno o más personajes rituales."@es .
 
 :ocurreDurante a owl:ObjectProperty ;
   rdfs:domain :EventoRitual ;
@@ -415,6 +441,24 @@
   :nivelEmbeddings "A" ;
   :relacionadoCon :FestividadVirgenCarmenPaucartambo ;
   :relacionadoCon :FestividadQoylluriti .
+
+### Personas o danzas
+
+:Ukuku a :PersonajeRitual ;
+  rdfs:label "Ukuku"@es ;
+  :descripcionBreve "Personaje ritual andino asociado a funciones de vigilancia, mediación y orden durante Qoyllur Rit’i."@es ;
+  :descripcionEtnografica "COMPLETAR: descripción narrativa (3–6 frases) basada en fuentes o experiencia de campo, sin inventar."@es ;
+  :fuenteTexto "COMPLETAR: fuente (campo, entrevista, texto, etc.)."@es ;
+  :nivelEmbeddings "A" .
+
+:DanzaUkuku a :Danza ;
+  rdfs:label "Danza del Ukuku"@es ;
+  :descripcionBreve "Danza ritual asociada al personaje Ukuku, interpretada en el marco de la festividad de Qoyllur Rit’i."@es ;
+  :descripcionEtnografica "COMPLETAR: descripción ampliada (3–6 frases) sobre su rol y ejecución en el contexto ritual."@es ;
+  :fuenteTexto "COMPLETAR: fuente (campo, entrevista, texto, etc.)."@es ;
+  :nivelEmbeddings "A" ;
+  :seInterpretaEnFestividad :FestividadQoylluriti ;
+  :incluyePersonaje :Ukuku .
 
 #################################################################
 ### (NUEVO) EJEMPLO DE EVENTO RITUAL COHERENTE
