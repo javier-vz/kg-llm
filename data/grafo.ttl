@@ -343,10 +343,22 @@
   rdfs:range :TiempoRitual ;
   rdfs:label "ocurre durante"@es .
 
+:celebra a owl:ObjectProperty ;
+  rdfs:domain :Comunidad ;
+  rdfs:range :Festividad ;
+  rdfs:label "celebra"@es ;
+  rdfs:comment "Indica que una comunidad participa/organiza/celebra una festividad (relación social, no geográfica)."@es .
+
 :estaEnLugar a owl:ObjectProperty ;
   rdfs:domain :EventoRitual ;
   rdfs:range :Lugar ;
   rdfs:label "está en lugar"@es .
+
+:ubicadoEn a owl:ObjectProperty ;
+  rdfs:domain :Lugar ;
+  rdfs:range :Lugar ;
+  rdfs:label "ubicado en"@es ;
+  rdfs:comment "Relaciona un lugar con otro lugar que lo contiene o contextualiza (p.ej. Colque Punku ubicado en Sinakara; Iglesia ubicada en Paucartambo)."@es .
 
 :relacionadoCon a owl:ObjectProperty ;
   rdfs:domain :Comunidad ;
@@ -384,10 +396,11 @@
   :nivelEmbeddings "A" ;
   rdfs:comment "COMPLETAR: lat/long si se desea georreferenciación."@es .
 
-### (NUEVO) Lugar clave para precisión etnográfica
+### Lugar clave para precisión etnográfica
 :ColquePunku a :Glaciar ;
   rdfs:label "Colque Punku"@es ;
   :descripcionBreve "Glaciar asociado a la peregrinación de Qoyllur Rit’i en el área ritual de Sinakara."@es ;
+  :ubicadoEn :Sinakara ;
   :nivelEmbeddings "A" ;
   rdfs:comment "COMPLETAR: lat/long con referencia (GPS/carta/fuente)."@es .
 
@@ -403,6 +416,7 @@
   :nivelEmbeddings "A" ;
   geo:lat "-13.3140"^^xsd:decimal ;
   geo:long "-71.5940"^^xsd:decimal ;
+  :ubicadoEn :Paucartambo ;
   rdfs:comment "Coordenadas aproximadas (mismo centro urbano). Ajustar si se desea precisión del edificio."@es .
 
 ### Entidades veneradas
@@ -424,6 +438,7 @@
   :descripcionBreve "Peregrinación andina al santuario del Señor de Qoyllur Rit’i."@es ;
   :nivelEmbeddings "A" ;
   :SeCelebraEn :SantuarioQoylluriti ;
+  :SeCelebraEn :ColquePunku ;
   :SeCelebraEn :Sinakara .
 
 :FestividadVirgenCarmenPaucartambo a :Festividad ;
@@ -440,7 +455,8 @@
   :descripcionBreve "Colectivo local vinculado a la organización de la festividad."@es ;
   :nivelEmbeddings "A" ;
   :relacionadoCon :FestividadVirgenCarmenPaucartambo ;
-  :relacionadoCon :FestividadQoylluriti .
+  :relacionadoCon :FestividadQoylluriti ;
+  :relacionadoCon :Paucartambo .
 
 ### Personas o danzas
 
