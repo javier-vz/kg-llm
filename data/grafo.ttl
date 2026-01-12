@@ -407,7 +407,9 @@
   rdfs:label "Sinakara"@es ;
   :descripcionBreve "Zona ritual de alta montaña asociada a Qoyllur Rit’i."@es ;
   :nivelEmbeddings "A" ;
-  rdfs:comment "COMPLETAR: lat/long si se desea georreferenciación."@es .
+  geo:lat "-13.528333"^^xsd:decimal ;
+  geo:long "-71.233611"^^xsd:decimal ;
+  rdfs:comment "lat/long aproximado."@es .
 
 ### Lugar clave para precisión etnográfica
 :ColquePunku a :Glaciar ;
@@ -415,13 +417,17 @@
   :descripcionBreve "Glaciar asociado a la peregrinación de Qoyllur Rit’i en el área ritual de Sinakara."@es ;
   :ubicadoEn :Sinakara ;
   :nivelEmbeddings "A" ;
-  rdfs:comment "COMPLETAR: lat/long con referencia (GPS/carta/fuente)."@es .
+  geo:lat "-13.519167"^^xsd:decimal ;
+  geo:long "-71.206667"^^xsd:decimal ;
+  rdfs:comment "lat/long aproximado."@es .
 
 :SantuarioQoylluriti a :Santuario, :LugarRitual ;
   rdfs:label "Santuario del Señor de Qoyllur Rit’i"@es ;
   :descripcionBreve "Santuario principal de la peregrinación de Qoyllur Rit’i."@es ;
   :nivelEmbeddings "A" ;
-  rdfs:comment "COMPLETAR: lat/long si aplica."@es .
+  geo:lat "-13.1869"^^xsd:decimal ;
+  geo:long "-71.3366"^^xsd:decimal ;
+  rdfs:comment "lat/long aproximado."@es .
 
 :IglesiaPaucartambo a :Iglesia ;
   rdfs:label "Iglesia de Paucartambo"@es ;
