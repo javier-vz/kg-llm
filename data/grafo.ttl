@@ -282,11 +282,16 @@
   rdfs:subClassOf :Lugar ;
   rdfs:label "Iglesia"@es .
 
+:LugarRitual a owl:Class ;
+  rdfs:subClassOf :Lugar ;
+  rdfs:label "Lugar ritual"@es ;
+  rdfs:comment "Lugar asociado de manera directa a prácticas rituales o devocionales dentro de una festividad (sin describir el acto)."@es .
+
 :LugarDePaso a owl:Class ;
   rdfs:subClassOf :Lugar ;
   rdfs:label "Lugar de paso"@es .
 
-### (NUEVO) Subtipo útil para precisión (opcional)
+### Subtipo útil para precisión
 :Glaciar a owl:Class ;
   rdfs:subClassOf :Lugar ;
   rdfs:label "Glaciar"@es ;
@@ -309,6 +314,14 @@
 ### PROPIEDADES DE OBJETO
 ### Definen relaciones entre entidades.
 #################################################################
+
+:esVeneradaEn a owl:ObjectProperty ;
+  rdfs:domain :EntidadVenerada ;
+  rdfs:range  :EventoRitual .
+
+:tieneLugarDeVeneracion a owl:ObjectProperty ;
+  rdfs:domain :EntidadVenerada ;
+  rdfs:range  :LugarRitual .
 
 :SeCelebraEn a owl:ObjectProperty ;
   rdfs:domain :Festividad ;
@@ -404,7 +417,7 @@
   :nivelEmbeddings "A" ;
   rdfs:comment "COMPLETAR: lat/long con referencia (GPS/carta/fuente)."@es .
 
-:SantuarioQoylluriti a :Santuario ;
+:SantuarioQoylluriti a :Santuario, :LugarRitual ;
   rdfs:label "Santuario del Señor de Qoyllur Rit’i"@es ;
   :descripcionBreve "Santuario principal de la peregrinación de Qoyllur Rit’i."@es ;
   :nivelEmbeddings "A" ;
