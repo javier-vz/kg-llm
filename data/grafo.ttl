@@ -467,7 +467,9 @@
 
 :FestividadQoylluriti a :Festividad ;
   rdfs:label "Festividad del Señor de Qoyllur Rit’i"@es ;
-  :descripcionBreve "Peregrinación andina al santuario del Señor de Qoyllur Rit’i."@es ;
+  :descripcionBreve "Peregrinación andina de carácter ritual que se realiza anualmente en el área de Sinakara en honor al Señor de Qoyllur Rit’i."@es ;
+  :descripcionEtnografica "La festividad del Señor de Qoyllur Rit’i es una de las peregrinaciones rituales más importantes de los Andes del sur del Perú. Reúne a comunidades y naciones de distintas regiones que se desplazan hacia el área ritual de Sinakara, incluyendo el santuario y el glaciar Colque Punku. Durante la festividad se desarrollan caminatas rituales, danzas, actos de veneración y eventos colectivos que articulan prácticas religiosas, identidades locales y relaciones con el paisaje sagrado de montaña."@es ;
+  :fuenteTexto "Observación de campo, registro etnográfico propio y conocimiento local compartido por participantes de la festividad."@es ;
   :nivelEmbeddings "A" ;
   :SeCelebraEn :SantuarioQoylluriti ;
   :SeCelebraEn :ColquePunku ;
