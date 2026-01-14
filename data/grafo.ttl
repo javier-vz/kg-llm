@@ -437,7 +437,8 @@
 
 :IglesiaPaucartambo a :Iglesia ;
   rdfs:label "Iglesia de Paucartambo"@es ;
-  :descripcionBreve "Templo central de la festividad de la Virgen del Carmen."@es ;
+  :descripcionBreve "Templo principal de Paucartambo donde se realizan los actos centrales de la festividad de la Virgen del Carmen."@es ;
+  :descripcionEtnografica "La iglesia de Paucartambo es el espacio religioso más importante del pueblo durante la festividad de la Virgen del Carmen. Frente a este templo se organizan formaciones, desfiles y actos rituales previos y posteriores a las celebraciones principales. Durante los días festivos, la iglesia concentra la participación de danzas, comparsas, autoridades locales y devotos."@es ;
   :nivelEmbeddings "A" ;
   geo:lat "-13.3140"^^xsd:decimal ;
   geo:long "-71.5940"^^xsd:decimal ;
@@ -448,14 +449,19 @@
 
 :SenorDeQoyllurRiti a :EntidadVenerada ;
   rdfs:label "Señor de Qoyllur Rit’i"@es ;
-  :descripcionBreve "Entidad sagrada central de la peregrinación andina."@es ;
+  :descripcionBreve "Entidad sagrada venerada en la peregrinación andina de Qoyllur Rit’i."@es ;
+  :descripcionEtnografica "El Señor de Qoyllur Rit’i es la imagen sagrada en torno a la cual se organiza la peregrinación anual en la zona de Sinakara. Su veneración convoca a comunidades y naciones andinas que participan mediante caminatas rituales, danzas y ceremonias colectivas. La presencia de esta entidad estructura los recorridos, los tiempos rituales y los actos religiosos que se desarrollan en el santuario."@es ;  
   :nivelEmbeddings "A" ;
   :tieneLugarDeVeneracion :SantuarioQoylluriti .
 
 :VirgenDelCarmen a :EntidadVenerada ;
   rdfs:label "Virgen del Carmen"@es ;
-  :descripcionBreve "Imagen mariana venerada en Paucartambo."@es ;
-  :nivelEmbeddings "A" .
+  :descripcionBreve "Imagen mariana venerada en la festividad de la Virgen del Carmen en Paucartambo."@es ;
+  :descripcionEtnografica "La Virgen del Carmen es la imagen central de la festividad de Paucartambo y concentra las prácticas religiosas y celebratorias del pueblo. Su veneración se expresa mediante procesiones, danzas y actos colectivos que articulan la vida ritual y social de la localidad. La presencia de esta imagen organiza los recorridos festivos y las actividades que se desarrollan en torno a la iglesia y el espacio urbano."@es ;
+  :fuenteTexto "Observación de campo y registro etnográfico propio."@es ;
+  :nivelEmbeddings "A" ;
+  :tieneLugarDeVeneracion :IglesiaPaucartambo ;
+  :tieneLugarDeVeneracion :Paucartambo .
 
 ### Festividades
 
