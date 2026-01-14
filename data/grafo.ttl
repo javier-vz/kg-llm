@@ -206,7 +206,6 @@
   rdfs:label "Nivel de embeddings"@es ;
   rdfs:comment "Clasificación para embeddings y RAG: A = entidades centrales (si faltan, el sistema no entiende el dominio); B = entidades contextuales (aportan contexto, pero no son protagonistas); C = entidades estructurales o técnicas (ordenan el grafo y no deben aparecer en respuestas ni generar embeddings)."@es .
 
-
 :codigoRecurso a owl:AnnotationProperty ;
   rdfs:label "Código de recurso"@es ;
   rdfs:comment "Identificador estable para fotos, videos, audios y documentos."@es .
@@ -214,6 +213,10 @@
 :rutaArchivo a owl:AnnotationProperty ;
   rdfs:label "Ruta de archivo"@es ;
   rdfs:comment "Ruta local o URL donde se encuentra el recurso."@es .
+
+:nombreAlternativo a owl:AnnotationProperty ;
+  rdfs:label "nombre alternativo"@es ;
+  rdfs:comment "Variantes de nombre (locales, regionales o históricas) para la misma entidad. No crea entidades nuevas: solo alias para búsqueda y RAG."@es .
 
 #################################################################
 ### (NUEVO) PROPIEDADES DE DATOS
@@ -397,21 +400,22 @@
 
 :Paucartambo a :Localidad ;
   rdfs:label "Paucartambo"@es ;
-  :descripcionBreve "Localidad cusqueña donde se celebra la festividad de la Virgen del Carmen."@es ;
+  :descripcionBreve "Paucartambo es una localidad del Cusco reconocida por su fuerte tradición festiva y religiosa. Es el principal centro urbano asociado a la festividad de la Virgen del   Carmen y un punto de partida importante para la peregrinación al Señor de Qoyllur Rit’i."@es ;
+  :descripcionEtnografica "Paucartambo es un pueblo andino con una vida ritual intensa, donde las danzas y las festividades religiosas forman parte central de la identidad local. Cada año, la festividad de la Virgen del Carmen convoca a comparsas, músicos y visitantes, transformando el espacio urbano en un escenario ritual. Desde Paucartambo también parten grupos de danzantes y peregrinos hacia la festividad del Señor de Qoyllur Rit’i, iniciando el recorrido hacia Mahuayani y posteriormente hacia Sinakara. En este contexto, el pueblo funciona como un punto de reunión, preparación y despedida, articulando la vida cotidiana con los ciclos rituales regionales."@es ;
   :nivelEmbeddings "A" ;
   geo:lat "-13.3140"^^xsd:decimal ;
   geo:long "-71.5940"^^xsd:decimal ;
-  rdfs:comment "Coordenadas aproximadas. Ajustar con fuente oficial si se requiere precisión."@es .
+  rdfs:comment "Coordenadas aproximadas. Ajustar con fuente oficial."@es .
 
 :Sinakara a :Lugar ;
   rdfs:label "Sinakara"@es ;
-  :descripcionBreve "Zona ritual de alta montaña asociada a Qoyllur Rit’i."@es ;
+  :descripcionBreve "Sinakara es una zona ritual de alta montaña donde se desarrolla la parte principal de la festividad del Señor de Qoyllur Rit’i. En este espacio se concentran el santuario, los campamentos y los principales eventos rituales de la peregrinación."@es ;
+  :descripcionEtnografica "Sinakara es un espacio ritual de altura ubicado en la cordillera, que funciona como el núcleo territorial de la festividad del Señor de Qoyllur Rit’i. Durante los días de la peregrinación, el área se transforma con la llegada de miles de personas, la instalación de campamentos y la realización de ceremonias religiosas y rituales. En Sinakara se encuentran el santuario, las zonas de descanso y los accesos hacia lugares clave como el glaciar Colque Punku. El espacio no es un pueblo permanente, sino un territorio ritual temporalmente habitado, cuya organización responde a los tiempos y prácticas propias de la festividad."@es ;
   :nivelEmbeddings "A" ;
   geo:lat "-13.528333"^^xsd:decimal ;
   geo:long "-71.233611"^^xsd:decimal ;
   rdfs:comment "lat/long aproximado."@es .
 
-### Lugar clave para precisión etnográfica
 :ColquePunku a :Glaciar ;
   rdfs:label "Colque Punku"@es ;
   :descripcionBreve "Glaciar asociado a la peregrinación de Qoyllur Rit’i en el área ritual de Sinakara."@es ;
@@ -484,6 +488,8 @@
   :descripcionBreve "Personaje ritual andino asociado a funciones de vigilancia, mediación y orden durante Qoyllur Rit’i."@es ;
   :descripcionEtnografica "COMPLETAR: descripción narrativa (3–6 frases) basada en fuentes o experiencia de campo, sin inventar."@es ;
   :fuenteTexto "COMPLETAR: fuente (campo, entrevista, texto, etc.)."@es ;
+  :nombreAlternativo "Ukamari"@es ;
+  :nombreAlternativo "Pablito"@es ;
   :nivelEmbeddings "A" .
 
 :DanzaUkuku a :Danza ;
@@ -512,7 +518,7 @@
 :FestividadQoylluriti :incluyeEvento :BajadaColquePunku_2025 .
 
 #################################################################
-### (NUEVO) EJEMPLO DE RECURSO MEDIAL (FOTO)
+### EJEMPLO DE RECURSO MEDIAL (FOTO)
 ### Incluye código estable + ruta + fecha + relación documental.
 #################################################################
 
