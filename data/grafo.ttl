@@ -419,6 +419,7 @@
 :ColquePunku a :Glaciar ;
   rdfs:label "Colque Punku"@es ;
   :descripcionBreve "Glaciar asociado a la peregrinación de Qoyllur Rit’i en el área ritual de Sinakara."@es ;
+  :descripcionEtnografica "Colque Punku es un glaciar de alta montaña ubicado en el área ritual de Sinakara y constituye uno de los espacios centrales en el desarrollo de la festividad del Señor de Qoyllur Rit’i. Durante la peregrinación, distintos grupos y danzantes ascienden y descienden por este sector como parte de eventos rituales específicos del ciclo festivo. El glaciar y su entorno inmediato funcionan como un espacio de tránsito ritual, donde se observan desplazamientos colectivos, formaciones de grupos y pausas breves antes de continuar el recorrido."@es ;
   :ubicadoEn :Sinakara ;
   :nivelEmbeddings "A" ;
   geo:lat "-13.519167"^^xsd:decimal ;
@@ -427,7 +428,8 @@
 
 :SantuarioQoylluriti a :Santuario, :LugarRitual ;
   rdfs:label "Santuario del Señor de Qoyllur Rit’i"@es ;
-  :descripcionBreve "Santuario principal de la peregrinación de Qoyllur Rit’i."@es ;
+  :descripcionBreve "Santuario de alta montaña donde se concentra la peregrinación del Señor de Qoyllur Rit’i durante la festividad anual."@es ;
+  :descripcionEtnografica "El santuario del Señor de Qoyllur Rit’i es el principal punto de reunión de los peregrinos que llegan a la zona de Sinakara. En este espacio se realizan actos de veneración y ceremonias colectivas vinculadas a la imagen sagrada. Durante los días de la festividad, el entorno del santuario se llena de campamentos temporales y de la presencia de danzas, comunidades y naciones provenientes de distintas regiones andinas."@es ;
   :nivelEmbeddings "A" ;
   geo:lat "-13.1869"^^xsd:decimal ;
   geo:long "-71.3366"^^xsd:decimal ;
@@ -447,7 +449,8 @@
 :SenorDeQoyllurRiti a :EntidadVenerada ;
   rdfs:label "Señor de Qoyllur Rit’i"@es ;
   :descripcionBreve "Entidad sagrada central de la peregrinación andina."@es ;
-  :nivelEmbeddings "A" .
+  :nivelEmbeddings "A" ;
+  :tieneLugarDeVeneracion :SantuarioQoylluriti .
 
 :VirgenDelCarmen a :EntidadVenerada ;
   rdfs:label "Virgen del Carmen"@es ;
