@@ -445,6 +445,31 @@
   :ubicadoEn :Paucartambo ;
   rdfs:comment "Coordenadas aproximadas (mismo centro urbano). Ajustar si se desea precisión del edificio."@es .
 
+:CementerioPaucartambo a :Lugar ;
+  rdfs:label "Cementerio de Paucartambo"@es ;
+  :descripcionBreve "Espacio funerario de Paucartambo visitado por peregrinos en contextos de romería y memoria."@es ;
+  :nivelEmbeddings "B" ;
+  :ubicadoEn :Paucartambo ;
+  rdfs:comment "Lugar agregado desde anotación fotográfica. Completar coordenadas si se dispone."@es .
+
+:Ccatcca a :Localidad ;
+  rdfs:label "Ccatcca"@es ;
+  :descripcionBreve "Localidad de paso mencionada en la ruta del peregrinaje hacia Qoyllur Rit’i."@es ;
+  :nivelEmbeddings "B" ;
+  rdfs:comment "Completar coordenadas si se dispone."@es .
+
+:PlazaCcatcca a :Lugar ;
+  rdfs:label "Plaza de Ccatcca"@es ;
+  :descripcionBreve "Espacio público central de Ccatcca observado como punto de parada y reunión."@es ;
+  :nivelEmbeddings "B" ;
+  :ubicadoEn :Ccatcca .
+
+:IglesiaSanJuanBautistaCcatcca a :Iglesia ;
+  rdfs:label "Iglesia San Juan Bautista de Ccatcca"@es ;
+  :descripcionBreve "Iglesia principal de Ccatcca, registrada como parte de una parada durante el trayecto."@es ;
+  :nivelEmbeddings "B" ;
+  :ubicadoEn :Ccatcca .
+
 ### Entidades veneradas
 
 :SenorDeQoyllurRiti a :EntidadVenerada ;
@@ -483,6 +508,8 @@
   :nivelEmbeddings "A" ;
   :SeCelebraEn :Paucartambo ;
   :SeCelebraEn :IglesiaPaucartambo .
+
+
 
 ### Comunidad
 
