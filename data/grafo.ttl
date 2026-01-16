@@ -561,23 +561,50 @@
 
 :FestividadQoylluriti :incluyeEvento :BajadaColquePunku_2025 .
 
+:EventoPrevioPeregrinaje_Paucartambo_2025_06_15 a :EventoRitual ;
+  rdfs:label "Encuentro de Ukuku frente a la iglesia en Paucartambo (15 junio 2025)"@es ;
+  :descripcionBreve "Grupo de Ukuku reunido frente a la iglesia de Paucartambo, en un contexto previo al peregrinaje hacia Qoyllur Rit’i (según anotación del equipo)."@es ;
+  :nivelEmbeddings "B" ;
+  :estaEnLugar :IglesiaPaucartambo ;
+  rdfs:comment "Nota: la foto sugiere un momento previo a la partida; si luego se confirma que corresponde a otro marco ritual (p. ej. Virgen del Carmen u otra actividad local), ajustar la relación de festividad."@es .
+
+:RomeriaPaucartambo_2025_06_15 a :EventoRitual ;
+  rdfs:label "Romería en el cementerio de Paucartambo (15 junio 2025)"@es ;
+  :descripcionBreve "Romería en la que peregrinos visitan a sus fallecidos y los recuerdan con cantos y música de tono solemne (según anotación del equipo)."@es ;
+  :nivelEmbeddings "B" ;
+  :estaEnLugar :CementerioPaucartambo ;
+  rdfs:comment "En la anotación se menciona vestimenta (camisa blanca, pantalón negro, waraka) y música; evitar listar instrumentos específicos si no se observan en la foto."@es .
+
+
 #################################################################
 ### EJEMPLO DE RECURSO MEDIAL (FOTO)
 ### Incluye código estable + ruta + fecha + relación documental.
 #################################################################
 
-:QOY_FOTO_2025_001 a :Foto ;
-  rdfs:label "Foto: Bajada desde Colque Punku (17 junio 2025)"@es ;
-  :codigoRecurso "QOY-FOTO-2025-001" ;
-  :rutaArchivo "resources/qoylluriti/fotos/QOY-FOTO-2025-001.jpg" ;
-  :fechaCaptura "2025-06-17"^^xsd:date ;
-  :descripcionBreve "Fotografía del descenso desde el glaciar Colque Punku en Sinakara durante Qoyllur Rit’i, con participantes de distintas naciones."@es ;
-  :descripcionEtnografica "COMPLETAR: descripción ampliada (3–6 frases) con vocabulario narrativo, sin inventar, indicando lo visible en la imagen."@es ;
-  :fuenteTexto "Registro fotográfico propio, 17/06/2025."@es ;
+:FOTO_15_JUNIO_1 a :Foto ;
+  rdfs:label "Foto: Ukuku frente a la iglesia de Paucartambo (15 junio 2025)"@es ;
+  :codigoRecurso "15-junio-1" ;
+  :rutaArchivo "15-junio-1.jpeg" ;
+  :fechaCaptura "2025-06-15"^^xsd:date ;
+  :descripcionBreve "Ukuku frente a la iglesia de Paucartambo, registrado en un momento previo al peregrinaje hacia Qoyllur Rit’i (según anotación del equipo)."@es ;
   :nivelEmbeddings "A" ;
-  :documentaA :BajadaColquePunku_2025 .
+  :documentaA :EventoPrevioPeregrinaje_Paucartambo_2025_06_15 .
 
-:FestividadQoylluriti :tieneRecursoMedial :QOY_FOTO_2025_001 .
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_1 .
+
+:FOTO_15_JUNIO_2 a :Foto ;
+  rdfs:label "Foto: Romería en cementerio de Paucartambo (15 junio 2025)"@es ;
+  :codigoRecurso "15-junio-2" ;
+  :rutaArchivo "https://drive.google.com/file/d/1pq2euUyvy8dGyqp7ijY0e6Y9V6XrdCqs/view?usp=drive_link" ;
+  :fechaCaptura "2025-06-15"^^xsd:date ;
+  :descripcionBreve "Romería en el cementerio de Paucartambo: peregrinos visitan a sus fallecidos y los honran con cantos y música de tono solemne (según anotación del equipo)."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :RomeriaPaucartambo_2025_06_15 ;
+  rdfs:comment "Anotador: María de los Ángeles. En comentario se describe práctica cultural general; dejar esa ampliación para :descripcionEtnografica si luego se redacta con fuente."@es .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_2 ;
+:incluyeEvento :RomeriaPaucartambo_2025_06_15 .
+
 
 #################################################################
 ### CÓMO EXTENDER ESTE TTL (PATRONES)
