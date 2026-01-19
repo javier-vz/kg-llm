@@ -577,7 +577,7 @@
 
 
 #################################################################
-### EJEMPLO DE RECURSO MEDIAL (FOTO)
+### RECURSO MEDIAL (FOTO)
 ### Incluye código estable + ruta + fecha + relación documental.
 #################################################################
 
@@ -604,6 +604,21 @@
 
 :FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_2 ;
 :incluyeEvento :RomeriaPaucartambo_2025_06_15 .
+
+:FOTO_15_JUNIO_3 a :Foto ;
+  rdfs:label "Foto: Parada de visitantes en Ccatcca (15 junio 2025)"@es ;
+  :codigoRecurso "15-junio-3" ;
+  :rutaArchivo "https://drive.google.com/file/d/1bTX43kbMdxOwoN00uSYAtxqGFI3wmudM/view?usp=drive_link" ;
+  :fechaCaptura "2025-06-15"^^xsd:date ;
+  :descripcionBreve "Visitantes en el pueblo de Ccatcca; en la escena se distinguen uno o dos Ukuku."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :PlazaCcatcca ;
+  rdfs:comment "Anotador: María de los Ángeles. En la fila se consigna también la iglesia como referencia; si se confirma que aparece en la imagen, puede añadirse otro :documentaA o cambiar el principal."@es .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_3 .
+:FOTO_15_JUNIO_3 :documentaA :PlazaCcatcca ;
+              :documentaA :IglesiaSanJuanBautistaCcatcca .
+
 
 
 #################################################################
