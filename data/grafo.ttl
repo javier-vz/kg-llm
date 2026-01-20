@@ -582,7 +582,24 @@
   :estaEnLugar :Ccatcca ;
   rdfs:comment "Se observa la iglesia del pueblo y actividad nocturna en espacio público."@es .
 
+:Caminata_Mahuayani_Santuario_2025 a :EventoRitual ;
+  rdfs:label "Caminata desde Mahuayani hacia el santuario (2025)"@es ;
+  :descripcionBreve "Desplazamiento de los peregrinos desde Mahuayani hacia el santuario del Señor de Qoyllur Rit’i."@es ;
+  :nivelEmbeddings "B" ;
+  :estaEnLugar :Mahuayani .
 
+:FestividadQoylluriti :incluyeEvento :Caminata_Mahuayani_Santuario_2025 .
+
+:PasoCasaPrioste_2025_06_16 a :EventoRitual ;
+  rdfs:label "Paso por la casa del prioste (16 junio 2025)"@es ;
+  :descripcionBreve "Paso de los Ukumari y peregrinos por la casa del prioste del Señor de Qoyllur Rit’i, en el trayecto entre Paucartambo y Mahuayani."@es ;
+  :nivelEmbeddings "B" .
+
+:CeremoniaVeneracion_Templo_Qoylluriti_2025 a :EventoRitual ;
+  rdfs:label "Ceremonia de veneración en el templo de Qoyllur Rit’i (2025)"@es ;
+  :descripcionBreve "Ceremonia colectiva de veneración realizada en el interior del templo del Señor de Qoyllur Rit’i."@es ;
+  :nivelEmbeddings "B" ;
+  :estaEnLugar :SantuarioQoylluriti .
 
 #################################################################
 ### RECURSO MEDIAL (FOTO)
@@ -668,9 +685,72 @@
 
 :FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_5 .
 
+:FOTO_16_JUNIO_5 a :Foto ;
+  rdfs:label "Foto: Paso por la casa del prioste (16 junio 2025, madrugada)"@es ;
+  :codigoRecurso "16-junio-5" ;
+  :rutaArchivo "16-junio-5.jpeg" ;
+  :fechaCaptura "2025-06-16"^^xsd:date ;
+  :descripcionBreve "En la madrugada del 16 de junio, un grupo de Ukumari pasa por la casa del prioste del Señor de Qoyllur Rit’i. La imagen muestra a los participantes reunidos y en desplazamiento dentro del patio, algunos portando banderas y vestimenta ritual. La escena ocurre de noche y está iluminada artificialmente."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :PasoCasaPrioste_2025_06_16 .
+
+:FestividadQoylluriti :incluyeEvento :PasoCasaPrioste_2025_06_16 ;
+                     :tieneRecursoMedial :FOTO_16_JUNIO_5 .
+
 
 ########################
-### (D) FOTOS / RECURSOS (17 JUNIO 2025)
+### (D) FOTOS / RECURSOS (16 JUNIO 2025)
+########################
+
+:FOTO_16_JUNIO_3 a :Foto ;
+  rdfs:label "Foto: Entorno del santuario con carpas y botica improvisada (16 junio 2025)"@es ;
+  :codigoRecurso "16-junio-3" ;
+  :rutaArchivo "16-junio-3.jpeg" ;
+  :fechaCaptura "2025-06-16"^^xsd:date ;
+  :descripcionBreve "Sector del entorno del santuario del Señor de Qoyllur Rit’i con numerosas carpas instaladas en las laderas, cubiertas con plásticos por las condiciones climáticas. En primer plano se observa una botica improvisada y personas transitando y permaneciendo en el lugar."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :SantuarioQoylluriti .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_16_JUNIO_3 .
+
+:FOTO_16_JUNIO_4 a :Foto ;
+  rdfs:label "Foto: Inicio de caminata desde Mahuayani (16 junio 2025)"@es ;
+  :codigoRecurso "16-junio-4" ;
+  :rutaArchivo "16-junio-4.jpeg" ;
+  :fechaCaptura "2025-06-16"^^xsd:date ;
+  :descripcionBreve "Grupo de Ukumari iniciando la caminata de madrugada desde Mahuayani hacia el santuario del Señor de Qoyllur Rit’i. Se observa el cartel vial de Mahuayani, carpas al borde del camino e infraestructura local. Los participantes avanzan cargando bultos y objetos personales; la imagen está tomada desde el interior del grupo en desplazamiento."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :InicioCaminata_Mahuayani_Santuario_2025 .
+
+:FestividadQoylluriti :incluyeEvento :Caminata_Mahuayani_Santuario_2025 ;
+                     :tieneRecursoMedial :FOTO_16_JUNIO_4 .
+
+:FOTO_16_JUNIO_2 a :Foto ;
+  rdfs:label "Foto: Concentración de danzas cerca del templo de Qoyllur Rit’i (16 junio 2025)"@es ;
+  :codigoRecurso "16-junio-2" ;
+  :rutaArchivo "16-junio-2.jpeg" ;
+  :fechaCaptura "2025-06-16"^^xsd:date ;
+  :descripcionBreve "Concentración de danzas en las inmediaciones del templo del Señor de Qoyllur Rit’i, alrededor de una pequeña capilla. Participan diversos grupos rituales, entre ellos Ukumari, Qollas y Chunchos. La fotografía está tomada desde el interior de un grupo Ukumari, lo que define el punto de vista de la escena."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :SantuarioQoylluriti .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_16_JUNIO_2 .
+
+:FOTO_16_JUNIO_1 a :Foto ;
+  rdfs:label "Foto: Ceremonia de veneración en el templo de Qoyllur Rit’i (16 junio 2025)"@es ;
+  :codigoRecurso "16-junio-1" ;
+  :rutaArchivo "16-junio-1.jpeg" ;
+  :fechaCaptura "2025-06-16"^^xsd:date ;
+  :descripcionBreve "Interior del templo que resguarda la imagen del Señor de Qoyllur Rit’i durante la noche del 16 de junio. El espacio se encuentra colmado de personas que participan en una ceremonia de veneración; se distinguen asistentes de distintos orígenes y vinculados a diversas danzas, sin ejecución ritual visible en el momento de la toma."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :CeremoniaVeneracion_Templo_Qoylluriti_2025 .
+
+:FestividadQoylluriti :incluyeEvento :CeremoniaVeneracion_Templo_Qoylluriti_2025 ;
+                     :tieneRecursoMedial :FOTO_16_JUNIO_1 .
+
+
+########################
+### (E) FOTOS / RECURSOS (17 JUNIO 2025)
 ### Nota: aquí sí usamos xsd:date y el evento :BajadaColquePunku_2025 (ya existe en tu TTL)
 ########################
 
