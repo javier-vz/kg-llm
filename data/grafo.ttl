@@ -632,7 +632,7 @@
   :fuenteTexto "Preanotación del equipo (María de los Ángeles), 15/06/2025."@es ;
   :nivelEmbeddings "A" ;
   :documentaA :Ccatcca ;
-  :documentaA :Plaza de Ccatcca;
+  :documentaA :PlazaCcatcca;
   :documentaA :IglesiaSanJuanBautistaCcatcca;
   rdfs:comment "Si luego se precisa, puede añadirse el nodo de iglesia/plaza específica de Ccatcca."@es .
 
@@ -663,7 +663,7 @@
   :fuenteTexto "Preanotación del equipo (María de los Ángeles), 15/06/2025."@es ;
   :nivelEmbeddings "A" ;
   :documentaA :Ccatcca ;
-  :documentaA :Plaza de Ccatcca;
+  :documentaA :PlazaCcatcca;
   :documentaA :Sinakara .
 
 :FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_5 .
