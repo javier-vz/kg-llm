@@ -470,6 +470,12 @@
   :nivelEmbeddings "B" ;
   :ubicadoEn :Ccatcca .
 
+:Mahuayani a :Localidad ;
+  rdfs:label "Mahuayani"@es ;
+  :descripcionBreve "Localidad usada como punto de partida y paso hacia el santuario del Señor de Qoyllur Rit’i."@es ;
+  :nivelEmbeddings "A" ;
+  rdfs:comment "Agregar geo:lat/geo:long cuando se confirme una coordenada fiable (fuente o GPS)."@es .
+
 ### Entidades veneradas
 
 :SenorDeQoyllurRiti a :EntidadVenerada ;
@@ -720,7 +726,8 @@
   :fechaCaptura "2025-06-16"^^xsd:date ;
   :descripcionBreve "Grupo de Ukumari iniciando la caminata de madrugada desde Mahuayani hacia el santuario del Señor de Qoyllur Rit’i. Se observa el cartel vial de Mahuayani, carpas al borde del camino e infraestructura local. Los participantes avanzan cargando bultos y objetos personales; la imagen está tomada desde el interior del grupo en desplazamiento."@es ;
   :nivelEmbeddings "A" ;
-  :documentaA :InicioCaminata_Mahuayani_Santuario_2025 .
+  :documentaA :Caminata_Mahuayani_Santuario_2025 ;
+  :documentaA :Mahuayani .
 
 :FestividadQoylluriti :incluyeEvento :Caminata_Mahuayani_Santuario_2025 ;
                      :tieneRecursoMedial :FOTO_16_JUNIO_4 .
