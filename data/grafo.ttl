@@ -575,6 +575,14 @@
   :estaEnLugar :CementerioPaucartambo ;
   rdfs:comment "En la anotación se menciona vestimenta (camisa blanca, pantalón negro, waraka) y música; evitar listar instrumentos específicos si no se observan en la foto."@es .
 
+:ParadaNocturna_Ccatcca_2025_06_15 a :EventoRitual ;
+  rdfs:label "Parada nocturna de peregrinos en Ccatcca (15 junio 2025)"@es ;
+  :descripcionBreve "Parada nocturna de peregrinos en el trayecto entre Paucartambo y Mahuayani, con consumo de alimentos y bebidas calientes."@es ;
+  :nivelEmbeddings "B" ;
+  :estaEnLugar :Ccatcca ;
+  rdfs:comment "Se observa la iglesia del pueblo y actividad nocturna en espacio público."@es .
+
+
 
 #################################################################
 ### RECURSO MEDIAL (FOTO)
@@ -586,42 +594,138 @@
   :codigoRecurso "15-junio-1" ;
   :rutaArchivo "15-junio-1.jpeg" ;
   :fechaCaptura "2025-06-15"^^xsd:date ;
-  :descripcionBreve "Ukuku frente a la iglesia de Paucartambo, registrado en un momento previo al peregrinaje hacia Qoyllur Rit’i (según anotación del equipo)."@es ;
+  :descripcionBreve "Ukuku desfilan y danzan frente a la iglesia de Paucartambo antes de partir hacia Mahuayani."@es ;
+  :descripcionEtnografica "La imagen muestra a los Ukuku con trajes negros, gorros voluminosos y telas coloridas, danzando frente a la iglesia. Son reconocidos como protectores de la Virgen del Carmen y miembros de la nación de Paucartambo."@es ;
+  :fuenteTexto "Anotación de campo, María de los Ángeles (2025)."@es ;
   :nivelEmbeddings "A" ;
   :documentaA :EventoPrevioPeregrinaje_Paucartambo_2025_06_15 .
 
 :FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_1 .
 
 :FOTO_15_JUNIO_2 a :Foto ;
-  rdfs:label "Foto: Romería en cementerio de Paucartambo (15 junio 2025)"@es ;
+  rdfs:label "Foto: Romería de Ukuku en el cementerio de Paucartambo (15 junio 2025)"@es ;
   :codigoRecurso "15-junio-2" ;
-  :rutaArchivo "https://drive.google.com/file/d/1pq2euUyvy8dGyqp7ijY0e6Y9V6XrdCqs/view?usp=drive_link" ;
+  :rutaArchivo "15-junio-2.jpeg" ;
   :fechaCaptura "2025-06-15"^^xsd:date ;
-  :descripcionBreve "Romería en el cementerio de Paucartambo: peregrinos visitan a sus fallecidos y los honran con cantos y música de tono solemne (según anotación del equipo)."@es ;
+  :descripcionBreve "Ukuku visitan tumbas en el cementerio de Paucartambo, arrodillados frente a sepulturas, como parte de una romería ritual."@es ;
+  :descripcionEtnografica "Los Ukuku, sin disfraz completo, rinden homenaje a familiares o capataces fallecidos mediante cantos tristes. Se observan banderas con colores asociados al grupo, posiblemente de los Ukuku negros."@es ;
+  :fuenteTexto "Anotación de campo, María de los Ángeles (2025)."@es ;
   :nivelEmbeddings "A" ;
-  :documentaA :RomeriaPaucartambo_2025_06_15 ;
-  rdfs:comment "Anotador: María de los Ángeles. En comentario se describe práctica cultural general; dejar esa ampliación para :descripcionEtnografica si luego se redacta con fuente."@es .
+  :documentaA :RomeriaPaucartambo_2025_06_15 .
 
 :FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_2 ;
-:incluyeEvento :RomeriaPaucartambo_2025_06_15 .
+  :incluyeEvento :RomeriaPaucartambo_2025_06_15 .
 
 :FOTO_15_JUNIO_3 a :Foto ;
-  rdfs:label "Foto: Parada de visitantes en Ccatcca (15 junio 2025)"@es ;
+  rdfs:label "Foto: Parada nocturna de peregrinos en Ccatcca (15 junio 2025)"@es ;
   :codigoRecurso "15-junio-3" ;
-  :rutaArchivo "https://drive.google.com/file/d/1bTX43kbMdxOwoN00uSYAtxqGFI3wmudM/view?usp=drive_link" ;
+  :rutaArchivo "15-junio-3.jpeg" ;
   :fechaCaptura "2025-06-15"^^xsd:date ;
-  :descripcionBreve "Visitantes en el pueblo de Ccatcca; en la escena se distinguen uno o dos Ukuku."@es ;
+  :descripcionBreve "Peregrinos reunidos de noche en el pueblo de Ccatcca, con presencia de Ukuku y tránsito continuo."@es ;
+  :descripcionEtnografica "La imagen muestra actividad nocturna frente a la iglesia de Ccatcca. Los peregrinos consumen alimentos y bebidas calientes, y algunos pueden chacchar coca como parte de un acto de agradecimiento a los apus."@es ;
+  :fuenteTexto "Anotación de campo, María de los Ángeles (2025)."@es ;
   :nivelEmbeddings "A" ;
-  :documentaA :PlazaCcatcca ;
-  rdfs:comment "Anotador: María de los Ángeles. En la fila se consigna también la iglesia como referencia; si se confirma que aparece en la imagen, puede añadirse otro :documentaA o cambiar el principal."@es .
+  :documentaA :ParadaNocturna_Ccatcca_2025_06_15 .
 
 :FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_3 .
 :FOTO_15_JUNIO_3 :documentaA :PlazaCcatcca ;
               :documentaA :IglesiaSanJuanBautistaCcatcca .
 
+:FOTO_15_JUNIO_4 a :Foto ;
+  rdfs:label "Foto: Ukuku recorriendo Paucartambo antes del viaje (15 junio 2025)"@es ;
+  :codigoRecurso "15-junio-4" ;
+  :rutaArchivo "15-junio-4.jpeg" ;
+  :fechaCaptura "2025-06-15"^^xsd:date ;
+  :descripcionBreve "Ukuku y peregrinos recorren las calles de Paucartambo antes de iniciar el trayecto hacia Mahuayani."@es ;
+  :descripcionEtnografica "La escena muestra tránsito conjunto entre danzantes y población local. Se distinguen los colores tradicionales de los Ukuku negros y el acompañamiento musical."@es ;
+  :fuenteTexto "Anotación de campo, María de los Ángeles (2025)."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :EventoPrevioPeregrinaje_Paucartambo_2025_06_15 .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_4 .
+:FOTO_15_JUNIO_4 :documentaA :Paucartambo .
+
+:FOTO_15_JUNIO_5 a :Foto ;
+  rdfs:label "Foto: Distribución de alimentos en Ccatcca (15 junio 2025, noche)"@es ;
+  :codigoRecurso "15-junio-5" ;
+  :rutaArchivo "15-junio-5.jpeg" ;
+  :fechaCaptura "2025-06-15"^^xsd:date ;
+  :descripcionBreve "Durante la noche del 15 de junio de 2025, en Ccatcca, se observa a personas del lugar distribuyendo alimentos a los asistentes; varias personas se reúnen alrededor de la comida mientras reciben y sirven porciones."@es ;
+  :descripcionEtnografica "En otra escena de la misma noche en Ccatcca, una señora reparte mote a visitantes. Por el color del sombrero de algunos presentes, se sugiere (sin confirmación) una posible procedencia o influencia de una nación cercana."@es ;
+  :fuenteTexto "Preanotación del equipo (María de los Ángeles) a partir de la imagen 15-junio-5.jpeg."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :Ccatcca ;
+  :documentaA :ParadaNocturna_Ccatcca_2025_06_15 .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_1 ;
+:FOTO_15_JUNIO_4 :documentaA :Ccatcca .
+
+:QOY_FOTO_2025_17_JUN_6 a :Foto ;
+  rdfs:label "Foto: Descenso de Ukumari con cruz en ruta de bajada (17 junio 2025)"@es ;
+  :codigoRecurso "QOY-FOTO-2025-17-JUN-6" ;
+  :rutaArchivo "17-junio-6.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "Se observa un grupo de Ukumari descendiendo desde el glaciar Colque Punku por un camino estrecho. Durante el trayecto cargan una cruz, y en algunos sectores del terreno se aprecia nieve. Los Ukumari visten su traje tradicional."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :BajadaColquePunku_2025 ;
+  :documentaA :ColquePunku .
+
+:FestividadQoylluriti :tieneRecursoMedial :QOY_FOTO_2025_17_JUN_6 .
 
 
-#################################################################
+:QOY_FOTO_2025_17_JUN_7 a :Foto ;
+  rdfs:label "Foto: Detalle de Ukumari con cruz y presencia de otro grupo (17 junio 2025)"@es ;
+  :codigoRecurso "QOY-FOTO-2025-17-JUN-7" ;
+  :rutaArchivo "17-junio-7.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "En la imagen se observa a Ukumari cargando una cruz en un entorno de alta montaña, con nieve dispersa sobre el terreno rocoso. En segundo plano se distingue otro grupo de Ukumari con variaciones en los colores del vestuario, lo que sugiere la presencia de más de un grupo ritual en el mismo espacio."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :BajadaColquePunku_2025 ;
+  :documentaA :ColquePunku .
+
+:FestividadQoylluriti :tieneRecursoMedial :QOY_FOTO_2025_17_JUN_7 .
+
+
+:QOY_FOTO_2025_17_JUN_10 a :Foto ;
+  rdfs:label "Foto: Paisaje de alta montaña en el entorno de Colque Punku (17 junio 2025)"@es ;
+  :codigoRecurso "QOY-FOTO-2025-17-JUN-10" ;
+  :rutaArchivo "17-junio-10.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "En la imagen se observa un paisaje de alta montaña con sectores cubiertos de nieve y formaciones rocosas escarpadas. La neblina y la pendiente pronunciada caracterizan el entorno natural donde transcurre la peregrinación. La montaña domina visualmente la escena y funciona como referente central del paisaje ritual."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :ColquePunku ;
+  :documentaA :Sinakara .
+
+:FestividadQoylluriti :tieneRecursoMedial :QOY_FOTO_2025_17_JUN_10 .
+
+
+:QOY_FOTO_2025_17_JUN_8 a :Foto ;
+  rdfs:label "Foto: Laguna y presencia distante de grupo ritual en ruta de alta montaña (17 junio 2025)"@es ;
+  :codigoRecurso "QOY-FOTO-2025-17-JUN-8" ;
+  :rutaArchivo "17-junio-8.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "En la imagen se observa un paisaje amplio de alta montaña, con sectores cubiertos de nieve, formaciones rocosas y una laguna visible en la parte media del encuadre. Cerca de la laguna se distingue, a cierta distancia, un grupo de personas con vestimenta ritual; los colores y la disposición sugieren que podría tratarse de un grupo distinto al observado en otras imágenes. El entorno natural —montaña, nieve y agua— domina la escena y enmarca la presencia humana."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :BajadaColquePunku_2025 ;
+  :documentaA :ColquePunku .
+
+:FestividadQoylluriti :tieneRecursoMedial :QOY_FOTO_2025_17_JUN_8 .
+
+
+:QOY_FOTO_2025_17_JUN_9 a :Foto ;
+  rdfs:label "Foto: Grupo de Ukumari posando al amanecer en entorno de alta montaña (17 junio 2025)"@es ;
+  :codigoRecurso "QOY-FOTO-2025-17-JUN-9" ;
+  :rutaArchivo "17-junio-9.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "En la imagen se observa a un grupo de Ukumari posando de manera frontal, vistiendo sus trajes rituales, en un entorno de alta montaña con presencia de nieve. Al fondo se distinguen el glaciar y formaciones rocosas que enmarcan la escena. La fotografía fue tomada durante el amanecer, visible en la iluminación suave y el cielo cubierto; la disposición del grupo es estática."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :ColquePunku ;
+  :documentaA :Sinakara .
+
+:FestividadQoylluriti :tieneRecursoMedial :QOY_FOTO_2025_17_JUN_9 .
+
+
+################################################################
 ### CÓMO EXTENDER ESTE TTL (PATRONES)
 ### 1) Agregar un nuevo lugar:
 ###    :NuevoLugar a :Lugar ; rdfs:label ... ; geo:lat ... ; geo:long ... ; :descripcionBreve ... .
