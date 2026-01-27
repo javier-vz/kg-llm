@@ -391,90 +391,106 @@
   rdfs:range owl:Thing ;
   rdfs:label "documenta a"@es .
 
-#################################################################
-### INDIVIDUOS
-### Un individuo es una entidad concreta del mundo real.
-#################################################################
+############################################################
+### INDIVIDUOS #############################################
+### Un individuo es una entidad concreta del mundo real. ###
+############################################################
 
-### Lugares
+###############
+### LUGARES ###
+###############
 
 :Paucartambo a :Localidad ;
   rdfs:label "Paucartambo"@es ;
-  :descripcionBreve "Paucartambo es una localidad del Cusco reconocida por su fuerte tradición festiva y religiosa. Es el principal centro urbano asociado a la festividad de la Virgen del   Carmen y un punto de partida importante para la peregrinación al Señor de Qoyllur Rit’i."@es ;
-  :descripcionEtnografica "Paucartambo es un pueblo andino con una vida ritual intensa, donde las danzas y las festividades religiosas forman parte central de la identidad local. Cada año, la festividad de la Virgen del Carmen convoca a comparsas, músicos y visitantes, transformando el espacio urbano en un escenario ritual. Desde Paucartambo también parten grupos de danzantes y peregrinos hacia la festividad del Señor de Qoyllur Rit’i, iniciando el recorrido hacia Mahuayani y posteriormente hacia Sinakara. En este contexto, el pueblo funciona como un punto de reunión, preparación y despedida, articulando la vida cotidiana con los ciclos rituales regionales."@es ;
+  :descripcionBreve "Localidad andina del Cusco con fuerte tradición festiva y religiosa."@es ;
+  :descripcionEtnografica "Paucartambo es un pueblo andino con una vida ritual intensa, articulada en torno a festividades como la Virgen del Carmen y su participación regional en la peregrinación al Señor de Qoyllur Rit’i. Funciona como espacio de reunión, organización y partida de danzantes y peregrinos."@es ;
   :nivelEmbeddings "A" ;
   geo:lat "-13.3140"^^xsd:decimal ;
   geo:long "-71.5940"^^xsd:decimal ;
-  rdfs:comment "Coordenadas aproximadas. Ajustar con fuente oficial."@es .
+  rdfs:comment "Coordenadas aproximadas. Centro urbano."@es .
 
-:Sinakara a :Lugar ;
+
+:Sinakara a :LugarRitual ;
   rdfs:label "Sinakara"@es ;
-  :descripcionBreve "Sinakara es una zona ritual de alta montaña donde se desarrolla la parte principal de la festividad del Señor de Qoyllur Rit’i. En este espacio se concentran el santuario, los campamentos y los principales eventos rituales de la peregrinación."@es ;
-  :descripcionEtnografica "Sinakara es un espacio ritual de altura ubicado en la cordillera, que funciona como el núcleo territorial de la festividad del Señor de Qoyllur Rit’i. Durante los días de la peregrinación, el área se transforma con la llegada de miles de personas, la instalación de campamentos y la realización de ceremonias religiosas y rituales. En Sinakara se encuentran el santuario, las zonas de descanso y los accesos hacia lugares clave como el glaciar Colque Punku. El espacio no es un pueblo permanente, sino un territorio ritual temporalmente habitado, cuya organización responde a los tiempos y prácticas propias de la festividad."@es ;
+  :descripcionBreve "Área ritual de alta montaña donde se desarrolla la festividad del Señor de Qoyllur Rit’i."@es ;
+  :descripcionEtnografica "Sinakara es una quebrada y territorio ritual temporalmente habitado durante la peregrinación de Qoyllur Rit’i. Alberga el santuario, campamentos y espacios ceremoniales, y estructura la movilidad ritual de los peregrinos."@es ;
   :nivelEmbeddings "A" ;
   geo:lat "-13.528333"^^xsd:decimal ;
   geo:long "-71.233611"^^xsd:decimal ;
-  rdfs:comment "lat/long aproximado."@es .
+  rdfs:comment "Lat/long aproximado según literatura etnográfica."@es .
+
 
 :ColquePunku a :Glaciar ;
   rdfs:label "Colque Punku"@es ;
-  :descripcionBreve "Glaciar asociado a la peregrinación de Qoyllur Rit’i en el área ritual de Sinakara."@es ;
-  :descripcionEtnografica "Colque Punku es un glaciar de alta montaña ubicado en el área ritual de Sinakara y constituye uno de los espacios centrales en el desarrollo de la festividad del Señor de Qoyllur Rit’i. Durante la peregrinación, distintos grupos y danzantes ascienden y descienden por este sector como parte de eventos rituales específicos del ciclo festivo. El glaciar y su entorno inmediato funcionan como un espacio de tránsito ritual, donde se observan desplazamientos colectivos, formaciones de grupos y pausas breves antes de continuar el recorrido."@es ;
+  :descripcionBreve "Glaciar asociado a rituales de altura durante la peregrinación de Qoyllur Rit’i."@es ;
+  :descripcionEtnografica "Colque Punku constituye un espacio de tránsito y ritualidad de alta montaña. Históricamente fue escenario de ascensos rituales de los ukukus y otros grupos vinculados a prácticas simbólicas relacionadas con el hielo y la montaña."@es ;
   :ubicadoEn :Sinakara ;
   :nivelEmbeddings "A" ;
   geo:lat "-13.519167"^^xsd:decimal ;
   geo:long "-71.206667"^^xsd:decimal ;
-  rdfs:comment "lat/long aproximado."@es .
+  rdfs:comment "Coordenadas aproximadas. Uso ritual documentado en literatura antropológica."@es .
+
 
 :SantuarioQoylluriti a :Santuario, :LugarRitual ;
   rdfs:label "Santuario del Señor de Qoyllur Rit’i"@es ;
-  :descripcionBreve "Santuario de alta montaña donde se concentra la peregrinación del Señor de Qoyllur Rit’i durante la festividad anual."@es ;
-  :descripcionEtnografica "El santuario del Señor de Qoyllur Rit’i es el principal punto de reunión de los peregrinos que llegan a la zona de Sinakara. En este espacio se realizan actos de veneración y ceremonias colectivas vinculadas a la imagen sagrada. Durante los días de la festividad, el entorno del santuario se llena de campamentos temporales y de la presencia de danzas, comunidades y naciones provenientes de distintas regiones andinas."@es ;
+  :descripcionBreve "Santuario de alta montaña donde se concentra la peregrinación anual de Qoyllur Rit’i."@es ;
+  :descripcionEtnografica "El santuario constituye el núcleo simbólico de la peregrinación. En él se realizan misas, procesiones y actos de veneración asociados tanto al cristianismo como a cosmologías andinas preexistentes."@es ;
   :nivelEmbeddings "A" ;
-  geo:lat "-13.1869"^^xsd:decimal ;
-  geo:long "-71.3366"^^xsd:decimal ;
-  rdfs:comment "lat/long aproximado."@es .
+  rdfs:comment "Ubicado en el área ritual de Sinakara. Coordenadas exactas no fijadas para evitar confusión con el área amplia."@es .
+
 
 :IglesiaPaucartambo a :Iglesia ;
   rdfs:label "Iglesia de Paucartambo"@es ;
-  :descripcionBreve "Templo principal de Paucartambo donde se realizan los actos centrales de la festividad de la Virgen del Carmen."@es ;
-  :descripcionEtnografica "La iglesia de Paucartambo es el espacio religioso más importante del pueblo durante la festividad de la Virgen del Carmen. Frente a este templo se organizan formaciones, desfiles y actos rituales previos y posteriores a las celebraciones principales. Durante los días festivos, la iglesia concentra la participación de danzas, comparsas, autoridades locales y devotos."@es ;
+  :descripcionBreve "Templo principal de Paucartambo asociado a la festividad de la Virgen del Carmen."@es ;
+  :descripcionEtnografica "Espacio central de ritualidad urbana donde se articulan procesiones, danzas y actos cívico-religiosos durante las festividades locales."@es ;
+  :ubicadoEn :Paucartambo ;
   :nivelEmbeddings "A" ;
   geo:lat "-13.3140"^^xsd:decimal ;
   geo:long "-71.5940"^^xsd:decimal ;
-  :ubicadoEn :Paucartambo ;
-  rdfs:comment "Coordenadas aproximadas (mismo centro urbano). Ajustar si se desea precisión del edificio."@es .
+  rdfs:comment "Se asume centro urbano de Paucartambo."@es .
+
 
 :CementerioPaucartambo a :Lugar ;
   rdfs:label "Cementerio de Paucartambo"@es ;
-  :descripcionBreve "Espacio funerario de Paucartambo visitado por peregrinos en contextos de romería y memoria."@es ;
-  :nivelEmbeddings "B" ;
+  :descripcionBreve "Espacio funerario vinculado a prácticas de memoria y visitas rituales."@es ;
+  :descripcionEtnografica ""@es ;
   :ubicadoEn :Paucartambo ;
-  rdfs:comment "Lugar agregado desde anotación fotográfica. Completar coordenadas si se dispone."@es .
+  :nivelEmbeddings "B" ;
+  rdfs:comment "Lugar identificado por registro fotográfico. Falta descripción etnográfica detallada."@es .
+
 
 :Ccatcca a :Localidad ;
   rdfs:label "Ccatcca"@es ;
-  :descripcionBreve "Localidad de paso mencionada en la ruta del peregrinaje hacia Qoyllur Rit’i."@es ;
+  :descripcionBreve "Localidad andina mencionada como punto de paso en la ruta hacia Qoyllur Rit’i."@es ;
+  :descripcionEtnografica ""@es ;
   :nivelEmbeddings "B" ;
-  rdfs:comment "Completar coordenadas si se dispone."@es .
+  rdfs:comment "Localidad referida en crónicas y rutas de peregrinación. Falta caracterización etnográfica."@es .
+
 
 :PlazaCcatcca a :Lugar ;
   rdfs:label "Plaza de Ccatcca"@es ;
-  :descripcionBreve "Espacio público central de Ccatcca observado como punto de parada y reunión."@es ;
+  :descripcionBreve "Plaza central de Ccatcca usada como punto de parada y reunión."@es ;
+  :descripcionEtnografica ""@es ;
+  :ubicadoEn :Ccatcca ;
   :nivelEmbeddings "B" ;
-  :ubicadoEn :Ccatcca .
+  rdfs:comment "Descripción etnográfica pendiente."@es .
+
 
 :IglesiaSanJuanBautistaCcatcca a :Iglesia ;
   rdfs:label "Iglesia San Juan Bautista de Ccatcca"@es ;
-  :descripcionBreve "Iglesia principal de Ccatcca, registrada como parte de una parada durante el trayecto."@es ;
+  :descripcionBreve "Iglesia principal de la localidad de Ccatcca."@es ;
+  :descripcionEtnografica ""@es ;
+  :ubicadoEn :Ccatcca ;
   :nivelEmbeddings "B" ;
-  :ubicadoEn :Ccatcca .
+  rdfs:comment "Información mínima. Falta fuente específica."@es .
+
 
 :Mahuayani a :Localidad ;
   rdfs:label "Mahuayani"@es ;
-  :descripcionBreve "Localidad usada como punto de partida y paso hacia el santuario del Señor de Qoyllur Rit’i."@es ;
+  :descripcionBreve "Localidad usada como punto terminal de transporte y comienzo de la caminata hacia el santuario."@es ;
+  :descripcionEtnografica "Mahuayani funciona como estación ritual de transición entre el espacio vehicular y el ascenso a pie hacia Sinakara. Desde aquí parten peregrinos, celadores y danzantes hacia el santuario del Señor de Qoyllur Rit’i."@es ;
   :nivelEmbeddings "A" ;
-  rdfs:comment "Agregar geo:lat/geo:long cuando se confirme una coordenada fiable (fuente o GPS)."@es .
+  rdfs:comment "Rol claramente documentado en literatura etnográfica (Brachetti 2002, entre otros). Coordenadas pendientes."@es .
 
 ### Entidades veneradas
 
@@ -514,7 +530,6 @@
   :nivelEmbeddings "A" ;
   :SeCelebraEn :Paucartambo ;
   :SeCelebraEn :IglesiaPaucartambo .
-
 
 
 ### Comunidad
