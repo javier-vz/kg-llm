@@ -415,6 +415,7 @@
   rdfs:label "Lugar de Inti Alabado (nombre por confirmar)"@es ;
   :descripcionBreve "Lugar de la ruta donde se realiza el evento ritual de Inti Alabado."@es ;
   :nivelEmbeddings "B" ;
+  :ubicadoEn :Tayancani ;
   rdfs:comment "Completar nombre local y coordenadas cuando se confirme."@es .
 
 :Paucartambo a :Localidad ;
@@ -425,7 +426,6 @@
   geo:lat "-13.3140"^^xsd:decimal ;
   geo:long "-71.5940"^^xsd:decimal ;
   rdfs:comment "Coordenadas aproximadas. Centro urbano."@es .
-
 
 :Sinakara a :LugarRitual ;
   rdfs:label "Sinakara"@es ;
@@ -501,13 +501,18 @@
   :nivelEmbeddings "B" ;
   rdfs:comment "Información mínima. Falta fuente específica."@es .
 
-
 :Mahuayani a :Localidad ;
   rdfs:label "Mahuayani"@es ;
   :descripcionBreve "Localidad usada como punto terminal de transporte y comienzo de la caminata hacia el santuario."@es ;
   :descripcionEtnografica "Mahuayani funciona como estación ritual de transición entre el espacio vehicular y el ascenso a pie hacia Sinakara. Desde aquí parten peregrinos, celadores y danzantes hacia el santuario del Señor de Qoyllur Rit’i."@es ;
   :nivelEmbeddings "A" ;
   rdfs:comment "Rol claramente documentado en literatura etnográfica (Brachetti 2002, entre otros). Coordenadas pendientes."@es .
+
+:Tayancani a :Localidad ;
+  rdfs:label "Tayancani"@es ;
+  :descripcionBreve "Localidad/paraje asociado al punto de llegada de la ruta ritual hacia el evento de Inti Alabado, en el ciclo de Qoyllur Rit’i."@es ;
+  :nivelEmbeddings "B" ;
+  rdfs:comment "Completar geo:lat/geo:long cuando se confirme una coordenada fiable (fuente o GPS)."@es .
 
 ### Entidades veneradas
 
