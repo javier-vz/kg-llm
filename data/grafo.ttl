@@ -273,6 +273,11 @@
   rdfs:label "Lugar"@es ;
   rdfs:comment "Espacio geográfico o construido."@es .
 
+:Ruta a owl:Class ;
+  rdfs:subClassOf :Lugar ;
+  rdfs:label "Ruta"@es ;
+  rdfs:comment "Trayecto o camino usado en desplazamientos rituales (modelado como Lugar para reutilizar :estaEnLugar y :documentaA)."@es .
+
 :Localidad a owl:Class ;
   rdfs:subClassOf :Lugar ;
   rdfs:label "Localidad"@es .
@@ -399,6 +404,18 @@
 ###############
 ### LUGARES ###
 ###############
+
+:Ruta24h_Santuario_IntiAlabado a :Ruta ;
+  rdfs:label "Ruta de caminata (24h) desde el santuario hacia Inti Alabado"@es ;
+  :descripcionBreve "Trayecto altoandino recorrido tras el glaciar, desde el santuario del Señor de Qoyllur Rit’i hacia el lugar donde se realiza el Inti Alabado."@es ;
+  :nivelEmbeddings "B" ;
+  rdfs:comment "Nombre local del lugar de llegada (Inti Alabado) pendiente de confirmación."@es .
+
+:LugarIntiAlabado a :LugarDePaso ;
+  rdfs:label "Lugar de Inti Alabado (nombre por confirmar)"@es ;
+  :descripcionBreve "Lugar de la ruta donde se realiza el evento ritual de Inti Alabado."@es ;
+  :nivelEmbeddings "B" ;
+  rdfs:comment "Completar nombre local y coordenadas cuando se confirme."@es .
 
 :Paucartambo a :Localidad ;
   rdfs:label "Paucartambo"@es ;
@@ -622,6 +639,23 @@
   :nivelEmbeddings "B" ;
   :estaEnLugar :SantuarioQoylluriti .
 
+:Caminata24h_Santuario_IntiAlabado_2025 a :EventoRitual ;
+  rdfs:label "Caminata ritual de 24 horas desde el santuario hacia Inti Alabado (2025)"@es ;
+  :descripcionBreve "Desplazamiento colectivo de peregrinos desde el santuario del Señor de Qoyllur Rit’i hacia el lugar donde se realiza el Inti Alabado."@es ;
+  :nivelEmbeddings "B" ;
+  :estaEnLugar :Ruta24h_Santuario_IntiAlabado ;
+  :estaEnLugar :SantuarioQoylluriti ;
+  :estaEnLugar :LugarIntiAlabado .
+
+:IntiAlabado_2025 a :EventoRitual ;
+  rdfs:label "Inti Alabado (2025)"@es ;
+  :descripcionBreve "Evento ritual realizado al final de la caminata desde el santuario, en el lugar conocido como Inti Alabado."@es ;
+  :nivelEmbeddings "B" ;
+  :estaEnLugar :LugarIntiAlabado .
+
+:FestividadQoylluriti :incluyeEvento :Caminata24h_Santuario_IntiAlabado_2025 ;
+                     :incluyeEvento :IntiAlabado_2025 .
+
 #################################################################
 ### RECURSO MEDIAL (FOTO)
 ### Incluye código estable + ruta + fecha + relación documental.
@@ -701,8 +735,7 @@
   :fuenteTexto "Preanotación del equipo (María de los Ángeles), 15/06/2025."@es ;
   :nivelEmbeddings "A" ;
   :documentaA :Ccatcca ;
-  :documentaA :PlazaCcatcca;
-  :documentaA :Sinakara .
+  :documentaA :PlazaCcatcca .
 
 :FestividadQoylluriti :tieneRecursoMedial :FOTO_15_JUNIO_5 .
 
@@ -846,6 +879,74 @@
 
 :FestividadQoylluriti :tieneRecursoMedial :QOY_FOTO_2025_17_JUN_10 .
 
+:FOTO_17_JUNIO_1 a :Foto ;
+  rdfs:label "Foto: Tramo de la ruta de 24 horas hacia Inti Alabado (17 junio 2025)"@es ;
+  :codigoRecurso "17-junio-1" ;
+  :rutaArchivo "17-junio-1.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "Tramo de la ruta de 24 horas desde el santuario de Qoyllur Rit’i hacia el Inti Alabado. Se observan numerosos ukumari de diferentes naciones y otras personas caminando en fila, varios con trajes tradicionales y capas, en un paisaje de alta montaña."@es ;
+  :fuenteTexto "Registro fotográfico (Emily), 17/06/2025."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :Caminata24h_Santuario_IntiAlabado_2025 ;
+  :documentaA :Ruta24h_Santuario_IntiAlabado .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_17_JUNIO_1 .
+
+
+:FOTO_17_JUNIO_2 a :Foto ;
+  rdfs:label "Foto: Inicio de la caminata de 24 horas desde el santuario (17 junio 2025)"@es ;
+  :codigoRecurso "17-junio-2" ;
+  :rutaArchivo "17-junio-2.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "Luego de subir y bajar del glaciar, comienza la caminata ritual de aproximadamente 24 horas desde el santuario de Qoyllur Rit’i hacia el Inti Alabado. Las personas caminan en fila, abrigadas y cargando sus pertenencias, con el paisaje de montaña altoandina alrededor."@es ;
+  :fuenteTexto "Registro fotográfico (Emily), 17/06/2025."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :Caminata24h_Santuario_IntiAlabado_2025 ;
+  :documentaA :SantuarioQoylluriti .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_17_JUNIO_2 .
+
+
+:FOTO_17_JUNIO_3 a :Foto ;
+  rdfs:label "Foto: Descanso en la ruta de 24 horas (17 junio 2025)"@es ;
+  :codigoRecurso "17-junio-3" ;
+  :rutaArchivo "17-junio-3.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "Punto de descanso en la ruta de 24 horas entre el santuario de Qoyllur Rit’i y el Inti Alabado. Se observan grupos de personas distribuidas a lo largo del camino y, a la derecha, filas de ukumari de otras naciones reconocibles por sus trajes tradicionales en tonos rojos y negros. En la preanotación se indica que es una de las últimas vistas del área de Sinakara."@es ;
+  :fuenteTexto "Registro fotográfico (Emily), 17/06/2025."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :Ruta24h_Santuario_IntiAlabado ;
+  :documentaA :Caminata24h_Santuario_IntiAlabado_2025 .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_17_JUNIO_3 .
+
+
+:FOTO_17_JUNIO_4 a :Foto ;
+  rdfs:label "Foto: Descenso hacia la zona ritual principal tras el glaciar (17 junio 2025)"@es ;
+  :codigoRecurso "17-junio-4" ;
+  :rutaArchivo "17-junio-4.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "Luego de descender desde el glaciar hacia la zona ritual principal de Qoyllur Rit’i, los ukumari de distintas naciones avanzan formando grupos y filas. Se observa el paisaje rocoso con presencia de nieve y, en la parte superior, la zona desde donde se realizó el descenso."@es ;
+  :fuenteTexto "Registro fotográfico (Emily), 17/06/2025."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :BajadaColquePunku_2025 ;
+  :documentaA :ColquePunku .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_17_JUNIO_4 .
+
+
+:FOTO_17_JUNIO_5 a :Foto ;
+  rdfs:label "Foto: Descenso matinal desde la zona del glaciar hacia el santuario (17 junio 2025)"@es ;
+  :codigoRecurso "17-junio-5" ;
+  :rutaArchivo "17-junio-5.jpeg" ;
+  :fechaCaptura "2025-06-17"^^xsd:date ;
+  :descripcionBreve "Descenso desde la zona del glaciar hacia el santuario de Qoyllur Rit’i durante la mañana del 17 de junio. Se observan montañas rocosas, nieve dispersa y vegetación altoandina; a lo lejos se distinguen grupos pequeños de ukumari de otras naciones desplazándose por la ladera."@es ;
+  :fuenteTexto "Registro fotográfico (Emily), 17/06/2025."@es ;
+  :nivelEmbeddings "A" ;
+  :documentaA :BajadaColquePunku_2025 ;
+  :documentaA :SantuarioQoylluriti .
+
+:FestividadQoylluriti :tieneRecursoMedial :FOTO_17_JUNIO_5 .
 
 ################################################################
 ### CÓMO EXTENDER ESTE TTL (PATRONES)
