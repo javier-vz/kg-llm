@@ -318,6 +318,36 @@
 :Audio a owl:Class ; rdfs:subClassOf :RecursoMedial .
 :DocumentoTexto a owl:Class ; rdfs:subClassOf :RecursoMedial .
 
+:Lengua a owl:Class ;
+  rdfs:label "Lengua"@es ;
+  rdfs:comment "Lengua natural usada para etiquetas, nombres alternativos y glosario."@es .
+
+:ConceptoQuechua a owl:Class ;
+  rdfs:label "Concepto en quechua"@es ;
+  rdfs:comment "Término o concepto en lengua quechua con significado ritual, social o territorial."@es .
+
+:tieneLengua a owl:ObjectProperty ;
+  rdfs:label "tiene lengua"@es ;
+  rdfs:domain :ConceptoQuechua ;
+  rdfs:range :Lengua .
+
+:tieneVariante a owl:DatatypeProperty ;
+  rdfs:label "tiene variante"@es ;
+  rdfs:domain :ConceptoQuechua ;
+  rdfs:range rdf:langString ;
+  rdfs:comment "Variante nominal (p.ej., 'Ukumari', 'Ukamari'). Usar con tag de idioma cuando aplique."@es .
+
+:tieneConceptoLinguistico a owl:ObjectProperty ;
+  rdfs:label "tiene concepto lingüístico"@es ;
+  rdfs:domain owl:Thing ;
+  rdfs:range :ConceptoQuechua ;
+  rdfs:comment "Vincula una entidad del grafo con un concepto del glosario (p.ej., personaje, lugar, evento)."@es .
+
+:Quechua a :Lengua ;
+  rdfs:label "Quechua"@es ;
+  rdfs:label "Runa simi"@qu ;
+  :nivelEmbeddings "B" .
+
 #################################################################
 ### PROPIEDADES DE OBJETO
 ### Definen relaciones entre entidades.
@@ -381,6 +411,12 @@
   rdfs:label "ubicado en"@es ;
   rdfs:comment "Relaciona un lugar con otro lugar que lo contiene o contextualiza (p.ej. Colque Punku ubicado en Sinakara; Iglesia ubicada en Paucartambo)."@es .
 
+:conduceA a owl:ObjectProperty ;
+  rdfs:label "conduce a"@es ;
+  rdfs:comment "Relaciona una ruta o trayecto con el lugar o evento ritual al que conduce."@es ;
+  rdfs:domain :Ruta ;
+  rdfs:range :Lugar .
+
 :relacionadoCon a owl:ObjectProperty ;
   rdfs:domain :Comunidad ;
   rdfs:range :Festividad ;
@@ -406,10 +442,10 @@
 ###############
 
 :Ruta24h_Santuario_IntiAlabado a :Ruta ;
-  rdfs:label "Ruta de caminata (24h) desde el santuario hacia Inti Alabado"@es ;
-  :descripcionBreve "Trayecto altoandino recorrido tras el glaciar, desde el santuario del Señor de Qoyllur Rit’i hacia el lugar donde se realiza el Inti Alabado."@es ;
+  rdfs:label "Ruta 24h: santuario → Inti Alabado"@es ;
+  :descripcionBreve "Trayecto de caminata en alta montaña que parte del santuario del Señor de Qoyllur Rit’i y conduce al lugar donde se realiza el Inti Alabado. En esta ruta avanzan peregrinos y grupos rituales en filas, con pausas de descanso en el camino."@es ;
   :nivelEmbeddings "B" ;
-  rdfs:comment "Nombre local del lugar de llegada (Inti Alabado) pendiente de confirmación."@es .
+  rdfs:comment "El punto de llegada del Inti Alabado se asocia a Tayancani (nombre y ubicación a confirmar con fuente local/GPS). El nombre específico del paraje del ritual puede diferir del nombre del pueblo."@es .
 
 :LugarIntiAlabado a :LugarDePaso ;
   rdfs:label "Lugar de Inti Alabado (nombre por confirmar)"@es ;
@@ -544,6 +580,7 @@
   :nivelEmbeddings "A" ;
   :SeCelebraEn :SantuarioQoylluriti ;
   :SeCelebraEn :ColquePunku ;
+  :tieneConceptoLinguistico :QConcepto_QoyllurRiti ;
   :SeCelebraEn :Sinakara .
 
 :FestividadVirgenCarmenPaucartambo a :Festividad ;
@@ -577,6 +614,7 @@
   :fuenteTexto "Salas Carreño, G. (2014). The Glacier, the Rock, the Image: Emotional Experience and Semiotic Diversity at the Quyllurit’i Pilgrimage."@es ;
   :nombreAlternativo "Ukamari"@es ;
   :nombreAlternativo "Pablito"@es ;
+  :tieneConceptoLinguistico :QConcepto_Ukuku ;
   :nivelEmbeddings "A" .
 
 :DanzaUkuku a :Danza ;
@@ -587,6 +625,41 @@
   :nivelEmbeddings "A" ;
   :seInterpretaEnFestividad :FestividadQoylluriti ;
   :incluyePersonaje :Ukuku .
+
+########################
+### (C) GLOSARIO QUECHUA (instancias)
+########################
+
+:QConcepto_QoyllurRiti a :ConceptoQuechua ;
+  rdfs:label "Qoyllur Rit’i"@qu ;
+  rdfs:label "Qoyllur Rit’i"@es ;
+  :descripcionBreve "Nombre ritual de la festividad y del Señor venerado, asociado a la peregrinación en Sinakara."@es ;
+  :tieneLengua :Quechua ;
+  :nivelEmbeddings "A" .
+
+:QConcepto_Ukuku a :ConceptoQuechua ;
+  rdfs:label "Ukuku"@qu ;
+  rdfs:label "Ukuku"@es ;
+  :descripcionBreve "Nombre del personaje ritual presente en Qoyllur Rit’i; el término se usa para referir al danzante y su rol dentro del orden ritual."@es ;
+  :tieneLengua :Quechua ;
+  :tieneVariante "Ukumari"@qu ;
+  :tieneVariante "Ukamari"@qu ;
+  :tieneVariante "Pablito"@es ;
+  :nivelEmbeddings "A" .
+
+:QConcepto_Sinakara a :ConceptoQuechua ;
+  rdfs:label "Sinakara"@qu ;
+  rdfs:label "Sinakara"@es ;
+  :descripcionBreve "Nombre del territorio ritual de alta montaña donde se instala el santuario y se desarrollan campamentos y ceremonias."@es ;
+  :tieneLengua :Quechua ;
+  :nivelEmbeddings "A" .
+
+:QConcepto_ColquePunku a :ConceptoQuechua ;
+  rdfs:label "Colque Punku"@qu ;
+  rdfs:label "Colque Punku"@es ;
+  :descripcionBreve "Nombre del glaciar y su entorno ritual asociado a ascensos y descensos colectivos durante la festividad."@es ;
+  :tieneLengua :Quechua ;
+  :nivelEmbeddings "A" .
 
 #################################################################
 ### EVENTO RITUAL
