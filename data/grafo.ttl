@@ -556,9 +556,9 @@
   :descripcionEtnografica "Espacio central de ritualidad urbana donde se articulan procesiones, danzas y actos cívico-religiosos durante las festividades locales."@es ;
   :ubicadoEn :Paucartambo ;
   :nivelEmbeddings "A" ;
-  geo:lat "-13.3142"^^xsd:decimal ;
-  geo:long "-71.5942"^^xsd:decimal ;
-  rdfs:comment "Coordenadas ajustadas para separar del centro del pueblo."@es .
+  geo:lat "-13.3140"^^xsd:decimal ;
+  geo:long "-71.5940"^^xsd:decimal ;
+  rdfs:comment "Se asume centro urbano de Paucartambo."@es .
 
 :CementerioPaucartambo a :Lugar ;
   rdfs:label "Cementerio de Paucartambo"@es ;
@@ -567,7 +567,6 @@
   :ubicadoEn :Paucartambo ;
   :nivelEmbeddings "B" ;
   rdfs:comment "Lugar identificado por registro fotográfico. Falta descripción etnográfica detallada."@es .
-
 
 :Ccatcca a :Localidad ;
   rdfs:label "Ccatcca"@es ;
