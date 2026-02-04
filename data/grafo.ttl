@@ -589,20 +589,23 @@
   geo:long "-71.580295"^^xsd:decimal ;
   rdfs:comment "Descripción etnográfica pendiente. Coordenadas movidas con respecto Ccatcca en +0.005 para visualización."@es .
 
-
 :IglesiaSanJuanBautistaCcatcca a :Iglesia ;
   rdfs:label "Iglesia San Juan Bautista de Ccatcca"@es ;
   :descripcionBreve "Iglesia principal de la localidad de Ccatcca."@es ;
   :descripcionEtnografica ""@es ;
   :ubicadoEn :Ccatcca ;
   :nivelEmbeddings "B" ;
-  rdfs:comment "Información mínima. Falta fuente específica."@es .
+  geo:lat "-13.6118199"^^xsd:decimal ;
+  geo:long "-71.585295"^^xsd:decimal ;
+  rdfs:comment "Descripción etnográfica pendiente. Coordenadas movidas con respecto a la Plaza de Ccatcca en +0.005 para visualización."@es .
 
 :Mahuayani a :Localidad ;
   rdfs:label "Mahuayani"@es ;
   :descripcionBreve "Localidad usada como punto terminal de transporte y comienzo de la caminata hacia el santuario."@es ;
   :descripcionEtnografica "Mahuayani funciona como estación ritual de transición entre el espacio vehicular y el ascenso a pie hacia Sinakara. Desde aquí parten peregrinos, celadores y danzantes hacia el santuario del Señor de Qoyllur Rit’i."@es ;
   :nivelEmbeddings "A" ;
+  geo:lat "-13.6052187"^^xsd:decimal ;
+  geo:long "-71.2350153"^^xsd:decimal ;
   rdfs:comment "Rol claramente documentado en literatura etnográfica (Brachetti 2002, entre otros). Coordenadas pendientes."@es .
 
 :Tayancani a :Localidad ;
