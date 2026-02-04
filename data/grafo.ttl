@@ -538,7 +538,6 @@
   geo:long "-71.233611"^^xsd:decimal ;
   rdfs:comment "Lat/long aproximado según literatura etnográfica."@es .
 
-
 :ColquePunku a :Glaciar ;
   rdfs:label "Colque Punku"@es ;
   :descripcionBreve "Glaciar asociado a rituales de altura durante la peregrinación de Qoyllur Rit’i."@es ;
@@ -548,7 +547,6 @@
   geo:lat "-13.519167"^^xsd:decimal ;
   geo:long "-71.206667"^^xsd:decimal ;
   rdfs:comment "Coordenadas aproximadas. Uso ritual documentado en literatura antropológica."@es .
-
 
 :SantuarioQoylluriti a :Santuario, :LugarRitual ;
   rdfs:label "Santuario del Señor de Qoyllur Rit’i"@es ;
@@ -658,7 +656,9 @@
   rdfs:label "Colquepata"@es ;
   :descripcionBreve "Distrito asociado a la Nación de Paucartambo; referencia de salida hacia Pisac (según testimonio)."@es ;
   :nivelEmbeddings "B" ;
-  rdfs:comment "Completar coordenadas si se dispone."@es .
+  geo:lat "-13.406114"^^xsd:decimal ;
+  geo:long "-72.0602736"^^xsd:decimal ;
+  rdfs:comment "Coordenadas de Google maps."@es .
 
 :Huancarani a :Localidad ;
   rdfs:label "Huancarani"@es ;
