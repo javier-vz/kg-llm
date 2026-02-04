@@ -556,8 +556,8 @@
   :descripcionEtnografica "Espacio central de ritualidad urbana donde se articulan procesiones, danzas y actos cívico-religiosos durante las festividades locales."@es ;
   :ubicadoEn :Paucartambo ;
   :nivelEmbeddings "A" ;
-  geo:lat "-13.3140"^^xsd:decimal ;
-  geo:long "-71.5940"^^xsd:decimal ;
+  geo:lat "-13.3190"^^xsd:decimal ;
+  geo:long "-71.5990"^^xsd:decimal ;
   rdfs:comment "Se asume centro urbano de Paucartambo."@es .
 
 :CementerioPaucartambo a :Lugar ;
@@ -675,12 +675,6 @@
   :incluyeDistrito :Caicay ;
   :incluyeDistrito :Ccapi ;
   :incluyeDistrito :Ccarhuayo .
-
-:Tayancani a :Localidad ;
-  rdfs:label "Tayancani"@es ;
-  :descripcionBreve "Localidad asociada al cierre de la caminata de 24 horas y al espacio ritual del Inti Alabado (según testimonio)."@es ;
-  :nivelEmbeddings "B" ;
-  rdfs:comment "Completar coordenadas cuando se confirme."@es .
 
 :CapillaTayancani a :Capilla ;
   rdfs:label "Capilla de Tayancani"@es ;
