@@ -368,6 +368,9 @@
 :conduceA a owl:ObjectProperty ;
   rdfs:label "conduce a"@es .
 
+:desde a owl:ObjectProperty ;
+  rdfs:label "desde a"@es .
+
 :conformadaPor a owl:ObjectProperty ;
   rdfs:label "conformada por"@es .
 
@@ -494,15 +497,63 @@
 ### Un individuo es una entidad concreta del mundo real. ###
 ############################################################
 
+#################################################################
+### SEGMENTOS TEMPORALES de la Peregrinación - Nación Paucartambo
+### (Nivel C - Estructural)
+#################################################################
+
+:Dia1_SabadoPreparacion a :SegmentoRitual ;
+    rdfs:label "Día 1: Sábado de preparación"@es ;
+    rdfs:comment "Sábado después de la Cuaresma. Dedicado a la gelación y ensayos en Paucartambo."@es ;
+    :nivelEmbeddings "C" .
+
+:Dia2_DomingoPartida a :SegmentoRitual ;
+    rdfs:label "Día 2: Domingo de partida y viaje"@es ;
+    rdfs:comment "Domingo. Incluye misa, romería, anuncio público y viaje en vehículo hasta Mahuayani."@es ;
+    :nivelEmbeddings "C" .
+
+:Dia3_LunesAscenso a :SegmentoRitual ;
+    rdfs:label "Día 3: Lunes de ascenso al santuario"@es ;
+    rdfs:comment "Lunes. Caminata desde Mahuayani al santuario, Misa de Ukukus, ingreso por P'achakunapata y actividades en el santuario."@es ;
+    :nivelEmbeddings "C" .
+
+:NocheLunesMartes_Glaciar a :SegmentoRitual ;
+    rdfs:label "Noche del lunes al martes (en el glaciar)"@es ;
+    rdfs:comment "Franja nocturna dedicada a la subida y permanencia en el glaciar Colque Punku para realizar rituales."@es ;
+    :nivelEmbeddings "C" .
+
+:Dia4_MartesDescensoYLomada a :SegmentoRitual ;
+    rdfs:label "Día 4: Martes de descenso e inicio de la lomada"@es ;
+    rdfs:comment "Martes por la mañana. Comprende el descenso desde Colque Punku al santuario y el inicio de la caminata ritual de 24 horas (lomada)."@es ;
+    :nivelEmbeddings "C" .
+
+:NocheMartesMiercoles_Lomada a :SegmentoRitual ;
+    rdfs:label "Noche del martes al miércoles (durante la lomada)"@es ;
+    rdfs:comment "Franja nocturna en la que se desarrolla la parte central de la caminata de 24 horas, incluyendo hitos como Q'espi Cruz."@es ;
+    :nivelEmbeddings "C" .
+
+:Dia5_MiercolesAlba a :SegmentoRitual ;
+    rdfs:label "Día 5: Miércoles del alba y finalización"@es ;
+    rdfs:comment "Amanecer del miércoles. Incluye el evento del Inti Alabado, la llegada a Tayankani y el retorno a Ocongate."@es ;
+    :nivelEmbeddings "C" .
+
 ###############
 ### LUGARES ###
 ###############
 
-:Ruta24h_Santuario_IntiAlabado a :Ruta ;
+:Ruta24h_Santuario_IntiAlabado a :Ruta, :EventoRitual ;
   rdfs:label "Ruta 24h: santuario → Inti Alabado"@es ;
+  rdfs:label "Lomada (caminata ritual de 24 horas)"@es ;
   :descripcionBreve "Trayecto de caminata en alta montaña que parte del santuario del Señor de Qoyllur Rit’i y conduce al lugar donde se realiza el Inti Alabado. En esta ruta avanzan peregrinos y grupos rituales en filas, con pausas de descanso en el camino."@es ;
+  :descripcionBreve "Caminata ritual conocida como 'lomada' o 'loman pureq', desde el santuario hacia el lugar de Inti Alabado."@es ;
   :nivelEmbeddings "B" ;
-  rdfs:comment "El punto de llegada del Inti Alabado se asocia a Tayancani (nombre y ubicación a confirmar con fuente local/GPS). El nombre específico del paraje del ritual puede diferir del nombre del pueblo."@es .
+  :estaEnLugar :SantuarioQoylluriti ;
+  :estaEnLugar :LugarIntiAlabado ;
+  :participaNacion :NacionPaucartambo ;
+  rdfs:comment "El punto de llegada del Inti Alabado se asocia a Tayancani (nombre y ubicación a confirmar con fuente local/GPS). El nombre específico del paraje del ritual puede diferir del nombre del pueblo."@es ;
+  rdfs:comment "Nombre local indicado en testimonio: 'lomada' / 'loman pureq'. Este evento ritual sigue esta misma ruta."@es .
+
+:FestividadQoylluriti :incluyeEvento :Ruta24h_Santuario_IntiAlabado .
 
 :LugarIntiAlabado a :LugarDePaso ;
   rdfs:label "Lugar de Inti Alabado (nombre por confirmar)"@es ;
@@ -715,13 +766,16 @@
 
 :Ruta24h_Santuario_IntiAlabado
   :conduceA :LugarIntiAlabado ;
+  :desde SantuarioQoylluriti ;
   :usaNombreLocal :Lomada ;
   :usaNombreLocal :LomanPureq ;
   rdfs:comment "Nombre local reportado: 'lomada' / 'loman pureq' (Jacho Martínez, 02/02/2026)."@es .
 
 :Lomada a :Ruta ;
   rdfs:label "Lomada"@es ;
+  owl:sameAs :Ruta24h_Santuario_IntiAlabado ;
   :nivelEmbeddings "C" ;
+  
   rdfs:comment "Nombre local de la caminata de 24h (Jacho Martínez, 02/02/2026)."@es .
 
 :LomanPureq a :Ruta ;
@@ -884,7 +938,6 @@
 
 :FestividadQoylluriti :incluyeEvento :BajadaColquePunku_2025 .
 
-
 :EventoPrevioPeregrinaje_Paucartambo_2025_06_15 a :EventoRitual ;
   rdfs:label "Encuentro de Ukuku frente a la iglesia en Paucartambo (15 junio 2025)"@es ;
   :descripcionBreve "Encuentro de Ukuku/Ukumari frente a la iglesia en Paucartambo, previo a la salida hacia Mahuayani (según anotación del equipo)."@es ;
@@ -977,19 +1030,6 @@
   rdfs:comment "Según testimonio, la subida ocurre siempre la noche del lunes."@es .
 
 :FestividadQoylluriti :incluyeEvento :SubidaColquePunku_2025 .
-
-
-:Lomada24h_2025 a :EventoRitual ;
-  rdfs:label "Lomada (caminata ritual de 24 horas) (2025)"@es ;
-  :descripcionBreve "Caminata ritual conocida como 'lomada' o 'loman pureq', desde el santuario hacia el lugar de Inti Alabado."@es ;
-  :nivelEmbeddings "B" ;
-  :estaEnLugar :Ruta24h_Santuario_IntiAlabado ;
-  :estaEnLugar :SantuarioQoylluriti ;
-  :estaEnLugar :LugarIntiAlabado ;
-  :participaNacion :NacionPaucartambo ;
-  rdfs:comment "Nombre local indicado en testimonio: 'lomada' / 'loman pureq'."@es .
-
-:FestividadQoylluriti :incluyeEvento :Lomada24h_2025 .
 
 
 ########################
