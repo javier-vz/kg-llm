@@ -585,7 +585,9 @@
   :descripcionEtnografica ""@es ;
   :ubicadoEn :Ccatcca ;
   :nivelEmbeddings "B" ;
-  rdfs:comment "Descripción etnográfica pendiente."@es .
+  geo:lat "-13.6068199"^^xsd:decimal ;
+  geo:long "-71.580295"^^xsd:decimal ;
+  rdfs:comment "Descripción etnográfica pendiente. Coordenadas movidas con respecto Ccatcca en +0.005 para visualización."@es .
 
 
 :IglesiaSanJuanBautistaCcatcca a :Iglesia ;
