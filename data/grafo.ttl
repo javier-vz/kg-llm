@@ -525,9 +525,9 @@
   rdfs:label "Cusco"@es ;
   :descripcionBreve "Ciudad andina del sur del Perú y centro histórico, cultural y administrativo de la región Cusco."@es ;
   :nivelEmbeddings "C" ;
-  geo:lat "-13.4193663"^^xsd:decimal ;
-  geo:long "-72.1748968"^^xsd:decimal ;
-  rdfs:comment "Nodo de referencia regional y urbana para flujos rituales, administrativos y de transmisión cultural."@es .
+  geo:lat "-13.531950"^^xsd:decimal ;
+  geo:long "-71.967463"^^xsd:decimal ;
+  rdfs:comment "Corregir coordenadas. Nodo de referencia regional y urbana para flujos rituales, administrativos y de transmisión cultural."@es .
 
 :Sinakara a :LugarRitual ;
   rdfs:label "Sinakara"@es ;
