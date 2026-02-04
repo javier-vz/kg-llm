@@ -633,12 +633,16 @@
   :descripcionBreve "Sector alto asociado a Paucartambo; origen de participantes de la nación."@es ;
   :nivelEmbeddings "B" ;
   :ubicadoEn :Paucartambo ;
-  rdfs:comment "Completar coordenadas/naturaleza administrativa cuando se confirme."@es .
+  geo:lat "-13.4301125"^^xsd:decimal ;
+  geo:long "-71.6622734"^^xsd:decimal ;
+  rdfs:comment "Confirmar latitud/longitud."@es .
 
 :Challabamba a :Localidad ;
   rdfs:label "Challabamba"@es ;
   :descripcionBreve "Distrito asociado a la Nación de Paucartambo; zona baja cercana a la entrada hacia la selva (según testimonio)."@es ;
   :nivelEmbeddings "B" ;
+  geo:lat "-13.2156564"^^xsd:decimal ;
+  geo:long "-71.7337319"^^xsd:decimal ;
   rdfs:comment "Completar coordenadas si se dispone."@es .
 
 :Colquepata a :Localidad ;
