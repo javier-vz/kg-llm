@@ -664,24 +664,32 @@
   rdfs:label "Huancarani"@es ;
   :descripcionBreve "Distrito asociado a Paucartambo; cruce donde se realiza una parada en ruta hacia Ccatcca (según testimonio)."@es ;
   :nivelEmbeddings "B" ;
+  geo:lat "-13.5002574"^^xsd:decimal ;
+  geo:long "-71.6646144"^^xsd:decimal ;
   rdfs:comment "Completar coordenadas si se dispone."@es .
 
 :Caicay a :Localidad ;
   rdfs:label "Caicay"@es ;
   :descripcionBreve "Distrito y comunidades campesinas vinculadas a la Nación de Paucartambo (según testimonio)."@es ;
   :nivelEmbeddings "B" ;
+  geo:lat "-13.5980806"^^xsd:decimal ;
+  geo:long "-71.7194643"^^xsd:decimal ;
   rdfs:comment "Completar coordenadas si se dispone."@es .
 
 :Ccapi a :Localidad ;
   rdfs:label "Ccapi"@es ;
   :descripcionBreve "Localidad asociada por tradición a la Nación de Paucartambo en el santuario (según testimonio)."@es ;
   :nivelEmbeddings "B" ;
+  geo:lat "-13.8553791"^^xsd:decimal ;
+  geo:long "-72.0942241"^^xsd:decimal ;
   rdfs:comment "Geográficamente en Quispicanchis según testimonio; confirmar."@es .
 
 :Ccarhuayo a :Localidad ;
   rdfs:label "Ccarhuayo"@es ;
   :descripcionBreve "Localidad asociada por tradición a la Nación de Paucartambo en el santuario (según testimonio)."@es ;
   :nivelEmbeddings "B" ;
+  geo:lat "-13.5940493"^^xsd:decimal ;
+  geo:long "-71.4117326"^^xsd:decimal ;
   rdfs:comment "Geográficamente en Quispicanchis según testimonio; confirmar."@es .
 
 :NacionPaucartambo
