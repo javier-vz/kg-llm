@@ -558,7 +558,7 @@
   :nivelEmbeddings "A" ;
   geo:lat "-13.3190"^^xsd:decimal ;
   geo:long "-71.5990"^^xsd:decimal ;
-  rdfs:comment "Se asume centro urbano de Paucartambo."@es .
+  rdfs:comment "Coordenadas movidas con respecto a Paucartambo en +0.005 para visualización."@es .
 
 :CementerioPaucartambo a :Lugar ;
   rdfs:label "Cementerio de Paucartambo"@es ;
@@ -566,15 +566,18 @@
   :descripcionEtnografica ""@es ;
   :ubicadoEn :Paucartambo ;
   :nivelEmbeddings "B" ;
-  rdfs:comment "Lugar identificado por registro fotográfico. Falta descripción etnográfica detallada."@es .
+  geo:lat "-13.3240"^^xsd:decimal ;
+  geo:long "-71.6040"^^xsd:decimal ;
+  rdfs:comment "Lugar identificado por registro fotográfico. Falta descripción etnográfica detallada. Coordenadas movidas con respecto a la Iglesia de Paucartambo en +0.005 para visualización."@es .
 
 :Ccatcca a :Localidad ;
   rdfs:label "Ccatcca"@es ;
   :descripcionBreve "Localidad andina mencionada como punto de paso en la ruta hacia Qoyllur Rit’i."@es ;
   :descripcionEtnografica ""@es ;
   :nivelEmbeddings "B" ;
+  geo:lat "-13.6018199"^^xsd:decimal ;
+  geo:long "-71.575295"^^xsd:decimal ;
   rdfs:comment "Localidad referida en crónicas y rutas de peregrinación. Falta caracterización etnográfica."@es .
-
 
 :PlazaCcatcca a :Lugar ;
   rdfs:label "Plaza de Ccatcca"@es ;
