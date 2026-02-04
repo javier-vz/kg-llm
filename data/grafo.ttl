@@ -621,10 +621,7 @@
   :descripcionBreve "Conjunto ritual que peregrina como nación en Qoyllur Rit’i; integra distritos y comunidades asociadas por tradición."@es ;
   :nivelEmbeddings "A" ;
   :relacionadoCon :Paucartambo ;
-  :relacionadoCon :FestividadQoylluriti .
-
-:NacionPaucartambo
-  :relacionadoCon :Paucartambo ;
+  :relacionadoCon :FestividadQoylluriti ;
   :participaEnFestividad :FestividadQoylluriti ;
   :participaEnFestividad :FestividadVirgenCarmenPaucartambo ;
   :veneraEntidad :SenorDeQoyllurRiti ;
