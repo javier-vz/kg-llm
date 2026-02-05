@@ -791,11 +791,11 @@
 :CapillaTayancani a :Capilla ;
   rdfs:label "Capilla de Tayancani"@es ;
   :descripcionBreve "Residencia del Senor de Tayancani."@es ;
-  :descripcionEtnografica "Lugar de custodia de la imagen del Senor de Tayancani. Durante Qoyllur Rit'i, es custodiada temporalmente por el Senor de Ocongate."@es ;
+  :descripcionEtnografica "Lugar de custodia de la imagen del Senor de Tayancani. Durante Qoyllur Rit'i, es custodiada temporalmente por el Señor de Ocongate."@es ;
   :fuenteTexto "Jacho Martinez, 02/02/2026."@es ;
   :nivelEmbeddings "B" ;
   :ubicadoEn :Tayancani ;
-  rdfs:comment "Punto central del intercambio ritual."@es .:LugarIntiAlabado
+  rdfs:comment "Punto central del intercambio ritual."@es
   :ubicadoEn :Tayancani ;
   :seDejaImagenEn :CapillaTayancani .
 
