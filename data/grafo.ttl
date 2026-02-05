@@ -790,12 +790,12 @@
 
 :CapillaTayancani a :Capilla ;
   rdfs:label "Capilla de Tayancani"@es ;
-  :descripcionBreve "Capilla en la localidad de Tayancani que es la residencia habitual durante todo el año de la imagen del Señor de Tayancani."@es ;
-  :descripcionEtnografica "Esta capilla es el lugar de veneración y custodia de la imagen del Señor de Tayancani. Durante la peregrinación a Qoyllur Rit'i, la imagen es llevada al santuario. Según la tradición católica relatada, mientras esta imagen está fuera, la imagen del Señor de Ocongate es trasladada a esta misma capilla para custodiarla simbólicamente. Al final del ciclo ritual, el Señor de Tayancani retorna a su capilla."@es ;
-  :fuenteTexto "Testimonio de Jacho Martínez (02/02/2026): '...normalmente está todo el año en tayankani que es una capilla...' y 'Se deja en la capilla de tayancani'."@es ;
+  :descripcionBreve "Capilla en la localidad de Tayancani que es la residencia habitual durante todo el ano de la imagen del Senor de Tayancani."@es ;
+  :descripcionEtnografica "Esta capilla es el lugar de veneracion y custodia de la imagen del Senor de Tayancani. Durante la peregrinacion a Qoyllur Rit'i, la imagen es llevada al santuario. Segun la tradicion catolica relatada, mientras esta imagen esta fuera, la imagen del Senor de Ocongate es trasladada a esta misma capilla para custodiarla simbolicamente. Al final del ciclo ritual, el Senor de Tayancani retorna a su capilla."@es ;
+  :fuenteTexto "Testimonio de Jacho Martinez (02/02/2026): 'normalmente esta todo el ano en tayankani que es una capilla' y 'Se deja en la capilla de tayancani'."@es ;
   :nivelEmbeddings "B" ;
   :ubicadoEn :Tayancani ;
-  rdfs:comment "Es el lugar de residencia permanente del Señor de Tayancani y punto central del intercambio ritual de imágenes con el Señor de Ocongate."@es .
+  rdfs:comment "Es el lugar de residencia permanente del Senor de Tayancani y punto central del intercambio ritual de imagenes con el Senor de Ocongate."@es .
 
 :LugarIntiAlabado
   :ubicadoEn :Tayancani ;
