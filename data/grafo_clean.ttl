@@ -799,9 +799,9 @@
   :seDejaImagenEn :CapillaTayancani .
 
 
-:Ruta24h_Santuario_IntiAlabado a :Ruta ;
+:Ruta24h_Santuario_IntiAlabado
   :conduceA :LugarIntiAlabado ;
-  :desde :SantuarioQoylluriti ;
+  :desde SantuarioQoylluriti ;
   :usaNombreLocal :Lomada ;
   :usaNombreLocal :LomanPureq ;
   rdfs:comment "Nombre local reportado: 'lomada' / 'loman pureq' (Jacho Martínez, 02/02/2026)."@es .
