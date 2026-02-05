@@ -537,6 +537,41 @@
     rdfs:comment "Amanecer del miércoles. Incluye el evento del Inti Alabado, la llegada a Tayankani y el retorno a Ocongate."@es ;
     :nivelEmbeddings "C" .
 
+#################################################################
+### CONEXIONES TEMPORALES de Eventos Rituales
+### (Vinculan eventos existentes con los segmentos de arriba)
+#################################################################
+
+# Día 1: Sábado
+:EventoPrevioPeregrinaje_Paucartambo_2025_06_15 :ocurreDurante :Dia1_SabadoPreparacion .
+
+# Día 2: Domingo
+:RomeriaPaucartambo_2025_06_15 :ocurreDurante :Dia2_DomingoPartida .
+:ParadaNocturna_Ccatcca_2025_06_15 :ocurreDurante :Dia2_DomingoPartida .
+:Caminata_Mahuayani_Santuario_2025 :ocurreDurante :Dia2_DomingoPartida . # Inicia en Mahuayani el domingo.
+:PasoCasaPrioste_2025_06_16 :ocurreDurante :Dia2_DomingoPartida .
+
+# Día 3: Lunes
+:CeremoniaVeneracion_Templo_Qoylluriti_2025 :ocurreDurante :Dia3_LunesAscenso .
+:MisaUkukus_2025 :ocurreDurante :Dia3_LunesAscenso .
+# El evento de "Entrada a P'achakunapata" debería crearse y conectarse aquí.
+
+# Noche Lunes->Martes (Glaciar)
+:SubidaColquePunku_2025 :ocurreDurante :NocheLunesMartes_Glaciar .
+
+# Día 4: Martes
+:BajadaColquePunku_2025 :ocurreDurante :Dia4_MartesDescensoYLomada .
+:Lomada24h_2025 :ocurreDurante :Dia4_MartesDescensoYLomada . # La lomada INICIA de día.
+
+# Noche Martes->Miércoles (Lomada)
+:Lomada24h_2025 :ocurreDurante :NocheMartesMiercoles_Lomada . # La lomada CONTINÚA de noche.
+# Q'espi Cruz, como hito, se asocia al evento Lomada24h_2025, no directamente a la noche.
+
+# Día 5: Miércoles (Amanecer)
+:IntiAlabado_2025 :ocurreDurante :Dia5_MiercolesAlba .
+:TrasladoImagenSenorOcongate_Tayancani_2025 :ocurreDurante :Dia5_MiercolesAlba .
+:DejaImagenEnCapillaTayancani_2025 :ocurreDurante :Dia5_MiercolesAlba .
+
 ###############
 ### LUGARES ###
 ###############
@@ -755,10 +790,12 @@
 
 :CapillaTayancani a :Capilla ;
   rdfs:label "Capilla de Tayancani"@es ;
-  :descripcionBreve "Capilla donde se deja la imagen durante la secuencia ritual vinculada a Tayancani (según testimonio)."@es ;
+  :descripcionBreve "Capilla en la localidad de Tayancani que es la residencia habitual durante todo el año de la imagen del Señor de Tayancani."@es ;
+  :descripcionEtnografica "Esta capilla es el lugar de veneración y custodia de la imagen del Señor de Tayancani. Durante la peregrinación a Qoyllur Rit'i, la imagen es llevada al santuario. Según la tradición católica relatada, mientras esta imagen está fuera, la imagen del Señor de Ocongate es trasladada a esta misma capilla para custodiarla simbólicamente. Al final del ciclo ritual, el Señor de Tayancani retorna a su capilla."@es ;
+  :fuenteTexto "Testimonio de Jacho Martínez (02/02/2026): '...normalmente está todo el año en tayankani que es una capilla...' y 'Se deja en la capilla de tayancani'."@es ;
   :nivelEmbeddings "B" ;
   :ubicadoEn :Tayancani ;
-  rdfs:comment "Completar nombre local de la capilla si aplica."@es .
+  rdfs:comment "Es el lugar de residencia permanente del Señor de Tayancani y punto central del intercambio ritual de imágenes con el Señor de Ocongate."@es .
 
 :LugarIntiAlabado
   :ubicadoEn :Tayancani ;
