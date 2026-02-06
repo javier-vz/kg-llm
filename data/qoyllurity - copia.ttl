@@ -1,0 +1,342 @@
+@prefix : <http://example.org/festividades#> .
+@prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://example.org/festividades#> .
+
+<http://www.semanticweb.org/jvera/ontologies/2026/1/untitled-ontology-10> rdf:type owl:Ontology .
+
+#################################################################
+#    Datatypes
+#################################################################
+
+###  http://www.w3.org/2001/XMLSchema#date
+xsd:date rdf:type rdfs:Datatype .
+
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://example.org/festividades#conduceA
+:conduceA rdf:type owl:ObjectProperty ;
+          rdfs:domain :Lugar ;
+          rdfs:range :Lugar ;
+          rdfs:label "conduce a"@es .
+
+
+###  http://example.org/festividades#desde
+:desde rdf:type owl:ObjectProperty ;
+       rdfs:domain :Lugar ;
+       rdfs:range :Lugar ;
+       rdfs:label "desde"@es .
+
+
+###  http://example.org/festividades#esParteDeFestividad
+:esParteDeFestividad rdf:type owl:ObjectProperty ;
+                     rdfs:domain :SegmentoRitual ;
+                     rdfs:range :Festividad .
+
+
+###  http://example.org/festividades#ocurreDurante
+:ocurreDurante rdf:type owl:ObjectProperty ;
+               rdfs:domain :EventoRitual ;
+               rdfs:range :SegmentoRitual .
+
+
+###  http://example.org/festividades#ocurreEnLugar
+:ocurreEnLugar rdf:type owl:ObjectProperty ;
+               rdfs:domain :EventoRitual ;
+               rdfs:range :Lugar .
+
+
+###  http://example.org/festividades#participaNacion
+:participaNacion rdf:type owl:ObjectProperty ;
+                 rdfs:domain :EventoRitual ;
+                 rdfs:range :Nacion .
+
+
+###  http://example.org/festividades#sigueRuta
+:sigueRuta rdf:type owl:ObjectProperty ;
+           rdfs:domain :EventoRitual ;
+           rdfs:range :Lugar .
+
+
+###  http://www.w3.org/2002/07/owl#topObjectProperty
+owl:topObjectProperty rdfs:domain :EventoRitual ;
+                      rdfs:range :SegmentoRitual .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://example.org/festividades#descripcionBreve
+:descripcionBreve rdf:type owl:DatatypeProperty ;
+                  rdfs:range xsd:string .
+
+
+###  http://example.org/festividades#tieneFecha
+:tieneFecha rdf:type owl:DatatypeProperty ;
+            rdfs:domain :SegmentoRitual ;
+            rdfs:range xsd:date ;
+            rdfs:label "tieneFecha" .
+
+
+###  http://example.org/festividades#tieneNombreLocal
+:tieneNombreLocal rdf:type owl:DatatypeProperty ;
+                  rdfs:domain :EventoRitual ,
+                              :Lugar ;
+                  rdfs:range xsd:string .
+
+
+###  http://example.org/festividades#tieneOrden
+:tieneOrden rdf:type owl:DatatypeProperty ;
+            rdfs:domain :SegmentoRitual ;
+            rdfs:range xsd:integer .
+
+
+###  http://www.semanticweb.org/jvera/ontologies/2026/1/untitled-ontology-10#descripcion
+:descripcion rdf:type owl:DatatypeProperty ;
+             rdfs:range xsd:string ;
+             rdfs:label "descripcion"@es .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://example.org/festividades#EventoRitual
+:EventoRitual rdf:type owl:Class ;
+              rdfs:label "EventoRitual" .
+
+
+###  http://example.org/festividades#Festividad
+:Festividad rdf:type owl:Class ;
+            rdfs:comment "Celebración ritual de carácter anual o periódico." ;
+            rdfs:label "Festividad" .
+
+
+###  http://example.org/festividades#Lugar
+:Lugar rdf:type owl:Class ;
+       rdfs:label "Lugar" .
+
+
+###  http://example.org/festividades#Nacion
+:Nacion rdf:type owl:Class ;
+        rdfs:label "Nacion" .
+
+
+###  http://example.org/festividades#RecursoMultimedia
+:RecursoMultimedia rdf:type owl:Class ;
+                   rdfs:label "RecursoMultimedia" .
+
+
+###  http://example.org/festividades#SegmentoRitual
+:SegmentoRitual rdf:type owl:Class ;
+                rdfs:comment "Unidad temporal de la peregrinación (día o franja horaria)" ;
+                rdfs:label "SegmentoRitual" .
+
+
+#################################################################
+#    Individuals
+#################################################################
+
+###  http://example.org/festividades#Caminata_Mahuayani_Santuario_2025
+:Caminata_Mahuayani_Santuario_2025 rdf:type owl:NamedIndividual ,
+                                            :EventoRitual ;
+                                   :ocurreDurante :Dia2_DomingoPartida ;
+                                   :ocurreEnLugar :Mahuayani ,
+                                                  :SantuarioQoylluriti ;
+                                   :participaNacion :NacionPaucartambo ;
+                                   :descripcion "Ascenso desde Mahuayani hasta el santuario del Señor de Qoyllu Rit'i."@es ;
+                                   rdfs:label "Caminata Mahuayani-Santuario (2025)"@es .
+
+
+###  http://example.org/festividades#Ccatcca
+:Ccatcca rdf:type owl:NamedIndividual ,
+                  :Lugar ;
+         :descripcion "Localidad andina mencionada como punto de paso en la ruta hacia el Santuario del Señor de Qoyllur Rit’i."@es ;
+         rdfs:label "Ccatcca" .
+
+
+###  http://example.org/festividades#ColquePunku
+:ColquePunku rdf:type owl:NamedIndividual ,
+                      :Lugar ;
+             :descripcionBreve "Glaciar asociado a rituales de altura durante la peregrinación de Qoyllur Rit’i. El glaciar Colque Punku ha sido escenario de ascensos rituales de los ukukus y otros grupos vinculados a prácticas simbólicas relacionadas con el hielo y la montaña."@es ;
+             rdfs:label "Glaciar Colque Punku"@es .
+
+
+###  http://example.org/festividades#Dia1_SabadoPreparacion
+:Dia1_SabadoPreparacion rdf:type owl:NamedIndividual ,
+                                 :SegmentoRitual ;
+                        :esParteDeFestividad :FestividadQoylluriti ;
+                        :tieneFecha "2025-06-14"^^xsd:date ;
+                        :tieneOrden 1 ;
+                        rdfs:comment "Sábado después de la Cuaresma. Dedicado a la gelación y ensayos en Paucartambo."@es ;
+                        rdfs:label "Día 1: Sábado de preparación"@es .
+
+
+###  http://example.org/festividades#Dia2_DomingoPartida
+:Dia2_DomingoPartida rdf:type owl:NamedIndividual ,
+                              :SegmentoRitual ;
+                     :esParteDeFestividad :FestividadQoylluriti ;
+                     :tieneFecha "2025-06-15"^^xsd:date ;
+                     :tieneOrden 2 ;
+                     rdfs:comment "Domingo. Incluye misa, romería, anuncio público y viaje en vehículo hasta Mahuayani."@es ;
+                     rdfs:label "Día 2: Domingo de partida y viaje"@es .
+
+
+###  http://example.org/festividades#Dia3_LunesAscenso
+:Dia3_LunesAscenso rdf:type owl:NamedIndividual ,
+                            :SegmentoRitual ;
+                   :esParteDeFestividad :FestividadQoylluriti ;
+                   :tieneFecha "lunes"@es ,
+                               "2025-06-16"^^xsd:date ;
+                   :tieneOrden 3 ;
+                   rdfs:comment "Lunes. Caminata desde Mahuayani al santuario, Misa de Ukukus, ingreso por P'achakunapata y actividades en el santuario."@es ;
+                   rdfs:label "Día 3: Lunes de ascenso al santuario"@es .
+
+
+###  http://example.org/festividades#Dia4_MartesDescensoYLomada
+:Dia4_MartesDescensoYLomada rdf:type owl:NamedIndividual ,
+                                     :SegmentoRitual ;
+                            :esParteDeFestividad :FestividadQoylluriti ;
+                            :tieneFecha "2025-06-17"^^xsd:date ;
+                            :tieneOrden 5 ;
+                            rdfs:comment "Martes por la mañana. Comprende el descenso desde Colque Punku al santuario y el inicio de la caminata ritual de 24 horas (lomada)."@es ;
+                            rdfs:label "Día 4: Martes de descenso e inicio de la lomada"@es .
+
+
+###  http://example.org/festividades#Dia5_MiercolesAlba
+:Dia5_MiercolesAlba rdf:type owl:NamedIndividual ,
+                             :SegmentoRitual ;
+                    :tieneFecha "2025-06-18"^^xsd:date ;
+                    :tieneOrden 7 ;
+                    rdfs:comment "Amanecer del miércoles. Incluye el evento del Inti Alabado, la llegada a Tayankani y el retorno a Ocongate."@es ;
+                    rdfs:label "Día 5: Miércoles del alba y finalización"@es .
+
+
+###  http://example.org/festividades#EventoPrevioPeregrinaje_Paucartambo_2025_06_14
+:EventoPrevioPeregrinaje_Paucartambo_2025_06_14 rdf:type owl:NamedIndividual ;
+                                                :ocurreDurante :Dia1_SabadoPreparacion ;
+                                                :participaNacion :NacionPaucartambo ;
+                                                :descripcion "Preparativos, gelación y ensayos en Paucartambo"@es ;
+                                                rdfs:label "Evento previo al peregrinaje (2025)"@es .
+
+
+###  http://example.org/festividades#FestividadQoylluriti
+:FestividadQoylluriti rdf:type owl:NamedIndividual ,
+                               :Festividad ;
+                      :descripcionBreve "Peregrinación andina de carácter ritual que se realiza anualmente en el área de Sinakara en honor al Señor de Qoyllur Rit’i."@es ;
+                      rdfs:label "Festividad del Señor de Qoyllur Rit'i"@es .
+
+
+###  http://example.org/festividades#LugarIntiAlabado
+:LugarIntiAlabado rdf:type owl:NamedIndividual ,
+                           :Lugar ;
+                  :descripcionBreve "Ubicación donde se realiza el ritual del Inti Alabado"@es ;
+                  rdfs:label "Lugar del Inti Alabado (Tayancani)"@es .
+
+
+###  http://example.org/festividades#Mahuayani
+:Mahuayani rdf:type owl:NamedIndividual ,
+                    :Lugar ;
+           :descripcion "Punto de inicio de la caminata al santuario del Señor de Qoyllu Rit'i."@es ;
+           rdfs:label "Mahuayani" .
+
+
+###  http://example.org/festividades#NacionPaucartambo
+:NacionPaucartambo rdf:type owl:NamedIndividual ,
+                            :Nacion ;
+                   :descripcion "Comunidad participante principal en la festividad del Señor de Qoyllu Rit'i."@es ;
+                   rdfs:label "Nación Paucartambo"@es .
+
+
+###  http://example.org/festividades#NocheLunesMartes_Glaciar
+:NocheLunesMartes_Glaciar rdf:type owl:NamedIndividual ,
+                                   :EventoRitual ;
+                          :esParteDeFestividad :FestividadQoylluriti ;
+                          :tieneFecha "2025-06-16"^^xsd:date ;
+                          :tieneOrden 4 ;
+                          rdfs:comment "Franja nocturna dedicada a la subida y permanencia en el glaciar Colque Punku para realizar rituales."@es ;
+                          rdfs:label "Noche del lunes al martes (en el glaciar)"@es .
+
+
+###  http://example.org/festividades#NocheMartesMiercoles_Lomada
+:NocheMartesMiercoles_Lomada rdf:type owl:NamedIndividual ,
+                                      :SegmentoRitual ;
+                             :esParteDeFestividad :FestividadQoylluriti ;
+                             :tieneFecha "2025-06-17"^^xsd:date ;
+                             :tieneOrden 6 ;
+                             rdfs:comment "Franja nocturna en la que se desarrolla la parte central de la caminata de 24 horas, incluyendo hitos como Q'espi Cruz."@es ;
+                             rdfs:label "Noche del martes al miércoles (durante la lomada)"@es .
+
+
+###  http://example.org/festividades#Ocongate
+:Ocongate rdf:type owl:NamedIndividual ,
+                   :Lugar ;
+          :descripcionBreve "Localidad de paso en la ruta hacia desde Paucartambo Mahuayani. También, es el destino final de la peregrinación del Señor de Qoyllu Rit'i."@es ;
+          rdfs:label "Ocongate" .
+
+
+###  http://example.org/festividades#ParadaNocturna_Ccatcca_2025_06_15
+:ParadaNocturna_Ccatcca_2025_06_15 rdf:type owl:NamedIndividual ,
+                                            :EventoRitual ;
+                                   :ocurreDurante :Dia2_DomingoPartida ;
+                                   :ocurreEnLugar :Ccatcca ;
+                                   :participaNacion :NacionPaucartambo ;
+                                   :descripcionBreve "Parada nocturna durante el viaje a Mahuayani" ;
+                                   rdfs:label "Parada nocturna en Ccatcca (2025)"@es .
+
+
+###  http://example.org/festividades#PasoCasaPrioste
+:PasoCasaPrioste rdf:type owl:NamedIndividual ,
+                          :EventoRitual ;
+                 :ocurreDurante :Dia2_DomingoPartida ;
+                 :participaNacion :NacionPaucartambo ;
+                 :descripcionBreve "Visita y ritual en la casa del prioste durante el camino entre Paucartambo y Mahuayani."@es ;
+                 rdfs:label "Paso por la casa del prioste (2025)"@es .
+
+
+###  http://example.org/festividades#Paucartambo
+:Paucartambo rdf:type owl:NamedIndividual ,
+                      :Lugar ;
+             :descripcionBreve "Paucartambo es un pueblo andino de la región Cusco con una vida ritual intensa, en torno a festividades como la Virgen del Carmen y su participación regional en la peregrinación al Señor de Qoyllur Rit’i. Funciona como espacio de reunión, organización y partida de danzantes y peregrinos."@es ;
+             rdfs:label "Paucartambo" .
+
+
+###  http://example.org/festividades#RomeriaPaucartambo_2025_06_15
+:RomeriaPaucartambo_2025_06_15 rdf:type owl:NamedIndividual ,
+                                        :EventoRitual ;
+                               :ocurreDurante :Dia2_DomingoPartida ;
+                               :ocurreEnLugar :Paucartambo ;
+                               :participaNacion :NacionPaucartambo ;
+                               :descripcion "Romería y anuncio público antes de la partida"@es ;
+                               rdfs:label "Romería en Paucartambo (2025)"@es .
+
+
+###  http://example.org/festividades#Ruta24h_Santuario_IntiAlabado
+:Ruta24h_Santuario_IntiAlabado rdf:type owl:NamedIndividual ,
+                                        :Lugar ;
+                               :conduceA :LugarIntiAlabado ;
+                               :desde :SantuarioQoylluriti ;
+                               :descripcionBreve "Desplazamiento colectivo de peregrinos desde el santuario del Señor de Qoyllur Rit’i hacia el lugar donde se realiza el Inti Alabado."@es ;
+                               :tieneNombreLocal "lomada" ,
+                                                 "loman pureq" ;
+                               rdfs:comment "Ruta seguida durante la lomada de 24 horas"@es ;
+                               rdfs:label "Ruta 24h: santuario -> Inti Alabado"@es .
+
+
+###  http://example.org/festividades#SantuarioQoylluriti
+:SantuarioQoylluriti rdf:type owl:NamedIndividual ,
+                              :Lugar ;
+                     :descripcion "Santuario de alta montaña donde se concentra la peregrinación anual del Señor de Qoyllur Rit’i."@es ;
+                     rdfs:comment "Ubicación exacta: 13°38'33\\\"S 70°54'21\\\"W" ;
+                     rdfs:label "Santuario del Señor de Qoyllur Rit'i"@es .
+
+
+###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
