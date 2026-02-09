@@ -476,6 +476,15 @@ xsd:date rdf:type rdfs:Datatype .
                                             rdfs:label "Veneración en el templo del santuario (2025)"@es .
 
 
+###  http://example.org/festividades#CeldaUkukusPaucartambo
+:CeldaUkukusPaucartambo rdf:type owl:NamedIndividual , :Lugar ;
+    :estaEn :SantuarioQoylluriti ;
+    rdfs:label "Celda de los Ukukus de Paucartambo"@es ;
+    rdfs:comment "Alojamiento en el bofedal del santuario donde la Nación Paucartambo pasa la noche y organiza sus enseres."@es ;
+    geo:lat -13.5986 ;
+    geo:long -71.1914 .
+
+
 ###  http://example.org/festividades#Challabamba
 :Challabamba rdf:type owl:NamedIndividual ,
                       :Lugar ;
@@ -635,6 +644,22 @@ xsd:date rdf:type rdfs:Datatype .
                       rdfs:label "Festividad del Señor de Qoyllur Rit'i"@es .
 
 
+###  http://example.org/festividades#GrutaTayankani
+:GrutaTayankani rdf:type owl:NamedIndividual , :Lugar ;
+    :estaEn :Tayancani ;
+    rdfs:label "Gruta de Tayankani"@es ;
+    rdfs:comment "Gruta en la parte alta del pueblo donde los Ukukus realizan sus últimos rituales antes del ingreso procesional."@es ;
+    geo:lat -13.5550 ;
+    geo:long -71.1500 .
+
+
+###  http://example.org/festividades#GrutaYanaqancha
+:GrutaYanaqancha rdf:type owl:NamedIndividual , :Lugar ;
+    :estaEn :Yanaqancha ;
+    rdfs:label "Gruta de Yanaqancha"@es ;
+    rdfs:comment "Gruta en Yanaqancha donde la Nación desciende bailando después del descanso."@es .
+
+
 ###  http://example.org/festividades#Huancarani
 :Huancarani rdf:type owl:NamedIndividual ,
                      :Lugar ;
@@ -662,6 +687,14 @@ xsd:date rdf:type rdfs:Datatype .
                     rdfs:label "Iglesia de Paucartambo"@es ;
                     geo:lat -13.3177508 ;
                     geo:long -71.6319747 .
+
+
+###  http://example.org/festividades#IntiLloksimuy
+:IntiLloksimuy rdf:type owl:NamedIndividual , :Lugar ;
+    rdfs:label "Inti Lloksimuy"@es ;
+    rdfs:comment "Lugar en las alturas de Tayankani donde se espera la salida del sol para el homenaje. Según la tradición, aquí empieza el Inti Raymi."@es ;
+    geo:lat -13.5600 ;
+    geo:long -71.1550 .
 
 
 ###  http://example.org/festividades#IntiAlabado_2025
@@ -787,6 +820,19 @@ xsd:date rdf:type rdfs:Datatype .
           rdfs:label "Ocongate" .
 
 
+###  http://example.org/festividades#Pachakunapata
+:Pachakunapata rdf:type owl:NamedIndividual , :Lugar , :EventoRitual ;
+    :estaEn :SantuarioQoylluriti ;
+    :ocurreEnLugar :Pachakunapata ;
+    :realizadoPor :NacionPaucartambo ;
+    :tieneNombreLocal "P'achakunapata" ;
+    :tieneOrdenEvento 3 ;
+    rdfs:label "P'achakunapata"@es ;
+    rdfs:comment "Dualidad evento-lugar: ritual de espera ceremonial y entrada unificada de la Nación al santuario que ocurre en la entrada ceremonial homónima."@es ;
+    geo:lat -13.598333 ;
+    geo:long -71.190833 .
+
+
 ###  http://example.org/festividades#ParadaHuancarani_2025
 :ParadaHuancarani_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
     :ocurreEnLugar :Huancarani ;
@@ -865,6 +911,14 @@ xsd:date rdf:type rdfs:Datatype .
                     :Lugar ;
            rdfs:comment "Hito importante en la ruta de la lomada, punto de paso y posiblemente lugar de ritual"@es ;
            rdfs:label "Q'espi Cruz" .
+
+
+###  http://example.org/festividades#QquchiyocWayqo
+:QquchiyocWayqo rdf:type owl:NamedIndividual , :Lugar ;
+    rdfs:label "Qquchiyoc Wayq'o"@es ;
+    rdfs:comment "Lugar donde pasa un riachuelo durante la Lomada nocturna, entre Yanaqancha y Q'espi Cruz."@es ;
+    geo:lat -13.5750 ;
+    geo:long -71.1700 .
 
 
 ###  http://example.org/festividades#RitualGrutaTayankani_2025
