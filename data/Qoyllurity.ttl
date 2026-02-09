@@ -422,12 +422,33 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#CantoQespiCruz_2025
-:CantoQespiCruz_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
-    :ocurreEnLugar :QespiCruz ;
-    :realizadoPor :NacionPaucartambo ;
-    :tieneOrdenEvento 4 ;
-    rdfs:label "Canto en Q'espi Cruz (2025)"@es ;
-    rdfs:comment "A medianoche, toda la Nación canta la 'Canción de Despedida de los Qapaq Qollas' en Q'espi Cruz."@es .
+:CantoQespiCruz_2025 rdf:type owl:NamedIndividual ,
+                              :EventoRitual ;
+                     :ocurreEnLugar :QespiCruz ;
+                     :realizadoPor :NacionPaucartambo ;
+                     :tieneOrdenEvento 4 ;
+                     rdfs:comment "A medianoche, toda la Nación canta la 'Canción de Despedida de los Qapaq Qollas' en Q'espi Cruz."@es ;
+                     rdfs:label "Canto en Q'espi Cruz (2025)"@es .
+
+
+###  http://example.org/festividades#CapillaTayankani
+:CapillaTayankani rdf:type owl:NamedIndividual ,
+                           :Lugar ;
+                  :estaEn :Tayancani ;
+                  rdfs:comment "Capilla donde reside normalmente todo el año la imagen del Señor de Tayankani, y donde es depositada al final de la peregrinación."@es ;
+                  rdfs:label "Capilla de Tayankani"@es ;
+                  geo:lat -13.5547 ;
+                  geo:long -71.1503 .
+
+
+###  http://example.org/festividades#CasaPriosteOcongate
+:CasaPriosteOcongate rdf:type owl:NamedIndividual ,
+                              :Lugar ;
+                     :estaEn :Ocongate ;
+                     rdfs:comment "Residencia del prioste, autoridad encargada de la organización de la fiesta, donde la Nación es recibida."@es ;
+                     rdfs:label "Casa del Prioste en Ocongate"@es ;
+                     geo:lat -13.6394 ;
+                     geo:long -71.3878 .
 
 
 ###  http://example.org/festividades#Ccapi
@@ -457,6 +478,16 @@ xsd:date rdf:type rdfs:Datatype .
          geo:long -71.575295 .
 
 
+###  http://example.org/festividades#CeldaUkukusPaucartambo
+:CeldaUkukusPaucartambo rdf:type owl:NamedIndividual ,
+                                 :Lugar ;
+                        :estaEn :SantuarioQoylluriti ;
+                        rdfs:comment "Alojamiento en el bofedal del santuario donde la Nación Paucartambo pasa la noche y organiza sus enseres."@es ;
+                        rdfs:label "Celda de los Ukukus de Paucartambo"@es ;
+                        geo:lat -13.5986 ;
+                        geo:long -71.1914 .
+
+
 ###  http://example.org/festividades#CementerioPaucartambo
 :CementerioPaucartambo rdf:type owl:NamedIndividual ,
                                 :Lugar ;
@@ -474,15 +505,6 @@ xsd:date rdf:type rdfs:Datatype .
                                             :tieneOrdenEvento 1 ;
                                             rdfs:comment "Actos de veneración al Señor de Qoyllur Rit'i dentro del templo principal del santuario."@es ;
                                             rdfs:label "Veneración en el templo del santuario (2025)"@es .
-
-
-###  http://example.org/festividades#CeldaUkukusPaucartambo
-:CeldaUkukusPaucartambo rdf:type owl:NamedIndividual , :Lugar ;
-    :estaEn :SantuarioQoylluriti ;
-    rdfs:label "Celda de los Ukukus de Paucartambo"@es ;
-    rdfs:comment "Alojamiento en el bofedal del santuario donde la Nación Paucartambo pasa la noche y organiza sus enseres."@es ;
-    geo:lat -13.5986 ;
-    geo:long -71.1914 .
 
 
 ###  http://example.org/festividades#Challabamba
@@ -539,21 +561,23 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#DescansoCeldaUkukus_2025
-:DescansoCeldaUkukus_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
-    :ocurreEnLugar :CeldaUkukusPaucartambo ;
-    :realizadoPor :Ukumaris_Paucartambo_2025 ;
-    :tieneOrdenEvento 5 ;
-    rdfs:label "Descanso en celda de Ukukus (2025)"@es ;
-    rdfs:comment "Descanso, comida y preparación en la celda de los Ukukus en el bofedal del santuario, antes de la subida nocturna al glaciar."@es .
+:DescansoCeldaUkukus_2025 rdf:type owl:NamedIndividual ,
+                                   :EventoRitual ;
+                          :ocurreEnLugar :CeldaUkukusPaucartambo ;
+                          :realizadoPor :Ukumaris_Paucartambo_2025 ;
+                          :tieneOrdenEvento 5 ;
+                          rdfs:comment "Descanso, comida y preparación en la celda de los Ukukus en el bofedal del santuario, antes de la subida nocturna al glaciar."@es ;
+                          rdfs:label "Descanso en celda de Ukukus (2025)"@es .
 
 
 ###  http://example.org/festividades#DescansoYanaqancha_2025
-:DescansoYanaqancha_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
-    :ocurreEnLugar :Yanaqancha ;
-    :realizadoPor :NacionPaucartambo ;
-    :tieneOrdenEvento 3 ;
-    rdfs:label "Descanso en Yanaqancha (2025)"@es ;
-    rdfs:comment "Descanso prolongado de 4 horas en Yanaqancha. Aquí se deja la imagen del Señor de Tayankani y la Nación se viste nuevamente."@es .
+:DescansoYanaqancha_2025 rdf:type owl:NamedIndividual ,
+                                  :EventoRitual ;
+                         :ocurreEnLugar :Yanaqancha ;
+                         :realizadoPor :NacionPaucartambo ;
+                         :tieneOrdenEvento 3 ;
+                         rdfs:comment "Descanso prolongado de 4 horas en Yanaqancha. Aquí se deja la imagen del Señor de Tayankani y la Nación se viste nuevamente."@es ;
+                         rdfs:label "Descanso en Yanaqancha (2025)"@es .
 
 
 ###  http://example.org/festividades#Dia1_SabadoPreparacion
@@ -571,8 +595,13 @@ xsd:date rdf:type rdfs:Datatype .
 :Dia2_DomingoPartida rdf:type owl:NamedIndividual ,
                               :EventoRitual ;
                      :defineMarcoTemporal :Caminata_Mahuayani_Santuario_2025 ,
+                                          :ComidaCcatcca_2025 ,
+                                          :MisaInicial_Paucartambo_2025 ,
+                                          :ParadaHuancarani_2025 ,
                                           :PasoCasaPrioste ,
-                                          :RomeriaPaucartambo_2025_06_15 ;
+                                          :RitualVestimentaDanzantes_2025 ,
+                                          :RomeriaPaucartambo_2025_06_15 ,
+                                          :ViajeVehicular_Paucartambo_Mahuayani_2025 ;
                      :esParteDeFestividad :FestividadQoylluriti ;
                      :tieneFecha "2025-06-15"^^xsd:date ;
                      :tieneOrden 2 ;
@@ -618,15 +647,17 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#Escalerachayoq
-:Escalerachayoq rdf:type owl:NamedIndividual , :Lugar , :EventoRitual ;
-    :ocurreEnLugar :Escalerachayoq ;
-    :realizadoPor :NacionPaucartambo ;
-    :tieneNombreLocal "Escalerachayoq" ;
-    :tieneOrdenEvento 6 ;  # En la secuencia de la Lomada
-    rdfs:label "Escalerachayoq"@es ;
-    rdfs:comment "Dualidad evento-lugar: tramo de la Lomada que consiste en una bajada de piedras entre las 3 y 4 de la madrugada, antes de llegar al Inti Alabado."@es ;
-    geo:lat -13.5650 ;
-    geo:long -71.1600 .
+:Escalerachayoq rdf:type owl:NamedIndividual ,
+                         :EventoRitual ,
+                         :Lugar ;
+                :ocurreEnLugar :Escalerachayoq ;
+                :realizadoPor :NacionPaucartambo ;
+                :tieneNombreLocal "Escalerachayoq" ;
+                :tieneOrdenEvento 6 ;
+                rdfs:comment "Dualidad evento-lugar: tramo de la Lomada que consiste en una bajada de piedras entre las 3 y 4 de la madrugada, antes de llegar al Inti Alabado."@es ;
+                rdfs:label "Escalerachayoq"@es ;
+                geo:lat -13.5650 ;
+                geo:long -71.1600 .
 
 
 ###  http://example.org/festividades#EventoPrevioPeregrinaje_Paucartambo_2025_06_14
@@ -645,19 +676,21 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#GrutaTayankani
-:GrutaTayankani rdf:type owl:NamedIndividual , :Lugar ;
-    :estaEn :Tayancani ;
-    rdfs:label "Gruta de Tayankani"@es ;
-    rdfs:comment "Gruta en la parte alta del pueblo donde los Ukukus realizan sus últimos rituales antes del ingreso procesional."@es ;
-    geo:lat -13.5550 ;
-    geo:long -71.1500 .
+:GrutaTayankani rdf:type owl:NamedIndividual ,
+                         :Lugar ;
+                :estaEn :Tayancani ;
+                rdfs:comment "Gruta en la parte alta del pueblo donde los Ukukus realizan sus últimos rituales antes del ingreso procesional."@es ;
+                rdfs:label "Gruta de Tayankani"@es ;
+                geo:lat -13.5550 ;
+                geo:long -71.1500 .
 
 
 ###  http://example.org/festividades#GrutaYanaqancha
-:GrutaYanaqancha rdf:type owl:NamedIndividual , :Lugar ;
-    :estaEn :Yanaqancha ;
-    rdfs:label "Gruta de Yanaqancha"@es ;
-    rdfs:comment "Gruta en Yanaqancha donde la Nación desciende bailando después del descanso."@es .
+:GrutaYanaqancha rdf:type owl:NamedIndividual ,
+                          :Lugar ;
+                 :estaEn :Yanaqancha ;
+                 rdfs:comment "Gruta en Yanaqancha donde la Nación desciende bailando después del descanso."@es ;
+                 rdfs:label "Gruta de Yanaqancha"@es .
 
 
 ###  http://example.org/festividades#Huancarani
@@ -689,14 +722,6 @@ xsd:date rdf:type rdfs:Datatype .
                     geo:long -71.6319747 .
 
 
-###  http://example.org/festividades#IntiLloksimuy
-:IntiLloksimuy rdf:type owl:NamedIndividual , :Lugar ;
-    rdfs:label "Inti Lloksimuy"@es ;
-    rdfs:comment "Lugar en las alturas de Tayankani donde se espera la salida del sol para el homenaje. Según la tradición, aquí empieza el Inti Raymi."@es ;
-    geo:lat -13.5600 ;
-    geo:long -71.1550 .
-
-
 ###  http://example.org/festividades#IntiAlabado_2025
 :IntiAlabado_2025 rdf:type owl:NamedIndividual ,
                            :EventoRitual ,
@@ -708,6 +733,15 @@ xsd:date rdf:type rdfs:Datatype .
                   :tieneOrdenEvento 1 ;
                   rdfs:comment "Dualidad evento-lugar: ritual de saludo al sol al amanecer que se realiza en el lugar homónimo. Como evento: ceremonia solar. Como lugar: sitio en las alturas de Tayankani donde se espera la salida del sol."@es ;
                   rdfs:label "Inti Alabado (2025)"@es .
+
+
+###  http://example.org/festividades#IntiLloksimuy
+:IntiLloksimuy rdf:type owl:NamedIndividual ,
+                        :Lugar ;
+               rdfs:comment "Lugar en las alturas de Tayankani donde se espera la salida del sol para el homenaje. Según la tradición, aquí empieza el Inti Raymi."@es ;
+               rdfs:label "Inti Lloksimuy"@es ;
+               geo:lat -13.5600 ;
+               geo:long -71.1550 .
 
 
 ###  http://example.org/festividades#Lomada_2025
@@ -728,11 +762,12 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#MachuCruz
-:MachuCruz rdf:type owl:NamedIndividual , :Lugar ;
-    rdfs:label "Machu Cruz"@es ;
-    rdfs:comment "Punto fijo con una cruz a poco más de una hora del santuario. Lugar de pausa para comer maíz y queso en señal de despedida."@es ;
-    geo:lat -13.5900 ;
-    geo:long -71.1850 .
+:MachuCruz rdf:type owl:NamedIndividual ,
+                    :Lugar ;
+           rdfs:comment "Punto fijo con una cruz a poco más de una hora del santuario. Lugar de pausa para comer maíz y queso en señal de despedida."@es ;
+           rdfs:label "Machu Cruz"@es ;
+           geo:lat -13.5900 ;
+           geo:long -71.1850 .
 
 
 ###  http://example.org/festividades#Mahuayani
@@ -745,12 +780,13 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#Mamachapata
-:Mamachapata rdf:type owl:NamedIndividual , :Lugar ;
-    :estaEn :SantuarioQoylluriti ;
-    rdfs:label "Mamachapata"@es ;
-    rdfs:comment "Área dentro del recinto del santuario hacia donde se dirige la procesión con la imagen del Señor de Tayankani."@es ;
-    geo:lat -13.598889 ;
-    geo:long -71.191111 .
+:Mamachapata rdf:type owl:NamedIndividual ,
+                      :Lugar ;
+             :estaEn :SantuarioQoylluriti ;
+             rdfs:comment "Área dentro del recinto del santuario hacia donde se dirige la procesión con la imagen del Señor de Tayankani."@es ;
+             rdfs:label "Mamachapata"@es ;
+             geo:lat -13.598889 ;
+             geo:long -71.191111 .
 
 
 ###  http://example.org/festividades#MisaInicial_Paucartambo_2025
@@ -821,25 +857,28 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#Pachakunapata
-:Pachakunapata rdf:type owl:NamedIndividual , :Lugar , :EventoRitual ;
-    :estaEn :SantuarioQoylluriti ;
-    :ocurreEnLugar :Pachakunapata ;
-    :realizadoPor :NacionPaucartambo ;
-    :tieneNombreLocal "P'achakunapata" ;
-    :tieneOrdenEvento 3 ;
-    rdfs:label "P'achakunapata"@es ;
-    rdfs:comment "Dualidad evento-lugar: ritual de espera ceremonial y entrada unificada de la Nación al santuario que ocurre en la entrada ceremonial homónima."@es ;
-    geo:lat -13.598333 ;
-    geo:long -71.190833 .
+:Pachakunapata rdf:type owl:NamedIndividual ,
+                        :EventoRitual ,
+                        :Lugar ;
+               :estaEn :SantuarioQoylluriti ;
+               :ocurreEnLugar :Pachakunapata ;
+               :realizadoPor :NacionPaucartambo ;
+               :tieneNombreLocal "P'achakunapata" ;
+               :tieneOrdenEvento 3 ;
+               rdfs:comment "Dualidad evento-lugar: ritual de espera ceremonial y entrada unificada de la Nación al santuario que ocurre en la entrada ceremonial homónima."@es ;
+               rdfs:label "P'achakunapata"@es ;
+               geo:lat -13.598333 ;
+               geo:long -71.190833 .
 
 
 ###  http://example.org/festividades#ParadaHuancarani_2025
-:ParadaHuancarani_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
-    :ocurreEnLugar :Huancarani ;
-    :realizadoPor :NacionPaucartambo ;
-    :tieneOrdenEvento 4 ;
-    rdfs:label "Parada en Huancarani (2025)"@es ;
-    rdfs:comment "Reunión y espera de todos los danzantes de la Nación Paucartambo en el cruce vial de Huancarani."@es .
+:ParadaHuancarani_2025 rdf:type owl:NamedIndividual ,
+                                :EventoRitual ;
+                       :ocurreEnLugar :Huancarani ;
+                       :realizadoPor :NacionPaucartambo ;
+                       :tieneOrdenEvento 4 ;
+                       rdfs:comment "Reunión y espera de todos los danzantes de la Nación Paucartambo en el cruce vial de Huancarani."@es ;
+                       rdfs:label "Parada en Huancarani (2025)"@es .
 
 
 ###  http://example.org/festividades#PasoCasaPrioste
@@ -870,12 +909,13 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#PlazaOcongate
-:PlazaOcongate rdf:type owl:NamedIndividual , :Lugar ;
-    :estaEn :Ocongate ;
-    rdfs:label "Plaza de Ocongate"@es ;
-    rdfs:comment "Plaza donde oficialmente termina la festividad del Señor de Qoyllur Rit'i para la Nación Paucartambo."@es ;
-    geo:lat -13.6394 ;
-    geo:long -71.3878 .
+:PlazaOcongate rdf:type owl:NamedIndividual ,
+                        :Lugar ;
+               :estaEn :Ocongate ;
+               rdfs:comment "Plaza donde oficialmente termina la festividad del Señor de Qoyllur Rit'i para la Nación Paucartambo."@es ;
+               rdfs:label "Plaza de Ocongate"@es ;
+               geo:lat -13.6394 ;
+               geo:long -71.3878 .
 
 
 ###  http://example.org/festividades#PlazaPaucartambo
@@ -889,21 +929,23 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#ProcesionEntradaOcongate_2025
-:ProcesionEntradaOcongate_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
-    :ocurreEnLugar :PlazaOcongate ;
-    :realizadoPor :NacionPaucartambo ;
-    :tieneOrdenEvento 4 ;
-    rdfs:label "Procesión de entrada a Ocongate (2025)"@es ;
-    rdfs:comment "Procesión final en Ocongate que marca el término oficial de la festividad para la Nación Paucartambo."@es .
+:ProcesionEntradaOcongate_2025 rdf:type owl:NamedIndividual ,
+                                        :EventoRitual ;
+                               :ocurreEnLugar :PlazaOcongate ;
+                               :realizadoPor :NacionPaucartambo ;
+                               :tieneOrdenEvento 4 ;
+                               rdfs:comment "Procesión final en Ocongate que marca el término oficial de la festividad para la Nación Paucartambo."@es ;
+                               rdfs:label "Procesión de entrada a Ocongate (2025)"@es .
 
 
 ###  http://example.org/festividades#ProcesionMamachapata_2025
-:ProcesionMamachapata_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
-    :ocurreEnLugar :Mamachapata ;
-    :realizadoPor :NacionPaucartambo ;
-    :tieneOrdenEvento 4 ;
-    rdfs:label "Procesión a Mamachapata (2025)"@es ;
-    rdfs:comment "Procesión con la imagen del Señor de Tayankani hacia el área de Mamachapata dentro del santuario. La Nación Paucartambo tiene el derecho histórico de ser los primeros en sacar esta imagen."@es .
+:ProcesionMamachapata_2025 rdf:type owl:NamedIndividual ,
+                                    :EventoRitual ;
+                           :ocurreEnLugar :Mamachapata ;
+                           :realizadoPor :NacionPaucartambo ;
+                           :tieneOrdenEvento 4 ;
+                           rdfs:comment "Procesión con la imagen del Señor de Tayankani hacia el área de Mamachapata dentro del santuario. La Nación Paucartambo tiene el derecho histórico de ser los primeros en sacar esta imagen."@es ;
+                           rdfs:label "Procesión a Mamachapata (2025)"@es .
 
 
 ###  http://example.org/festividades#QespiCruz
@@ -914,29 +956,32 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#QquchiyocWayqo
-:QquchiyocWayqo rdf:type owl:NamedIndividual , :Lugar ;
-    rdfs:label "Qquchiyoc Wayq'o"@es ;
-    rdfs:comment "Lugar donde pasa un riachuelo durante la Lomada nocturna, entre Yanaqancha y Q'espi Cruz."@es ;
-    geo:lat -13.5750 ;
-    geo:long -71.1700 .
+:QquchiyocWayqo rdf:type owl:NamedIndividual ,
+                         :Lugar ;
+                rdfs:comment "Lugar donde pasa un riachuelo durante la Lomada nocturna, entre Yanaqancha y Q'espi Cruz."@es ;
+                rdfs:label "Qquchiyoc Wayq'o"@es ;
+                geo:lat -13.5750 ;
+                geo:long -71.1700 .
 
 
 ###  http://example.org/festividades#RitualGrutaTayankani_2025
-:RitualGrutaTayankani_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
-    :ocurreEnLugar :GrutaTayankani ;
-    :realizadoPor :Ukumaris_Paucartambo_2025 ;
-    :tieneOrdenEvento 2 ;
-    rdfs:label "Ritual en gruta de Tayankani (2025)"@es ;
-    rdfs:comment "Últimos rituales de los Ukukus en la gruta de Tayankani antes del ingreso procesional al pueblo."@es .
+:RitualGrutaTayankani_2025 rdf:type owl:NamedIndividual ,
+                                    :EventoRitual ;
+                           :ocurreEnLugar :GrutaTayankani ;
+                           :realizadoPor :Ukumaris_Paucartambo_2025 ;
+                           :tieneOrdenEvento 2 ;
+                           rdfs:comment "Últimos rituales de los Ukukus en la gruta de Tayankani antes del ingreso procesional al pueblo."@es ;
+                           rdfs:label "Ritual en gruta de Tayankani (2025)"@es .
 
 
 ###  http://example.org/festividades#RitualMachuCruz_2025
-:RitualMachuCruz_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
-    :ocurreEnLugar :MachuCruz ;
-    :realizadoPor :NacionPaucartambo ;
-    :tieneOrdenEvento 1 ;
-    rdfs:label "Ritual en Machu Cruz (2025)"@es ;
-    rdfs:comment "Pausa ritual a poco más de una hora del santuario para comer maíz y queso, en acto simbólico de despedida del espacio sagrado."@es .
+:RitualMachuCruz_2025 rdf:type owl:NamedIndividual ,
+                               :EventoRitual ;
+                      :ocurreEnLugar :MachuCruz ;
+                      :realizadoPor :NacionPaucartambo ;
+                      :tieneOrdenEvento 1 ;
+                      rdfs:comment "Pausa ritual a poco más de una hora del santuario para comer maíz y queso, en acto simbólico de despedida del espacio sagrado."@es ;
+                      rdfs:label "Ritual en Machu Cruz (2025)"@es .
 
 
 ###  http://example.org/festividades#RitualVestimentaDanzantes_2025
@@ -1046,19 +1091,21 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#Yanaqancha
-:Yanaqancha rdf:type owl:NamedIndividual , :Lugar ;
-    rdfs:label "Yanaqancha"@es ;
-    rdfs:comment "Lugar de descanso prolongado (4 horas) durante la Lomada. Aquí se deja la imagen del Señor de Tayankani."@es ;
-    geo:lat -13.5800 ;
-    geo:long -71.1750 .
+:Yanaqancha rdf:type owl:NamedIndividual ,
+                     :Lugar ;
+            rdfs:comment "Lugar de descanso prolongado (4 horas) durante la Lomada. Aquí se deja la imagen del Señor de Tayankani."@es ;
+            rdfs:label "Yanaqancha"@es ;
+            geo:lat -13.5800 ;
+            geo:long -71.1750 .
 
 
 ###  http://example.org/festividades#Yanaqocha
-:Yanaqocha rdf:type owl:NamedIndividual , :Lugar ;
-    rdfs:label "Laguna Yanaqocha"@es ;
-    rdfs:comment "Laguna donde se realizan rituales de despedida entre miembros de la Nación durante la Lomada."@es ;
-    geo:lat -13.5850 ;
-    geo:long -71.1800 .
+:Yanaqocha rdf:type owl:NamedIndividual ,
+                    :Lugar ;
+           rdfs:comment "Laguna donde se realizan rituales de despedida entre miembros de la Nación durante la Lomada."@es ;
+           rdfs:label "Laguna Yanaqocha"@es ;
+           geo:lat -13.5850 ;
+           geo:long -71.1800 .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
