@@ -613,7 +613,10 @@ xsd:date rdf:type rdfs:Datatype .
 :Dia3_LunesAscenso rdf:type owl:NamedIndividual ,
                             :EventoRitual ;
                    :defineMarcoTemporal :CeremoniaVeneracion_Templo_Qoylluriti_2025 ,
-                                        :MisaUkukus_2025 ;
+                                        :DescansoCeldaUkukus_2025 ,
+                                        :MisaUkukus_2025 ,
+                                        :Pachakunapata ,
+                                        :ProcesionMamachapata_2025 ;
                    :esParteDeFestividad :FestividadQoylluriti ;
                    :tieneFecha "lunes"@es ,
                                "2025-06-16"^^xsd:date ;
@@ -626,7 +629,11 @@ xsd:date rdf:type rdfs:Datatype .
 :Dia4_MartesDescensoYLomada rdf:type owl:NamedIndividual ,
                                      :EventoRitual ;
                             :defineMarcoTemporal :BajadaColquePunku_2025 ,
-                                                 :Lomada_2025 ;
+                                                 :CantoQespiCruz_2025 ,
+                                                 :DescansoYanaqancha_2025 ,
+                                                 :Lomada_2025 ,
+                                                 :RitualDespedida_Yanaqocha_2025 ,
+                                                 :RitualMachuCruz_2025 ;
                             :esParteDeFestividad :FestividadQoylluriti ;
                             :tieneFecha "2025-06-17"^^xsd:date ;
                             :tieneOrden 5 ;
@@ -639,6 +646,8 @@ xsd:date rdf:type rdfs:Datatype .
                              :EventoRitual ;
                     :defineMarcoTemporal :DejaImagenEnCapillaTayancani_2025 ,
                                          :IntiAlabado_2025 ,
+                                         :ProcesionEntradaOcongate_2025 ,
+                                         :RitualGrutaTayankani_2025 ,
                                          :TrasladoImagenSenorOcongate_Tayancani_2025 ;
                     :tieneFecha "2025-06-18"^^xsd:date ;
                     :tieneOrden 7 ;
@@ -841,7 +850,9 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#NocheMartesMiercoles_Lomada
 :NocheMartesMiercoles_Lomada rdf:type owl:NamedIndividual ,
                                       :EventoRitual ;
-                             :defineMarcoTemporal :Lomada_2025 ;
+                             :defineMarcoTemporal :CantoQespiCruz_2025 ,
+                                                  :Escalerachayoq ,
+                                                  :Lomada_2025 ;
                              :esParteDeFestividad :FestividadQoylluriti ;
                              :tieneFecha "2025-06-17"^^xsd:date ;
                              :tieneOrden 6 ;
@@ -962,6 +973,16 @@ xsd:date rdf:type rdfs:Datatype .
                 rdfs:label "Qquchiyoc Wayq'o"@es ;
                 geo:lat -13.5750 ;
                 geo:long -71.1700 .
+
+
+###  http://example.org/festividades#RitualDespedida_Yanaqocha_2025
+:RitualDespedida_Yanaqocha_2025 rdf:type owl:NamedIndividual ,
+                                         :EventoRitual ;
+                                :ocurreEnLugar :Yanaqocha ;
+                                :realizadoPor :NacionPaucartambo ;
+                                :tieneOrdenEvento 2 ;
+                                rdfs:comment "Rituales de despedida entre miembros de la Nación en la Laguna Yanaqocha, corriendo y abrazándose."@es ;
+                                rdfs:label "Ritual de despedida en Yanaqocha (2025)"@es .
 
 
 ###  http://example.org/festividades#RitualGrutaTayankani_2025
