@@ -823,6 +823,15 @@ xsd:date rdf:type rdfs:Datatype .
               geo:long -72.0779553 .
 
 
+###  http://example.org/festividades#PlazaOcongate
+:PlazaOcongate rdf:type owl:NamedIndividual , :Lugar ;
+    :estaEn :Ocongate ;
+    rdfs:label "Plaza de Ocongate"@es ;
+    rdfs:comment "Plaza donde oficialmente termina la festividad del Señor de Qoyllur Rit'i para la Nación Paucartambo."@es ;
+    geo:lat -13.6394 ;
+    geo:long -71.3878 .
+
+
 ###  http://example.org/festividades#PlazaPaucartambo
 :PlazaPaucartambo rdf:type owl:NamedIndividual ,
                            :Lugar ;
@@ -831,6 +840,15 @@ xsd:date rdf:type rdfs:Datatype .
                   rdfs:label "Plaza de Armas de Paucartambo"@es ;
                   geo:lat -13.3178313 ;
                   geo:long -71.6013075 .
+
+
+###  http://example.org/festividades#ProcesionEntradaOcongate_2025
+:ProcesionEntradaOcongate_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
+    :ocurreEnLugar :PlazaOcongate ;
+    :realizadoPor :NacionPaucartambo ;
+    :tieneOrdenEvento 4 ;
+    rdfs:label "Procesión de entrada a Ocongate (2025)"@es ;
+    rdfs:comment "Procesión final en Ocongate que marca el término oficial de la festividad para la Nación Paucartambo."@es .
 
 
 ###  http://example.org/festividades#ProcesionMamachapata_2025
