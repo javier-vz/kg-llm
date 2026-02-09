@@ -421,6 +421,15 @@ xsd:date rdf:type rdfs:Datatype .
                                    rdfs:label "Caminata Mahuayani-Santuario (2025)"@es .
 
 
+###  http://example.org/festividades#CantoQespiCruz_2025
+:CantoQespiCruz_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
+    :ocurreEnLugar :QespiCruz ;
+    :realizadoPor :NacionPaucartambo ;
+    :tieneOrdenEvento 4 ;
+    rdfs:label "Canto en Q'espi Cruz (2025)"@es ;
+    rdfs:comment "A medianoche, toda la Nación canta la 'Canción de Despedida de los Qapaq Qollas' en Q'espi Cruz."@es .
+
+
 ###  http://example.org/festividades#Ccapi
 :Ccapi rdf:type owl:NamedIndividual ,
                 :Lugar ;
@@ -597,6 +606,18 @@ xsd:date rdf:type rdfs:Datatype .
                     :tieneOrden 7 ;
                     rdfs:comment "Amanecer del miércoles. Incluye el evento del Inti Alabado, la llegada a Tayankani y el retorno a Ocongate."@es ;
                     rdfs:label "Día 5: Miércoles del alba y finalización"@es .
+
+
+###  http://example.org/festividades#Escalerachayoq
+:Escalerachayoq rdf:type owl:NamedIndividual , :Lugar , :EventoRitual ;
+    :ocurreEnLugar :Escalerachayoq ;
+    :realizadoPor :NacionPaucartambo ;
+    :tieneNombreLocal "Escalerachayoq" ;
+    :tieneOrdenEvento 6 ;  # En la secuencia de la Lomada
+    rdfs:label "Escalerachayoq"@es ;
+    rdfs:comment "Dualidad evento-lugar: tramo de la Lomada que consiste en una bajada de piedras entre las 3 y 4 de la madrugada, antes de llegar al Inti Alabado."@es ;
+    geo:lat -13.5650 ;
+    geo:long -71.1600 .
 
 
 ###  http://example.org/festividades#EventoPrevioPeregrinaje_Paucartambo_2025_06_14
@@ -826,6 +847,15 @@ xsd:date rdf:type rdfs:Datatype .
                     :Lugar ;
            rdfs:comment "Hito importante en la ruta de la lomada, punto de paso y posiblemente lugar de ritual"@es ;
            rdfs:label "Q'espi Cruz" .
+
+
+###  http://example.org/festividades#RitualGrutaTayankani_2025
+:RitualGrutaTayankani_2025 rdf:type owl:NamedIndividual , :EventoRitual ;
+    :ocurreEnLugar :GrutaTayankani ;
+    :realizadoPor :Ukumaris_Paucartambo_2025 ;
+    :tieneOrdenEvento 2 ;
+    rdfs:label "Ritual en gruta de Tayankani (2025)"@es ;
+    rdfs:comment "Últimos rituales de los Ukukus en la gruta de Tayankani antes del ingreso procesional al pueblo."@es .
 
 
 ###  http://example.org/festividades#RitualMachuCruz_2025
