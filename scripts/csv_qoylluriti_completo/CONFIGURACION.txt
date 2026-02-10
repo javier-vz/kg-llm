@@ -1,0 +1,49 @@
+# CONFIGURACIÓN PARA GOOGLE SHEETS
+# ============================================
+
+# PASOS PARA CONFIGURAR MENÚS DESPLEGABLES:
+
+1. Importa cada CSV como pestaña separada en Google Sheets
+
+2. En la pestaña FOTOS, configura estas validaciones de datos:
+
+   COLUMNA F (MARCO_TEMPORAL):
+   - Datos → Validación de datos
+   - Criterio: Lista de un rango
+   - Rango: marcos!$A$2:$A$100
+
+   COLUMNA G (EVENTO_ESPECIFICO):
+   - Datos → Validación de datos  
+   - Criterio: Lista de un rango
+   - Rango: eventos!$B$2:$B$100
+
+   COLUMNA H (LUGAR):
+   - Datos → Validación de datos
+   - Criterio: Lista de un rango
+   - Rango: lugares!$A$2:$A$100
+
+   COLUMNA I (PARTICIPANTE):
+   - Datos → Validación de datos
+   - Criterio: Lista de un rango
+   - Rango: participantes!$A$2:$A$100
+
+   COLUMNA J (PRACTICA):
+   - Datos → Validación de datos
+   - Criterio: Lista de un rango
+   - Rango: practicas!$A$2:$A$100
+
+3. Para menús dependientes (eventos por marco):
+   - Crea una pestaña llamada EVENTOS_FILTRADOS
+   - En A1: =FILTER(eventos!$B$2:$B$100, eventos!$A$2:$A$100=FOTOS!$F2)
+   - En FOTOS columna G, usa rango: EVENTOS_FILTRADOS!$A$2:$A$100
+
+# ============================================
+# ESTRUCTURA DE CARPETAS SUGERIDA PARA FOTOS:
+# qoyllur_riti_2025/
+# ├── Dia1_Sabado_Preparacion/
+# ├── Dia2_Domingo_Partida/
+# ├── Dia3_Lunes_Ascenso/
+# ├── Dia4_Martes_Descenso/
+# ├── Dia5_Miercoles_Alba/
+# └── general/
+# ============================================

@@ -1,0 +1,29 @@
+MARCO,ID,NOMBRE,ORDEN,HORA_APROX,DESCRIPCION_CORTA
+Dia1_SabadoPreparacion,EventoPrevioPeregrinaje_Paucartambo_2025_06_14,Evento previo al peregrinaje (2025),1,14:00,Gelación y ensayo de participantes en Paucartambo
+Dia2_DomingoPartida,MisaInicial_Paucartambo_2025,Misa inicial en Paucartambo (2025),1,07:00,Misa de envío en la iglesia de Paucartambo
+Dia2_DomingoPartida,RomeriaPaucartambo_2025_06_15,Romería en Paucartambo (2025),2,08:30,Romería al cementerio para honrar hermanos antiguos
+Dia2_DomingoPartida,RitualVestimentaDanzantes_2025,Ritual de vestimenta de danzantes (2025),3,12:00,Los danzantes se visten con trajes ceremoniales en la plaza
+Dia2_DomingoPartida,ParadaHuancarani_2025,Parada en Huancarani (2025),4,14:00,Reunión y espera de todos los danzantes en cruce vial
+Dia2_DomingoPartida,VisitaIglesiaCcatcca_2025,Visita a la iglesia de Ccatcca (2025),5,15:00,Visita ritual a la iglesia marcando el paso por el pueblo
+Dia2_DomingoPartida,ComidaCcatcca_2025,Comida comunitaria en Ccatcca (2025),6,16:00,Descanso y comida (asado con mote) en la plaza de Ccatcca
+Dia2_DomingoPartida,PasoCasaPrioste,Paso por la casa del prioste (2025),7,18:00,Visita al prioste en Ocongate, quien sirve mate caliente
+Dia2_DomingoPartida,ViajeVehicular_Paucartambo_Mahuayani_2025,Viaje vehicular a Mahuayani (2025),8,19:00,Viaje ritual en camión con paradas establecidas
+Dia2_DomingoPartida,Caminata_Mahuayani_Santuario_2025,Caminata Mahuayani-Santuario (2025),9,05:00,Ascenso a pie desde Mahuayani al santuario
+Dia3_LunesAscenso,MisaUkukus_2025,Misa de Ukukus (2025),2,10:00,Misa especial exclusiva para los Ukukus
+Dia3_LunesAscenso,Pachakunapata,P'achakunapata,3,11:00,Espera ceremonial y entrada unificada al santuario
+Dia3_LunesAscenso,CeremoniaVeneracion_Templo_Qoylluriti_2025,Veneración en el templo del santuario (2025),4,12:00,Actos de veneración al Señor de Qoyllur Rit'i
+Dia3_LunesAscenso,ProcesionMamachapata_2025,Procesión a Mamachapata (2025),5,14:00,Procesión con imagen del Señor de Tayankani
+Dia3_LunesAscenso,DescansoCeldaUkukus_2025,Descanso en celda de Ukukus (2025),6,16:00,Descanso y preparación en la celda del bofedal
+NocheLunesMartes_Glaciar,SubidaColquePunku_2025,Subida al Colque Punku (2025),1,23:00,Ascenso nocturno al glaciar para rituales
+Dia4_MartesDescensoYLomada,BajadaColquePunku_2025,Bajada del Colque Punku (2025),1,09:00,Descenso desde el glaciar al santuario
+Dia4_MartesDescensoYLomada,RitualMachuCruz_2025,Ritual en Machu Cruz (2025),2,10:00,Pausa ritual para comer maíz y queso en despedida
+Dia4_MartesDescensoYLomada,RitualDespedida_Yanaqocha_2025,Ritual de despedida en Yanaqocha (2025),3,11:00,Rituales de despedida en la laguna Yanaqocha
+Dia4_MartesDescensoYLomada,DescansoYanaqancha_2025,Descanso en Yanaqancha (2025),4,15:00,Descanso prolongado de 4 horas en Yanaqancha
+Dia4_MartesDescensoYLomada,Lomada_2025,Lomada / Loman Pureq (2025),5,21:00,Caminata ritual de 24 horas con hitos específicos
+NocheMartesMiercoles_Lomada,CantoQespiCruz_2025,Canto en Q'espi Cruz (2025),1,00:00,Canto de la Canción de Despedida a medianoche
+NocheMartesMiercoles_Lomada,EscaleraChayoq,EscaleraChayoq,2,02:00,Bajada de piedras entre las 3 y 4 de la madrugada
+Dia5_MiercolesAlba,IntiAlabado_2025,Inti Alabado (2025),1,04:00,Ritual de saludo al sol al amanecer
+Dia5_MiercolesAlba,RitualGrutaTayankani_2025,Ritual en gruta de Tayankani (2025),2,07:00,Últimos rituales de Ukukus antes del ingreso procesional
+Dia5_MiercolesAlba,DejaImagenEnCapillaTayancani_2025,Dejar imagen en capilla de Tayancani (2025),3,09:00,Depósito de la imagen en la capilla de Tayankani
+Dia5_MiercolesAlba,TrasladoImagenSenorOcongate_Tayancani_2025,Traslado de la imagen a Ocongate (2025),4,11:00,Procesión con imagen desde Tayankani hacia Ocongate
+Dia5_MiercolesAlba,ProcesionEntradaOcongate_2025,Procesión de entrada a Ocongate (2025),5,13:00,Procesión final que marca el término oficial

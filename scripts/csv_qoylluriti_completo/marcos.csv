@@ -1,0 +1,8 @@
+ID,NOMBRE,ORDEN,FECHA
+Dia1_SabadoPreparacion,Día 1: Sábado de preparación,1,2025-06-14
+Dia2_DomingoPartida,Día 2: Domingo de partida y viaje,2,2025-06-15
+Dia3_LunesAscenso,Día 3: Lunes de ascenso al santuario,3,2025-06-16
+NocheLunesMartes_Glaciar,Noche del lunes al martes (en el glaciar),4,2025-06-16
+Dia4_MartesDescensoYLomada,Día 4: Martes de descenso e inicio de la lomada,5,2025-06-17
+NocheMartesMiercoles_Lomada,Noche del martes al miércoles (durante la lomada),6,2025-06-17
+Dia5_MiercolesAlba,Día 5: Miércoles del alba y finalización,7,2025-06-18
