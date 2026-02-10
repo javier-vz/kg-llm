@@ -502,6 +502,7 @@ xsd:date rdf:type rdfs:Datatype .
 :CeremoniaVeneracion_Templo_Qoylluriti_2025 rdf:type owl:NamedIndividual ,
                                                      :EventoRitual ;
                                             :ocurreEnLugar :SantuarioQoylluriti ;
+                                            :realizadoPor :NacionPaucartambo ;
                                             :tieneOrdenEvento 1 ;
                                             rdfs:comment "Actos de veneración al Señor de Qoyllur Rit'i dentro del templo principal del santuario."@es ;
                                             rdfs:label "Veneración en el templo del santuario (2025)"@es .
@@ -802,7 +803,8 @@ xsd:date rdf:type rdfs:Datatype .
 :MisaInicial_Paucartambo_2025 rdf:type owl:NamedIndividual ,
                                        :EventoRitual ;
                               :ocurreEnLugar :IglesiaPaucartambo ;
-                              :tieneOrden 1 ;
+                              :realizadoPor :NacionPaucartambo ;
+                              :tieneOrdenEvento 1 ;
                               rdfs:comment "Misa de envío a las 7:00 AM en la Iglesia de Paucartambo antes de la partida de la peregrinación."@es ;
                               rdfs:label "Misa inicial en Paucartambo (2025)"@es .
 
@@ -864,7 +866,9 @@ xsd:date rdf:type rdfs:Datatype .
 :Ocongate rdf:type owl:NamedIndividual ,
                    :Lugar ;
           rdfs:comment "Localidad de paso en la ruta hacia desde Paucartambo Mahuayani. También, es el destino final de la peregrinación del Señor de Qoyllu Rit'i."@es ;
-          rdfs:label "Ocongate" .
+          rdfs:label "Ocongate" ;
+          geo:lat -13.639444 ;
+          geo:long -71.387778 .
 
 
 ###  http://example.org/festividades#Pachakunapata
@@ -933,7 +937,7 @@ xsd:date rdf:type rdfs:Datatype .
 :PlazaPaucartambo rdf:type owl:NamedIndividual ,
                            :Lugar ;
                   :estaEn :Paucartambo ;
-                  rdfs:comment "PENDIENTE"@es ;
+                  rdfs:comment "Plaza principal de Paucartambo donde se realiza el ritual público de vestimenta de los danzantes Ukukus antes de la partida hacia el santuario."@es ;
                   rdfs:label "Plaza de Armas de Paucartambo"@es ;
                   geo:lat -13.3178313 ;
                   geo:long -71.6013075 .
@@ -963,7 +967,9 @@ xsd:date rdf:type rdfs:Datatype .
 :QespiCruz rdf:type owl:NamedIndividual ,
                     :Lugar ;
            rdfs:comment "Hito importante en la ruta de la lomada, punto de paso y posiblemente lugar de ritual"@es ;
-           rdfs:label "Q'espi Cruz" .
+           rdfs:label "Q'espi Cruz" ;
+           geo:lat -13.5700 ;
+           geo:long -71.1650 .
 
 
 ###  http://example.org/festividades#QquchiyocWayqo
@@ -1009,8 +1015,11 @@ xsd:date rdf:type rdfs:Datatype .
 :RitualVestimentaDanzantes_2025 rdf:type owl:NamedIndividual ,
                                          :EventoRitual ;
                                 :ocurreEnLugar :PlazaPaucartambo ;
-                                :realizadoPor :Ukumaris_Paucartambo_2025 ;
-                                :tieneOrdenEvento 3 .
+                                :realizadoPor :NacionPaucartambo ,
+                                              :Ukumaris_Paucartambo_2025 ;
+                                :tieneOrdenEvento 3 ;
+                                rdfs:comment "Acto público donde los danzantes se visten con sus trajes ceremoniales en la plaza de Paucartambo, anunciando la partida de la Nación."@es ;
+                                rdfs:label "Ritual de vestimenta de danzantes (2025)"@es .
 
 
 ###  http://example.org/festividades#RomeriaPaucartambo_2025_06_15
@@ -1057,7 +1066,9 @@ xsd:date rdf:type rdfs:Datatype .
 :Tayancani rdf:type owl:NamedIndividual ,
                     :Lugar ;
            rdfs:comment "Localidad donde se deposita la imagen al final de la peregrinación"@es ;
-           rdfs:label "Tayancani" .
+           rdfs:label "Tayancani" ;
+           geo:lat -13.5547 ;
+           geo:long -71.1503 .
 
 
 ###  http://example.org/festividades#TrajeUkumari
