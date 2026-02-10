@@ -748,6 +748,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#IntiLloksimuy
 :IntiLloksimuy rdf:type owl:NamedIndividual ,
                         :Lugar ;
+               :estaEn :Tayancani ;
                rdfs:comment "Lugar en las alturas de Tayankani donde se espera la salida del sol para el homenaje. Según la tradición, aquí empieza el Inti Raymi."@es ;
                rdfs:label "Inti Lloksimuy"@es ;
                geo:lat -13.5600 ;
@@ -762,7 +763,13 @@ xsd:date rdf:type rdfs:Datatype .
              :desde :SantuarioQoylluriti ;
              :ocurreEnLugar :IntiAlabado_2025 ,
                             :SantuarioQoylluriti ;
-             :pasaPor :QespiCruz ;
+             :pasaPor :Escalerachayoq ,
+                      :IntiLloksimuy ,
+                      :MachuCruz ,
+                      :QespiCruz ,
+                      :QquchiyocWayqo ,
+                      :Yanaqancha ,
+                      :Yanaqocha ;
              :sigueRuta :Lomada_2025 ;
              :tieneNombreLocal "lomada" ,
                                "loman pureq" ;
@@ -802,6 +809,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#MisaInicial_Paucartambo_2025
 :MisaInicial_Paucartambo_2025 rdf:type owl:NamedIndividual ,
                                        :EventoRitual ;
+                              :antesDe :RomeriaPaucartambo_2025_06_15 ;
                               :ocurreEnLugar :IglesiaPaucartambo ;
                               :realizadoPor :NacionPaucartambo ;
                               :tieneOrdenEvento 1 ;
@@ -889,6 +897,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#ParadaHuancarani_2025
 :ParadaHuancarani_2025 rdf:type owl:NamedIndividual ,
                                 :EventoRitual ;
+                       :antesDe :VisitaIglesiaCcatcca_2025 ;
                        :ocurreEnLugar :Huancarani ;
                        :realizadoPor :NacionPaucartambo ;
                        :tieneOrdenEvento 4 ;
@@ -1014,6 +1023,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#RitualVestimentaDanzantes_2025
 :RitualVestimentaDanzantes_2025 rdf:type owl:NamedIndividual ,
                                          :EventoRitual ;
+                                :antesDe :ParadaHuancarani_2025 ;
                                 :ocurreEnLugar :PlazaPaucartambo ;
                                 :realizadoPor :NacionPaucartambo ,
                                               :Ukumaris_Paucartambo_2025 ;
@@ -1025,6 +1035,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#RomeriaPaucartambo_2025_06_15
 :RomeriaPaucartambo_2025_06_15 rdf:type owl:NamedIndividual ,
                                         :EventoRitual ;
+                               :antesDe :RitualVestimentaDanzantes_2025 ;
                                :ocurreEnLugar :CementerioPaucartambo ;
                                :tieneOrdenEvento 1 ;
                                rdfs:comment "Romería y anuncio público antes de la partida"@es ;
@@ -1101,20 +1112,25 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  http://example.org/festividades#ViajeVehicular_Paucartambo_Mahuayani_2025
 :ViajeVehicular_Paucartambo_Mahuayani_2025 rdf:type owl:NamedIndividual ,
-                                                    :EventoRitual ;
+                                                    :EventoRitual ,
+                                                    :Lugar ;
+                                           :conduceA :Mahuayani ;
+                                           :desde :Paucartambo ;
+                                           :ocurreEnLugar :ViajeVehicular_Paucartambo_Mahuayani_2025 ;
                                            :pasaPor :Ccatcca ,
                                                     :Huancarani ,
                                                     :Ocongate ;
                                            :realizadoPor :Ukumaris_Paucartambo_2025 ;
                                            :sigueRuta :RutaPaucartamboMahuayani ;
                                            :tieneOrdenEvento 7 ;
-                                           rdfs:comment "Viaje en camión desde Paucartambo hasta Mahuayani con paradas estratégicas en Huancarani, Ccatcca y Ocongate."@es ;
+                                           rdfs:comment "Dualidad evento-lugar: viaje ritual en vehículo desde Paucartambo hasta Mahuayani que sigue una ruta física específica con paradas rituales."@es ;
                                            rdfs:label "Viaje vehicular a Mahuayani (2025)"@es .
 
 
 ###  http://example.org/festividades#VisitaIglesiaCcatcca_2025
 :VisitaIglesiaCcatcca_2025 rdf:type owl:NamedIndividual ,
                                     :EventoRitual ;
+                           :antesDe :ComidaCcatcca_2025 ;
                            :ocurreEnLugar :IglesiaCcatcca ;
                            :realizadoPor :Ukumaris_Paucartambo_2025 ;
                            :tieneOrdenEvento 5 ;
