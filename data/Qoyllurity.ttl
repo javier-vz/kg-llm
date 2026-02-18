@@ -47,6 +47,15 @@ xsd:date rdf:type rdfs:Datatype .
           rdfs:label "conduce a"@es .
 
 
+###  http://example.org/festividades#contiene
+:contiene rdf:type owl:ObjectProperty ;
+          owl:inverseOf :estaEn ;
+          rdfs:domain :Lugar ;
+          rdfs:range :Lugar ;
+          rdfs:comment "Indica que un lugar contiene geográficamente a otro."@es ;
+          rdfs:label "contiene"@es .
+
+
 ###  http://example.org/festividades#defineMarcoTemporal
 :defineMarcoTemporal rdf:type owl:ObjectProperty ;
                      rdfs:domain :EventoRitual ;
@@ -116,6 +125,14 @@ xsd:date rdf:type rdfs:Datatype .
                      rdfs:range :Festividad .
 
 
+###  http://example.org/festividades#esParteDelApu
+:esParteDelApu rdf:type owl:ObjectProperty ;
+               rdfs:domain :LugarSagrado ;
+               rdfs:range :Apu ;
+               rdfs:comment "Indica que un lugar sagrado forma parte de un apu (espíritu de montaña)."@es ;
+               rdfs:label "es parte del apu"@es .
+
+
 ###  http://example.org/festividades#estaConformadaPor
 :estaConformadaPor rdf:type owl:ObjectProperty ;
                    rdfs:domain :Nacion ;
@@ -128,8 +145,8 @@ xsd:date rdf:type rdfs:Datatype .
 :estaEn rdf:type owl:ObjectProperty ;
         rdfs:domain :Lugar ;
         rdfs:range :Lugar ;
-        rdfs:comment "Un lugar está contenido dentro de otro lugar"@es ;
-        rdfs:label "está en"@es .
+        rdfs:comment "Un lugar está contenido geográficamente dentro de otro lugar"@es ;
+        rdfs:label "está ubicado en"@es .
 
 
 ###  http://example.org/festividades#ocurreEnLugar
@@ -207,6 +224,14 @@ xsd:date rdf:type rdfs:Datatype .
 :cantidadAproximada rdf:type owl:DatatypeProperty ;
                     rdfs:domain :Danzante ;
                     rdfs:range xsd:string .
+
+
+###  http://example.org/festividades#tieneAltitudMetros
+:tieneAltitudMetros rdf:type owl:DatatypeProperty ;
+                    rdfs:domain :Lugar ;
+                    rdfs:range xsd:integer ;
+                    rdfs:comment "Altitud sobre el nivel del mar en metros."@es ;
+                    rdfs:label "tiene altitud en metros"@es .
 
 
 ###  http://example.org/festividades#tieneDescripcion
@@ -287,6 +312,13 @@ xsd:date rdf:type rdfs:Datatype .
 #    Classes
 #################################################################
 
+###  http://example.org/festividades#Apu
+:Apu rdf:type owl:Class ;
+     rdfs:subClassOf :LugarSagrado ;
+     rdfs:comment "Espíritu protector de montaña en la cosmovisión andina, asociado a nevados."@es ;
+     rdfs:label "Apu"@es .
+
+
 ###  http://example.org/festividades#Colectivo
 :Colectivo rdf:type owl:Class ;
            rdfs:subClassOf :Participante ;
@@ -335,6 +367,13 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#Lugar
 :Lugar rdf:type owl:Class ;
        rdfs:label "Lugar" .
+
+
+###  http://example.org/festividades#LugarSagrado
+:LugarSagrado rdf:type owl:Class ;
+              rdfs:subClassOf :Lugar ;
+              rdfs:comment "Lugar con significado ritual o religioso en la cosmovisión andina."@es ;
+              rdfs:label "Lugar Sagrado"@es .
 
 
 ###  http://example.org/festividades#Nacion
@@ -391,6 +430,16 @@ xsd:date rdf:type rdfs:Datatype .
 #################################################################
 #    Individuals
 #################################################################
+
+###  http://example.org/festividades#Ausangate
+:Ausangate rdf:type owl:NamedIndividual ,
+                    :Apu ;
+           :contiene :ColquePunku ;
+           rdfs:comment "Apu Ausangate es el espíritu protector de la montaña más alta de la región Cusco (6384 msnm). En la cosmovisión andina, es uno de los apus más importantes. El nevado Ausangate contiene el glaciar Colque Punku, donde se realizan rituales durante Qoyllur Rit'i."@es ,
+                        "Ausangate"@es ;
+           geo:lat -13.7833 ;
+           geo:long -71.2500 .
+
 
 ###  http://example.org/festividades#BajadaColquePunku_2025
 :BajadaColquePunku_2025 rdf:type owl:NamedIndividual ,
@@ -519,11 +568,15 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  http://example.org/festividades#ColquePunku
 :ColquePunku rdf:type owl:NamedIndividual ,
-                      :Lugar ;
+                      :Lugar ,
+                      :LugarSagrado ;
+             :esParteDelApu :Ausangate ;
+             :estaEn :Ausangate ;
+             :tieneAltitudMetros 5200 ;
              rdfs:comment "Glaciar asociado a rituales de altura durante la peregrinación de Qoyllur Rit’i. El glaciar Colque Punku ha sido escenario de ascensos rituales de los ukukus y otros grupos vinculados a prácticas simbólicas relacionadas con el hielo y la montaña."@es ;
              rdfs:label "Glaciar Colque Punku"@es ;
-             geo:lat -13.519167 ;
-             geo:long -71.206667 .
+             geo:lat -13.7900 ;
+             geo:long -71.2400 .
 
 
 ###  http://example.org/festividades#Colquepata
@@ -779,7 +832,8 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  http://example.org/festividades#MachuCruz
 :MachuCruz rdf:type owl:NamedIndividual ,
-                    :Lugar ;
+                    :Lugar ,
+                    :LugarSagrado ;
            rdfs:comment "Punto fijo con una cruz a poco más de una hora del santuario. Lugar de pausa para comer maíz y queso en señal de despedida."@es ;
            rdfs:label "Machu Cruz"@es ;
            geo:lat -13.5900 ;
@@ -974,7 +1028,8 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  http://example.org/festividades#QespiCruz
 :QespiCruz rdf:type owl:NamedIndividual ,
-                    :Lugar ;
+                    :Lugar ,
+                    :LugarSagrado ;
            rdfs:comment "Hito importante en la ruta de la lomada, punto de paso y posiblemente lugar de ritual"@es ;
            rdfs:label "Q'espi Cruz" ;
            geo:lat -13.5700 ;
@@ -1051,9 +1106,27 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  http://example.org/festividades#SantuarioQoylluriti
 :SantuarioQoylluriti rdf:type owl:NamedIndividual ,
-                              :Lugar ;
+                              :Lugar ,
+                              :LugarSagrado ;
+                     :contiene :CeldaUkukusPaucartambo ,
+                               :Mamachapata ,
+                               :Pachakunapata ;
+                     :estaEn :Sinakara ;
                      rdfs:comment "Santuario de alta montaña donde se concentra la peregrinación anual del Señor de Qoyllur Rit’i."@es ;
                      rdfs:label "Santuario del Señor de Qoyllur Rit'i"@es .
+
+
+###  http://example.org/festividades#Sinakara
+:Sinakara rdf:type owl:NamedIndividual ,
+                   :Lugar ,
+                   :LugarSagrado ;
+          :contiene :SantuarioQoylluriti ;
+          :estaEn :Ausangate ;
+          :tieneAltitudMetros 4650 ;
+          rdfs:comment "Área montañosa sagrada ubicada en las faldas del nevado Ausangate, donde se encuentra el Santuario del Señor de Qoyllur Rit'i. Sinakara es el centro geográfico de la peregrinación anual y concentra los eventos principales de la festividad."@es ;
+          rdfs:label "Sinakara"@es ;
+          geo:lat -13.6500 ;
+          geo:long -71.1800 .
 
 
 ###  http://example.org/festividades#Sorriago
@@ -1149,7 +1222,8 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  http://example.org/festividades#Yanaqocha
 :Yanaqocha rdf:type owl:NamedIndividual ,
-                    :Lugar ;
+                    :Lugar ,
+                    :LugarSagrado ;
            rdfs:comment "Laguna donde se realizan rituales de despedida entre miembros de la Nación durante la Lomada."@es ;
            rdfs:label "Laguna Yanaqocha"@es ;
            geo:lat -13.5850 ;
