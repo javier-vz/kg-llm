@@ -1,5 +1,4 @@
 # PROPUESTA DE MODELADO DE AGENCIA PARA QOYLLUR RIT'I
-## Versión 2.0 - Mejorada
 
 ---
 
@@ -21,7 +20,7 @@ Capacidad de los participantes de actuar movidos por motivaciones, propósitos y
 - Dónde ocurre: `:ocurreEnLugar`
 - Cuándo ocurre: `:defineMarcoTemporal`
 
-**Lo que nos falta:**
+**Lo que falta:**
 - POR QUÉ actúan: motivaciones documentadas
 - PARA QUIÉN actúan: beneficiarios
 - DESDE QUÉ POSICIÓN: roles especializados
@@ -393,21 +392,6 @@ comunicarse con el mundo espiritual.
 | **Ayni** | Reciprocidad andina, intercambio equilibrado |
 | **Intermediario** | Mediador entre humanos y deidades |
 
----
-
-## 11. DIFERENCIAS CON VERSIÓN 1.0
-
-| Aspecto | V1.0 | V2.0 (Mejorada) |
-|---------|------|-----------------|
-| Nombre propiedad | `:tieneMotivo` | `:tienePropósito` (más claro) |
-| Propiedad rol | `:actuaDesdeRol` | `:desempeniaRol` (reusar existente) |
-| Subclases | Solo 3 tipos | 4 tipos (+ PropositoPractico) |
-| Inversas | No | Sí (`:esPropositoDe`) |
-| Fuentes | No | Sí (`:documentadoEn`) |
-| Intensidad | No | Sí (primario/secundario) |
-| Ejemplos | 8 | 10 (más variedad) |
-| Queries | 3 | 4 (+ fuentes) |
-| Integración GraphRAG | No | Sí (mapeos específicos) |
 
 ---
 
