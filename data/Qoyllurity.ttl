@@ -737,6 +737,10 @@ xsd:date rdf:type rdfs:Datatype .
                       rdfs:label "Festividad del Señor de Qoyllur Rit'i"@es .
 
 
+###  http://example.org/festividades#Foto1
+:Foto1 rdf:type owl:NamedIndividual .
+
+
 ###  http://example.org/festividades#GrutaTayankani
 :GrutaTayankani rdf:type owl:NamedIndividual ,
                          :Lugar ;
