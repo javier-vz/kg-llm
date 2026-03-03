@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qoyllur Rit'i - Grafo de Conocimiento Interactivo</title>
+    <title>Qoyllur Rit'i - Grafo de Conocimiento</title>
     
     <!-- vis-network -->
     <script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
     
     <!-- rdflib para parsear TTL -->
     <script src="https://cdn.jsdelivr.net/npm/rdflib@2.2.33/dist/rdflib.min.js"></script>
+    
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <style>
         * {
@@ -20,146 +23,324 @@
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1f2e 0%, #2c5f8d 100%);
-            color: white;
+            background: #f0f2f5;
+            color: #1e293b;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
             overflow: hidden;
         }
         
+        /* Header compacto */
         #header {
-            background: rgba(26, 31, 46, 0.95);
-            padding: 1.5rem 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            background: white;
+            padding: 0.8rem 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            z-index: 10;
+            flex-shrink: 0;
         }
         
         h1 {
-            font-size: 1.8rem;
-            color: #d4af37;
+            font-size: 1.4rem;
+            color: #0f3b5e;
             margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        h1 i {
+            color: #d4a017;
         }
         
         .subtitle {
-            font-size: 0.9rem;
-            color: #a0aec0;
-            margin-top: 0.25rem;
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 2px;
         }
         
         #controls {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             align-items: center;
+            flex-wrap: wrap;
         }
         
-        select, button {
-            padding: 0.5rem 1rem;
+        /* Estilos para filtros y búsqueda */
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+            background: #f8fafc;
+            padding: 0.3rem;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .filter-group i {
+            color: #94a3b8;
+            margin-left: 0.5rem;
+        }
+        
+        select, input, button {
+            padding: 0.4rem 0.8rem;
             border-radius: 6px;
-            border: 2px solid #2c5f8d;
+            border: 1px solid #e2e8f0;
             background: white;
-            color: #1a1f2e;
+            color: #1e293b;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.15s;
+        }
+        
+        input {
+            width: 200px;
+            cursor: text;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #0f3b5e;
+            box-shadow: 0 0 0 3px rgba(15, 59, 94, 0.1);
         }
         
         button {
-            background: linear-gradient(135deg, #d4af37 0%, #b8941f 100%);
+            background: #0f3b5e;
             border: none;
-            font-weight: 600;
+            color: white;
+            font-weight: 500;
         }
         
         button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
+            background: #1a4b72;
         }
         
-        #network {
-            width: 100%;
-            height: calc(100vh - 100px);
+        button i {
+            margin-right: 4px;
+        }
+        
+        /* Layout principal: panel lateral + grafo */
+        .main-container {
+            display: flex;
+            flex: 1;
+            overflow: hidden;
+        }
+        
+        /* Panel lateral fijo */
+        #sidebar {
+            width: 320px;
+            background: white;
+            border-right: 1px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            transition: width 0.2s;
+        }
+        
+        #sidebar.collapsed {
+            width: 40px;
+        }
+        
+        .sidebar-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f8fafc;
+        }
+        
+        .sidebar-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #0f3b5e;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .toggle-sidebar {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+        }
+        
+        .toggle-sidebar:hover {
+            background: #e2e8f0;
+        }
+        
+        /* Contenido del panel */
+        #info-content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+        
+        /* Tarjeta de entidad */
+        .entity-card {
             background: white;
         }
         
-        #info-panel {
-            position: absolute;
-            top: 120px;
-            right: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 12px;
-            padding: 1.5rem;
-            max-width: 350px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-            color: #2d3748;
-            display: none;
+        .entity-title {
+            font-size: 1.3rem;
+            color: #0f3b5e;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
         
-        #info-panel h3 {
-            color: #2c5f8d;
-            margin-bottom: 0.75rem;
-            font-size: 1.2rem;
-        }
-        
-        #info-panel .type {
-            display: inline-block;
-            background: #e2e8f0;
-            padding: 0.25rem 0.75rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            margin: 0.25rem 0.25rem 0.75rem 0;
-            color: #4a5568;
-        }
-        
-        #info-panel .description {
-            line-height: 1.6;
-            color: #4a5568;
+        .entity-types {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
             margin-bottom: 1rem;
         }
         
-        #info-panel .relations {
-            font-size: 0.85rem;
+        .type-badge {
+            background: #e9f2f9;
+            color: #0f3b5e;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            border: 1px solid #bdd3e8;
         }
         
-        #info-panel .relation-item {
-            padding: 0.5rem;
-            background: #f7fafc;
-            border-radius: 4px;
-            margin-bottom: 0.5rem;
-            border-left: 3px solid #d4af37;
+        .importance-badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
         
-        #stats {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            background: rgba(26, 31, 46, 0.9);
-            padding: 1rem 1.5rem;
+        .importance-central {
+            background: #dcfce7;
+            color: #166534;
+            border: 1px solid #86efac;
+        }
+        
+        .importance-secundaria {
+            background: #fef9c3;
+            color: #854d0e;
+            border: 1px solid #fde047;
+        }
+        
+        .importance-menor {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+        
+        .entity-description {
+            background: #f8fafc;
+            padding: 1rem;
             border-radius: 8px;
-            color: white;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: #334155;
+            margin-bottom: 1.5rem;
+            border-left: 3px solid #d4a017;
+        }
+        
+        .relations-section {
+            margin-top: 1rem;
+        }
+        
+        .relations-section h4 {
+            font-size: 0.9rem;
+            color: #64748b;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .relation-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .relation-item {
+            padding: 0.6rem;
+            background: #f8fafc;
+            border-radius: 6px;
             font-size: 0.85rem;
+            border-left: 3px solid #d4a017;
+        }
+        
+        .relation-item strong {
+            color: #0f3b5e;
+            display: block;
+            margin-bottom: 2px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+        
+        .no-selection {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 200px;
+            color: #94a3b8;
+            text-align: center;
+            gap: 1rem;
+        }
+        
+        .no-selection i {
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+        
+        /* Grafo */
+        #network {
+            flex: 1;
+            background: white;
+        }
+        
+        /* Stats */
+        #stats {
+            position: fixed;
+            bottom: 20px;
+            left: 340px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            padding: 0.8rem 1.2rem;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            color: #1e293b;
+            font-size: 0.85rem;
+            display: flex;
+            gap: 1.5rem;
+            border: 1px solid #e2e8f0;
+            z-index: 5;
         }
         
         #stats .stat {
-            margin: 0.25rem 0;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        #stats .stat i {
+            color: #d4a017;
         }
         
         #stats .stat-value {
-            color: #d4af37;
-            font-weight: 600;
-        }
-        
-        .close-btn {
-            float: right;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            color: #a0aec0;
-            cursor: pointer;
-            padding: 0;
-            margin: -0.5rem 0 0 0;
-        }
-        
-        .close-btn:hover {
-            color: #2c5f8d;
+            font-weight: 700;
+            color: #0f3b5e;
         }
         
         #loading {
@@ -170,56 +351,124 @@
             background: white;
             padding: 2rem 3rem;
             border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-            color: #2c5f8d;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            color: #0f3b5e;
             font-size: 1.2rem;
-            z-index: 1000;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        #loading i {
+            color: #d4a017;
+        }
+        
+        /* Cuando el sidebar está colapsado */
+        #sidebar.collapsed + #network {
+            margin-left: -280px;
+        }
+        
+        #sidebar.collapsed ~ #stats {
+            left: 60px;
         }
     </style>
 </head>
 <body>
     <div id="header">
         <div>
-            <h1>🏔️ Qoyllur Rit'i - Grafo de Conocimiento</h1>
-            <div class="subtitle">Visualización interactiva de la ontología de la festividad andina</div>
+            <h1>
+                <i class="fas fa-mountain"></i>
+                Qoyllur Rit'i - Grafo de Conocimiento
+            </h1>
+            <div class="subtitle">Exploración interactiva de la ontología de la festividad andina</div>
         </div>
         <div id="controls">
-            <select id="filter-type">
-                <option value="all">Todas las entidades</option>
-                <option value="EventoRitual">Eventos Rituales</option>
-                <option value="Lugar">Lugares</option>
-                <option value="Participante">Participantes</option>
-                <option value="ObjetoRitual">Objetos Rituales</option>
-                <option value="Danza">Danzas</option>
-            </select>
-            <button id="reset-btn">Restablecer Vista</button>
+            <div class="filter-group">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-box" placeholder="Buscar entidad..." autocomplete="off">
+            </div>
+            
+            <div class="filter-group">
+                <i class="fas fa-tag"></i>
+                <select id="filter-type">
+                    <option value="all">Todas las entidades</option>
+                    <option value="EventoRitual">Eventos Rituales</option>
+                    <option value="Lugar">Lugares</option>
+                    <option value="Participante">Participantes</option>
+                    <option value="ObjetoRitual">Objetos Rituales</option>
+                    <option value="Danza">Danzas</option>
+                    <option value="Ukumari">Ukumaris</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <i class="fas fa-star"></i>
+                <select id="filter-importance">
+                    <option value="all">Toda importancia</option>
+                    <option value="central">Central</option>
+                    <option value="secundaria">Secundaria</option>
+                    <option value="menor">Menor</option>
+                </select>
+            </div>
+            
+            <button id="reset-btn">
+                <i class="fas fa-eye"></i>
+                Restablecer Vista
+            </button>
         </div>
     </div>
     
-    <div id="network"></div>
-    
-    <div id="info-panel">
-        <button class="close-btn" onclick="closeInfoPanel()">×</button>
-        <h3 id="info-title"></h3>
-        <div id="info-types"></div>
-        <div id="info-description" class="description"></div>
-        <div id="info-relations" class="relations"></div>
+    <div class="main-container">
+        <!-- Sidebar lateral -->
+        <div id="sidebar">
+            <div class="sidebar-header">
+                <h3>
+                    <i class="fas fa-info-circle"></i>
+                    Información
+                </h3>
+                <button class="toggle-sidebar" onclick="toggleSidebar()">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+            </div>
+            <div id="info-content">
+                <div class="no-selection">
+                    <i class="fas fa-hand-pointer"></i>
+                    <p>Haz clic en cualquier nodo<br>para ver su información</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Área del grafo -->
+        <div id="network"></div>
     </div>
     
     <div id="stats">
-        <div class="stat">Nodos: <span class="stat-value" id="node-count">0</span></div>
-        <div class="stat">Relaciones: <span class="stat-value" id="edge-count">0</span></div>
-        <div class="stat">Clases: <span class="stat-value" id="class-count">0</span></div>
+        <div class="stat">
+            <i class="fas fa-circle-nodes"></i>
+            Nodos: <span class="stat-value" id="node-count">0</span>
+        </div>
+        <div class="stat">
+            <i class="fas fa-link"></i>
+            Relaciones: <span class="stat-value" id="edge-count">0</span>
+        </div>
+        <div class="stat">
+            <i class="fas fa-tags"></i>
+            Clases: <span class="stat-value" id="class-count">0</span>
+        </div>
     </div>
     
-    <div id="loading">Cargando grafo de conocimiento...</div>
+    <div id="loading">
+        <i class="fas fa-spinner fa-spin"></i>
+        Cargando grafo de conocimiento...
+    </div>
     
     <script>
         // ====================================================================
         // CONFIGURACIÓN
         // ====================================================================
         
-        const TTL_URL = 'qoyllurity.ttl';  // Debe estar en el mismo directorio
+        const TTL_URL = 'qoyllurity.ttl';
         
         const COLORES_TIPOS = {
             'EventoRitual': '#2c5f8d',
@@ -237,16 +486,17 @@
         };
         
         const ICONOS_TIPOS = {
-            'EventoRitual': '📅',
-            'Lugar': '📍',
-            'LugarSagrado': '✨',
-            'Apu': '⛰️',
-            'Ukumari': '🐻',
-            'Danzante': '💃',
-            'ObjetoRitual': '🎭',
-            'Vestimenta': '👔',
-            'Danza': '🎶',
-            'Nacion': '🏛️'
+            'EventoRitual': 'fa-calendar-alt',
+            'Lugar': 'fa-map-marker-alt',
+            'LugarSagrado': 'fa-place-of-worship',
+            'Apu': 'fa-mountain',
+            'Ukumari': 'fa-paw',
+            'Danzante': 'fa-user-tie',
+            'ObjetoRitual': 'fa-mask',
+            'Vestimenta': 'fa-tshirt',
+            'Danza': 'fa-music',
+            'Nacion': 'fa-flag',
+            'default': 'fa-tag'
         };
         
         // ====================================================================
@@ -262,11 +512,36 @@
         let entidades = new Map();
         
         // ====================================================================
-        // PARSEAR TTL
+        // FUNCIONES AUXILIARES
+        // ====================================================================
+        
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('collapsed');
+            const icon = document.querySelector('.toggle-sidebar i');
+            if (sidebar.classList.contains('collapsed')) {
+                icon.className = 'fas fa-chevron-right';
+            } else {
+                icon.className = 'fas fa-chevron-left';
+            }
+            setTimeout(() => network.redraw(), 200);
+        }
+        
+        function getImportancia(entidad) {
+            if (entidad.tieneImportancia) {
+                return entidad.tieneImportancia;
+            }
+            return null;
+        }
+        
+        // ====================================================================
+        // CARGAR TTL
         // ====================================================================
         
         async function cargarTTL() {
             try {
+                document.getElementById('loading').style.display = 'flex';
+                
                 const response = await fetch(TTL_URL);
                 const ttlText = await response.text();
                 
@@ -280,7 +555,10 @@
                 
             } catch (error) {
                 console.error('Error cargando TTL:', error);
-                document.getElementById('loading').innerHTML = '❌ Error cargando el archivo TTL';
+                document.getElementById('loading').innerHTML = `
+                    <i class="fas fa-exclamation-triangle" style="color:#e53e3e"></i>
+                    Error cargando el archivo TTL
+                `;
             }
         }
         
@@ -293,7 +571,6 @@
             const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
             const FEST = $rdf.Namespace('http://example.org/festividades#');
             
-            // Extraer todas las entidades (sujetos)
             const sujetos = new Set();
             store.statements.forEach(st => {
                 const sujetoURI = st.subject.value;
@@ -302,27 +579,26 @@
                 }
             });
             
-            // Procesar cada entidad
             sujetos.forEach(sujetoURI => {
                 const id = sujetoURI.split('#')[1];
                 if (!id || id.length < 2) return;
                 
                 const subject = $rdf.sym(sujetoURI);
                 
-                // Etiqueta
                 const labels = store.each(subject, RDFS('label'), null);
                 const label = labels.length > 0 ? labels[0].value : id;
                 
-                // Comentario
                 const comments = store.each(subject, RDFS('comment'), null);
                 const comment = comments.length > 0 ? comments[0].value : '';
                 
-                // Tipos
                 const tipos = store.each(subject, RDF('type'), null)
                     .map(t => t.value.split('#')[1])
                     .filter(t => t && t !== 'NamedIndividual');
                 
-                // Relaciones
+                // Buscar importancia
+                const importanciaStatements = store.each(subject, FEST('tieneImportancia'), null);
+                const tieneImportancia = importanciaStatements.length > 0 ? importanciaStatements[0].value : null;
+                
                 const relaciones = [];
                 store.statements.forEach(st => {
                     if (st.subject.value === sujetoURI && st.predicate.value.includes('festividades#')) {
@@ -342,6 +618,7 @@
                     label,
                     comment,
                     tipos,
+                    tieneImportancia,
                     relaciones
                 });
             });
@@ -357,23 +634,21 @@
             allNodes = [];
             allEdges = [];
             
-            // Crear nodos
             entidades.forEach((ent, id) => {
                 const tipoPrincipal = ent.tipos[0] || 'default';
                 const color = COLORES_TIPOS[tipoPrincipal] || COLORES_TIPOS['default'];
-                const icono = ICONOS_TIPOS[tipoPrincipal] || '';
                 
                 allNodes.push({
                     id: id,
-                    label: icono ? `${icono} ${ent.label}` : ent.label,
+                    label: ent.label,
                     title: ent.comment || ent.label,
                     color: color,
                     tipos: ent.tipos,
+                    importancia: ent.tieneImportancia,
                     data: ent
                 });
             });
             
-            // Crear aristas
             entidades.forEach((ent, id) => {
                 ent.relaciones.forEach(rel => {
                     if (entidades.has(rel.objeto)) {
@@ -382,17 +657,16 @@
                             to: rel.objeto,
                             label: rel.predicado,
                             arrows: 'to',
-                            font: { size: 10, color: '#666' }
+                            font: { size: 10, color: '#64748b' },
+                            color: { color: '#cbd5e1' }
                         });
                     }
                 });
             });
             
-            // Crear datasets
             nodesDataset = new vis.DataSet(allNodes);
             edgesDataset = new vis.DataSet(allEdges);
             
-            // Actualizar stats
             document.getElementById('node-count').textContent = allNodes.length;
             document.getElementById('edge-count').textContent = allEdges.length;
             
@@ -404,7 +678,7 @@
         }
         
         // ====================================================================
-        // CREAR RED VIS.JS
+        // CREAR RED
         // ====================================================================
         
         function crearRed() {
@@ -417,34 +691,31 @@
             const options = {
                 nodes: {
                     shape: 'dot',
-                    size: 15,
+                    size: 20,
                     font: {
                         size: 12,
-                        color: '#2d3748'
+                        color: '#1e293b',
+                        face: 'Segoe UI'
                     },
                     borderWidth: 2,
-                    borderWidthSelected: 4
+                    borderWidthSelected: 3,
+                    shadow: true
                 },
                 edges: {
-                    width: 2,
-                    color: { color: '#cbd5e0', highlight: '#2c5f8d' },
-                    smooth: {
-                        type: 'continuous'
-                    }
+                    width: 1.5,
+                    color: { color: '#cbd5e1', highlight: '#0f3b5e' },
+                    smooth: { type: 'continuous' },
+                    font: { background: 'white' }
                 },
                 physics: {
                     forceAtlas2Based: {
-                        gravitationalConstant: -50,
+                        gravitationalConstant: -30,
                         centralGravity: 0.01,
-                        springLength: 100,
+                        springLength: 120,
                         springConstant: 0.08
                     },
-                    maxVelocity: 50,
                     solver: 'forceAtlas2Based',
-                    timestep: 0.35,
-                    stabilization: {
-                        iterations: 150
-                    }
+                    stabilization: { iterations: 100 }
                 },
                 interaction: {
                     hover: true,
@@ -456,83 +727,163 @@
             
             network = new vis.Network(container, data, options);
             
-            // Event listeners
             network.on('click', function(params) {
                 if (params.nodes.length > 0) {
                     mostrarInfoNodo(params.nodes[0]);
                 } else {
-                    closeInfoPanel();
+                    mostrarInfoNodo(null);
                 }
+            });
+            
+            network.on('hoverNode', function(params) {
+                document.getElementById('network').style.cursor = 'pointer';
+            });
+            
+            network.on('blurNode', function(params) {
+                document.getElementById('network').style.cursor = 'default';
             });
         }
         
         // ====================================================================
-        // MOSTRAR INFO DE NODO
+        // MOSTRAR INFO EN SIDEBAR
         // ====================================================================
         
         function mostrarInfoNodo(nodeId) {
-            const ent = entidades.get(nodeId);
-            if (!ent) return;
+            const content = document.getElementById('info-content');
             
-            document.getElementById('info-title').textContent = ent.label;
+            if (!nodeId || !entidades.has(nodeId)) {
+                content.innerHTML = `
+                    <div class="no-selection">
+                        <i class="fas fa-hand-pointer"></i>
+                        <p>Haz clic en cualquier nodo<br>para ver su información</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            const ent = entidades.get(nodeId);
+            
+            // Badge de importancia
+            let importanceHTML = '';
+            if (ent.tieneImportancia) {
+                let importanceClass = '';
+                if (ent.tieneImportancia.includes('central')) importanceClass = 'importance-central';
+                else if (ent.tieneImportancia.includes('secundaria')) importanceClass = 'importance-secundaria';
+                else if (ent.tieneImportancia.includes('menor')) importanceClass = 'importance-menor';
+                
+                importanceHTML = `<div class="importance-badge ${importanceClass}">${ent.tieneImportancia}</div>`;
+            }
             
             // Tipos
             const tiposHTML = ent.tipos.map(t => 
-                `<span class="type">${t}</span>`
+                `<span class="type-badge"><i class="fas ${ICONOS_TIPOS[t] || 'fa-tag'}"></i> ${t}</span>`
             ).join('');
-            document.getElementById('info-types').innerHTML = tiposHTML;
-            
-            // Descripción
-            document.getElementById('info-description').textContent = 
-                ent.comment || 'Sin descripción disponible';
             
             // Relaciones
+            let relacionesHTML = '';
             if (ent.relaciones.length > 0) {
-                const relsHTML = ent.relaciones.slice(0, 10).map(rel => {
-                    const objEnt = entidades.get(rel.objeto);
-                    const objLabel = objEnt ? objEnt.label : rel.objeto;
-                    return `<div class="relation-item">
-                        <strong>${rel.predicado}:</strong> ${objLabel}
-                    </div>`;
-                }).join('');
-                document.getElementById('info-relations').innerHTML = 
-                    '<strong>Relaciones:</strong><br>' + relsHTML;
-            } else {
-                document.getElementById('info-relations').innerHTML = '';
+                relacionesHTML = `
+                    <div class="relations-section">
+                        <h4><i class="fas fa-link"></i> Relaciones (${ent.relaciones.length})</h4>
+                        <div class="relation-list">
+                            ${ent.relaciones.slice(0, 15).map(rel => {
+                                const objEnt = entidades.get(rel.objeto);
+                                const objLabel = objEnt ? objEnt.label : rel.objeto;
+                                return `
+                                    <div class="relation-item">
+                                        <strong>${rel.predicado}</strong>
+                                        ${objLabel}
+                                    </div>
+                                `;
+                            }).join('')}
+                            ${ent.relaciones.length > 15 ? `<div style="font-size:0.8rem; color:#64748b; margin-top:0.5rem;">... y ${ent.relaciones.length - 15} más</div>` : ''}
+                        </div>
+                    </div>
+                `;
             }
             
-            document.getElementById('info-panel').style.display = 'block';
+            content.innerHTML = `
+                <div class="entity-card">
+                    <div class="entity-title">
+                        <i class="fas ${ICONOS_TIPOS[ent.tipos[0]] || 'fa-tag'}" style="color: ${COLORES_TIPOS[ent.tipos[0]] || '#718096'}"></i>
+                        ${ent.label}
+                    </div>
+                    <div class="entity-types">
+                        ${tiposHTML}
+                    </div>
+                    ${importanceHTML}
+                    <div class="entity-description">
+                        ${ent.comment || 'Sin descripción disponible'}
+                    </div>
+                    ${relacionesHTML}
+                </div>
+            `;
         }
         
         function closeInfoPanel() {
-            document.getElementById('info-panel').style.display = 'none';
+            mostrarInfoNodo(null);
         }
         
         // ====================================================================
         // FILTROS
         // ====================================================================
         
-        document.getElementById('filter-type').addEventListener('change', function(e) {
-            const tipo = e.target.value;
+        function aplicarFiltros() {
+            const tipoSeleccionado = document.getElementById('filter-type').value;
+            const importanciaSeleccionada = document.getElementById('filter-importance').value;
+            const busqueda = document.getElementById('search-box').value.toLowerCase();
             
-            if (tipo === 'all') {
-                nodesDataset.update(allNodes);
-                edgesDataset.update(allEdges);
-            } else {
-                const filteredNodes = allNodes.filter(n => n.tipos.includes(tipo));
-                const filteredNodeIds = new Set(filteredNodes.map(n => n.id));
-                const filteredEdges = allEdges.filter(e => 
-                    filteredNodeIds.has(e.from) && filteredNodeIds.has(e.to)
-                );
+            let filteredNodes = allNodes.filter(node => {
+                // Filtro por tipo
+                if (tipoSeleccionado !== 'all' && !node.tipos.includes(tipoSeleccionado)) {
+                    return false;
+                }
                 
-                nodesDataset.clear();
-                edgesDataset.clear();
-                nodesDataset.add(filteredNodes);
-                edgesDataset.add(filteredEdges);
-            }
-        });
+                // Filtro por importancia
+                if (importanciaSeleccionada !== 'all') {
+                    const nodeImportancia = node.importancia || '';
+                    if (!nodeImportancia.includes(importanciaSeleccionada)) {
+                        return false;
+                    }
+                }
+                
+                // Filtro por búsqueda
+                if (busqueda) {
+                    const labelMatch = node.label.toLowerCase().includes(busqueda);
+                    const idMatch = node.id.toLowerCase().includes(busqueda);
+                    const tiposMatch = node.tipos.some(t => t.toLowerCase().includes(busqueda));
+                    if (!labelMatch && !idMatch && !tiposMatch) {
+                        return false;
+                    }
+                }
+                
+                return true;
+            });
+            
+            const filteredNodeIds = new Set(filteredNodes.map(n => n.id));
+            const filteredEdges = allEdges.filter(e => 
+                filteredNodeIds.has(e.from) && filteredNodeIds.has(e.to)
+            );
+            
+            nodesDataset.clear();
+            edgesDataset.clear();
+            nodesDataset.add(filteredNodes);
+            edgesDataset.add(filteredEdges);
+            
+            // Actualizar contador visible
+            document.getElementById('node-count').textContent = filteredNodes.length;
+            document.getElementById('edge-count').textContent = filteredEdges.length;
+        }
+        
+        document.getElementById('filter-type').addEventListener('change', aplicarFiltros);
+        document.getElementById('filter-importance').addEventListener('change', aplicarFiltros);
+        document.getElementById('search-box').addEventListener('input', aplicarFiltros);
         
         document.getElementById('reset-btn').addEventListener('click', function() {
+            document.getElementById('filter-type').value = 'all';
+            document.getElementById('filter-importance').value = 'all';
+            document.getElementById('search-box').value = '';
+            aplicarFiltros();
             network.fit();
             closeInfoPanel();
         });
