@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qoyllur Rit'i - Grafo de Conocimiento</title>
+    <title>Qoyllur Rit'i - Grafo y Mapa Interactivo</title>
     
     <!-- vis-network -->
     <script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
@@ -13,6 +13,10 @@
     
     <!-- Font Awesome para iconos -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Leaflet para mapas -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <style>
         * {
@@ -69,7 +73,40 @@
             flex-wrap: wrap;
         }
         
-        /* Estilos para filtros y búsqueda */
+        /* Pestañas de vista */
+        .view-tabs {
+            display: flex;
+            background: #f1f5f9;
+            border-radius: 8px;
+            padding: 2px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .view-tab {
+            padding: 0.5rem 1rem;
+            border: none;
+            background: transparent;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #64748b;
+            transition: all 0.2s;
+        }
+        
+        .view-tab.active {
+            background: white;
+            color: #0f3b5e;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            font-weight: 500;
+        }
+        
+        .view-tab i {
+            font-size: 1rem;
+        }
+        
         .filter-group {
             display: flex;
             gap: 0.5rem;
@@ -122,14 +159,14 @@
             margin-right: 4px;
         }
         
-        /* Layout principal: panel lateral + grafo */
+        /* Layout principal */
         .main-container {
             display: flex;
             flex: 1;
             overflow: hidden;
         }
         
-        /* Panel lateral fijo */
+        /* Panel lateral */
         #sidebar {
             width: 320px;
             background: white;
@@ -138,6 +175,7 @@
             flex-direction: column;
             overflow: hidden;
             transition: width 0.2s;
+            z-index: 20;
         }
         
         #sidebar.collapsed {
@@ -175,14 +213,44 @@
             background: #e2e8f0;
         }
         
-        /* Contenido del panel */
         #info-content {
             flex: 1;
             overflow-y: auto;
             padding: 1rem;
         }
         
-        /* Tarjeta de entidad */
+        /* Contenedor de vistas (grafo/mapa) */
+        #view-container {
+            flex: 1;
+            position: relative;
+            background: white;
+        }
+        
+        .view {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        .view.active {
+            display: block;
+        }
+        
+        #network {
+            width: 100%;
+            height: 100%;
+        }
+        
+        #map {
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        /* Tarjetas de información */
         .entity-card {
             background: white;
         }
@@ -252,6 +320,21 @@
             border-left: 3px solid #d4a017;
         }
         
+        .coordinates {
+            background: #f1f5f9;
+            padding: 0.5rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .coordinates i {
+            color: #e53e3e;
+        }
+        
         .relations-section {
             margin-top: 1rem;
         }
@@ -277,6 +360,13 @@
             border-radius: 6px;
             font-size: 0.85rem;
             border-left: 3px solid #d4a017;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .relation-item:hover {
+            background: #e9f2f9;
+            transform: translateX(2px);
         }
         
         .relation-item strong {
@@ -304,12 +394,6 @@
             opacity: 0.3;
         }
         
-        /* Grafo */
-        #network {
-            flex: 1;
-            background: white;
-        }
-        
         /* Stats */
         #stats {
             position: fixed;
@@ -325,7 +409,7 @@
             display: flex;
             gap: 1.5rem;
             border: 1px solid #e2e8f0;
-            z-index: 5;
+            z-index: 30;
         }
         
         #stats .stat {
@@ -364,12 +448,20 @@
             color: #d4a017;
         }
         
-        /* Cuando el sidebar está colapsado */
-        #sidebar.collapsed + #network {
-            margin-left: -280px;
+        /* Leaflet popup personalizado */
+        .leaflet-popup-content {
+            font-family: 'Segoe UI', sans-serif;
+            min-width: 200px;
         }
         
-        #sidebar.collapsed ~ #stats {
+        .leaflet-popup-content strong {
+            color: #0f3b5e;
+            display: block;
+            margin-bottom: 4px;
+        }
+        
+        /* Cuando el sidebar está colapsado */
+        #sidebar.collapsed ~ #view-container #stats {
             left: 60px;
         }
     </style>
@@ -379,11 +471,23 @@
         <div>
             <h1>
                 <i class="fas fa-mountain"></i>
-                Qoyllur Rit'i - Grafo de Conocimiento
+                Qoyllur Rit'i - Grafo y Mapa
             </h1>
-            <div class="subtitle">Exploración interactiva de la ontología de la festividad andina</div>
+            <div class="subtitle">Exploración interactiva de la festividad andina</div>
         </div>
         <div id="controls">
+            <!-- Pestañas de vista -->
+            <div class="view-tabs">
+                <button class="view-tab active" onclick="cambiarVista('grafo')">
+                    <i class="fas fa-project-diagram"></i>
+                    Grafo
+                </button>
+                <button class="view-tab" onclick="cambiarVista('mapa')">
+                    <i class="fas fa-map-marked-alt"></i>
+                    Mapa
+                </button>
+            </div>
+            
             <div class="filter-group">
                 <i class="fas fa-search"></i>
                 <input type="text" id="search-box" placeholder="Buscar entidad..." autocomplete="off">
@@ -414,7 +518,7 @@
             
             <button id="reset-btn">
                 <i class="fas fa-eye"></i>
-                Restablecer Vista
+                Restablecer
             </button>
         </div>
     </div>
@@ -434,13 +538,20 @@
             <div id="info-content">
                 <div class="no-selection">
                     <i class="fas fa-hand-pointer"></i>
-                    <p>Haz clic en cualquier nodo<br>para ver su información</p>
+                    <p>Haz clic en cualquier nodo o marcador<br>para ver su información</p>
                 </div>
             </div>
         </div>
         
-        <!-- Área del grafo -->
-        <div id="network"></div>
+        <!-- Contenedor de vistas -->
+        <div id="view-container">
+            <div id="graph-view" class="view active">
+                <div id="network"></div>
+            </div>
+            <div id="map-view" class="view">
+                <div id="map"></div>
+            </div>
+        </div>
     </div>
     
     <div id="stats">
@@ -453,8 +564,8 @@
             Relaciones: <span class="stat-value" id="edge-count">0</span>
         </div>
         <div class="stat">
-            <i class="fas fa-tags"></i>
-            Clases: <span class="stat-value" id="class-count">0</span>
+            <i class="fas fa-map-pin"></i>
+            Lugares: <span class="stat-value" id="place-count">0</span>
         </div>
     </div>
     
@@ -504,12 +615,15 @@
         // ====================================================================
         
         let network;
+        let map;
+        let markers = [];
         let allNodes = [];
         let allEdges = [];
         let nodesDataset;
         let edgesDataset;
         let store = $rdf.graph();
         let entidades = new Map();
+        let lugaresConCoordenadas = [];
         
         // ====================================================================
         // FUNCIONES AUXILIARES
@@ -524,14 +638,30 @@
             } else {
                 icon.className = 'fas fa-chevron-left';
             }
-            setTimeout(() => network.redraw(), 200);
+            setTimeout(() => {
+                if (network) network.redraw();
+                if (map) map.invalidateSize();
+            }, 200);
+        }
+        
+        function cambiarVista(vista) {
+            // Actualizar pestañas
+            document.querySelectorAll('.view-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.closest('.view-tab').classList.add('active');
+            
+            // Cambiar vista activa
+            document.getElementById('graph-view').classList.remove('active');
+            document.getElementById('map-view').classList.remove('active');
+            document.getElementById(vista + '-view').classList.add('active');
+            
+            // Ajustar mapa si es necesario
+            if (vista === 'mapa' && map) {
+                setTimeout(() => map.invalidateSize(), 100);
+            }
         }
         
         function getImportancia(entidad) {
-            if (entidad.tieneImportancia) {
-                return entidad.tieneImportancia;
-            }
-            return null;
+            return entidad.tieneImportancia || null;
         }
         
         // ====================================================================
@@ -550,6 +680,7 @@
                 
                 procesarGrafo();
                 inicializarVisualizacion();
+                inicializarMapa();
                 
                 document.getElementById('loading').style.display = 'none';
                 
@@ -570,6 +701,7 @@
             const RDFS = $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
             const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
             const FEST = $rdf.Namespace('http://example.org/festividades#');
+            const GEO = $rdf.Namespace('http://www.w3.org/2003/01/geo/wgs84_pos#');
             
             const sujetos = new Set();
             store.statements.forEach(st => {
@@ -595,9 +727,17 @@
                     .map(t => t.value.split('#')[1])
                     .filter(t => t && t !== 'NamedIndividual');
                 
-                // Buscar importancia
                 const importanciaStatements = store.each(subject, FEST('tieneImportancia'), null);
                 const tieneImportancia = importanciaStatements.length > 0 ? importanciaStatements[0].value : null;
+                
+                // Coordenadas
+                const latStatements = store.each(subject, GEO('lat'), null);
+                const longStatements = store.each(subject, GEO('long'), null);
+                let lat = null, lon = null;
+                if (latStatements.length > 0 && longStatements.length > 0) {
+                    lat = parseFloat(latStatements[0].value);
+                    lon = parseFloat(longStatements[0].value);
+                }
                 
                 const relaciones = [];
                 store.statements.forEach(st => {
@@ -619,11 +759,66 @@
                     comment,
                     tipos,
                     tieneImportancia,
+                    lat,
+                    lon,
                     relaciones
                 });
+                
+                if (lat && lon) {
+                    lugaresConCoordenadas.push({ id, label, lat, lon, tipos, comment });
+                }
             });
             
             console.log(`Procesadas ${entidades.size} entidades`);
+            console.log(`${lugaresConCoordenadas.length} lugares con coordenadas`);
+            
+            document.getElementById('place-count').textContent = lugaresConCoordenadas.length;
+        }
+        
+        // ====================================================================
+        // INICIALIZAR MAPA
+        // ====================================================================
+        
+        function inicializarMapa() {
+            // Centrar en Cusco aproximadamente
+            map = L.map('map').setView([-13.5, -71.5], 9);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '© OpenStreetMap contributors'
+            }).addTo(map);
+            
+            // Añadir marcadores
+            lugaresConCoordenadas.forEach(lugar => {
+                const icono = L.divIcon({
+                    html: `<i class="fas ${ICONOS_TIPOS[lugar.tipos[0]] || 'fa-map-marker-alt'}" style="color: ${COLORES_TIPOS[lugar.tipos[0]] || '#718096'}; font-size: 20px; text-shadow: 0 0 5px white;"></i>`,
+                    className: 'marcador-personalizado',
+                    iconSize: [25, 25],
+                    iconAnchor: [12, 12],
+                    popupAnchor: [0, -12]
+                });
+                
+                const marker = L.marker([lugar.lat, lugar.lon], { icon: icono }).addTo(map);
+                
+                marker.bindPopup(`
+                    <strong>${lugar.label}</strong><br>
+                    ${lugar.tipos.join(', ')}<br>
+                    <small><i>Haz clic para más información</i></small>
+                `);
+                
+                marker.on('click', () => {
+                    mostrarInfoNodo(lugar.id);
+                    
+                    // Resaltar en el grafo si está visible
+                    if (network && document.getElementById('graph-view').classList.contains('active')) {
+                        network.selectNodes([lugar.id]);
+                    }
+                });
+                
+                markers.push({ id: lugar.id, marker });
+            });
+            
+            // Ajustar después de mostrar
+            setTimeout(() => map.invalidateSize(), 100);
         }
         
         // ====================================================================
@@ -735,11 +930,11 @@
                 }
             });
             
-            network.on('hoverNode', function(params) {
+            network.on('hoverNode', function() {
                 document.getElementById('network').style.cursor = 'pointer';
             });
             
-            network.on('blurNode', function(params) {
+            network.on('blurNode', function() {
                 document.getElementById('network').style.cursor = 'default';
             });
         }
@@ -755,7 +950,7 @@
                 content.innerHTML = `
                     <div class="no-selection">
                         <i class="fas fa-hand-pointer"></i>
-                        <p>Haz clic en cualquier nodo<br>para ver su información</p>
+                        <p>Haz clic en cualquier nodo o marcador<br>para ver su información</p>
                     </div>
                 `;
                 return;
@@ -763,7 +958,6 @@
             
             const ent = entidades.get(nodeId);
             
-            // Badge de importancia
             let importanceHTML = '';
             if (ent.tieneImportancia) {
                 let importanceClass = '';
@@ -774,12 +968,21 @@
                 importanceHTML = `<div class="importance-badge ${importanceClass}">${ent.tieneImportancia}</div>`;
             }
             
-            // Tipos
             const tiposHTML = ent.tipos.map(t => 
                 `<span class="type-badge"><i class="fas ${ICONOS_TIPOS[t] || 'fa-tag'}"></i> ${t}</span>`
             ).join('');
             
-            // Relaciones
+            // Coordenadas
+            let coordsHTML = '';
+            if (ent.lat && ent.lon) {
+                coordsHTML = `
+                    <div class="coordinates">
+                        <i class="fas fa-map-pin"></i>
+                        ${ent.lat.toFixed(4)}, ${ent.lon.toFixed(4)}
+                    </div>
+                `;
+            }
+            
             let relacionesHTML = '';
             if (ent.relaciones.length > 0) {
                 relacionesHTML = `
@@ -790,7 +993,7 @@
                                 const objEnt = entidades.get(rel.objeto);
                                 const objLabel = objEnt ? objEnt.label : rel.objeto;
                                 return `
-                                    <div class="relation-item">
+                                    <div class="relation-item" onclick="mostrarInfoNodo('${rel.objeto}')">
                                         <strong>${rel.predicado}</strong>
                                         ${objLabel}
                                     </div>
@@ -812,16 +1015,13 @@
                         ${tiposHTML}
                     </div>
                     ${importanceHTML}
+                    ${coordsHTML}
                     <div class="entity-description">
                         ${ent.comment || 'Sin descripción disponible'}
                     </div>
                     ${relacionesHTML}
                 </div>
             `;
-        }
-        
-        function closeInfoPanel() {
-            mostrarInfoNodo(null);
         }
         
         // ====================================================================
@@ -834,29 +1034,17 @@
             const busqueda = document.getElementById('search-box').value.toLowerCase();
             
             let filteredNodes = allNodes.filter(node => {
-                // Filtro por tipo
-                if (tipoSeleccionado !== 'all' && !node.tipos.includes(tipoSeleccionado)) {
-                    return false;
-                }
-                
-                // Filtro por importancia
+                if (tipoSeleccionado !== 'all' && !node.tipos.includes(tipoSeleccionado)) return false;
                 if (importanciaSeleccionada !== 'all') {
                     const nodeImportancia = node.importancia || '';
-                    if (!nodeImportancia.includes(importanciaSeleccionada)) {
-                        return false;
-                    }
+                    if (!nodeImportancia.includes(importanciaSeleccionada)) return false;
                 }
-                
-                // Filtro por búsqueda
                 if (busqueda) {
                     const labelMatch = node.label.toLowerCase().includes(busqueda);
                     const idMatch = node.id.toLowerCase().includes(busqueda);
                     const tiposMatch = node.tipos.some(t => t.toLowerCase().includes(busqueda));
-                    if (!labelMatch && !idMatch && !tiposMatch) {
-                        return false;
-                    }
+                    if (!labelMatch && !idMatch && !tiposMatch) return false;
                 }
-                
                 return true;
             });
             
@@ -870,9 +1058,17 @@
             nodesDataset.add(filteredNodes);
             edgesDataset.add(filteredEdges);
             
-            // Actualizar contador visible
             document.getElementById('node-count').textContent = filteredNodes.length;
             document.getElementById('edge-count').textContent = filteredEdges.length;
+            
+            // Filtrar marcadores en el mapa
+            markers.forEach(m => {
+                if (filteredNodeIds.has(m.id)) {
+                    map.addLayer(m.marker);
+                } else {
+                    map.removeLayer(m.marker);
+                }
+            });
         }
         
         document.getElementById('filter-type').addEventListener('change', aplicarFiltros);
@@ -884,8 +1080,9 @@
             document.getElementById('filter-importance').value = 'all';
             document.getElementById('search-box').value = '';
             aplicarFiltros();
-            network.fit();
-            closeInfoPanel();
+            if (network) network.fit();
+            if (map) map.setView([-13.5, -71.5], 9);
+            mostrarInfoNodo(null);
         });
         
         // ====================================================================
