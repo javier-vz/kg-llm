@@ -29,14 +29,20 @@ geo:long rdf:type owl:AnnotationProperty .
 xsd:date rdf:type rdfs:Datatype .
 
 
+###  http://www.w3.org/2001/XMLSchema#time
+xsd:time rdf:type rdfs:Datatype .
+
+
 #################################################################
 #    Object Properties
 #################################################################
 
 ###  http://example.org/festividades#antesDe
-:antesDe rdf:type owl:ObjectProperty ;
+:antesDe rdf:type owl:ObjectProperty ,
+                  owl:TransitiveProperty ;
          rdfs:domain :EventoRitual ;
          rdfs:range :EventoRitual ;
+         rdfs:comment "Orden temporal. Transitiva: si A es antes de B y B es antes de C, entonces A es antes de C."@es ;
          rdfs:label "antes de"@es .
 
 
@@ -111,6 +117,16 @@ xsd:date rdf:type rdfs:Datatype .
                            "ejecuta danza"@es .
 
 
+###  http://example.org/festividades#esParteDe
+:esParteDe rdf:type owl:ObjectProperty ;
+           owl:inverseOf :tieneParte ;
+           rdf:type owl:TransitiveProperty ;
+           rdfs:domain :ObjetoRitual ;
+           rdfs:range :ObjetoRitual ;
+           rdfs:comment "Indica que un objeto es componente de otro objeto mayor. Transitiva: si A es parte de B y B es parte de C, entonces A es parte de C."@es ;
+           rdfs:label "es parte de"@es .
+
+
 ###  http://example.org/festividades#esParteDeConjunto
 :esParteDeConjunto rdf:type owl:ObjectProperty ;
                    rdfs:domain :RecursoMultimedia ;
@@ -133,8 +149,34 @@ xsd:date rdf:type rdfs:Datatype .
                rdfs:label "es parte del apu"@es .
 
 
+###  http://example.org/festividades#esPeriodicoCon
+:esPeriodicoCon rdf:type owl:ObjectProperty ;
+                rdfs:domain :EventoRitual ;
+                rdfs:range :Periodicidad ;
+                rdfs:label "es periódico con"@es .
+
+
+###  http://example.org/festividades#esPortadoPor
+:esPortadoPor rdf:type owl:ObjectProperty ;
+              owl:inverseOf :portaObjeto ;
+              rdfs:domain :ObjetoRitual ;
+              rdfs:range :Participante ;
+              rdfs:comment "Un objeto es portado por participante(s)."@es ;
+              rdfs:label "es portado por"@es .
+
+
+###  http://example.org/festividades#esUsadoPor
+:esUsadoPor rdf:type owl:ObjectProperty ;
+            owl:inverseOf :usaObjetoRitual ;
+            rdfs:domain :ObjetoRitual ;
+            rdfs:range :Participante ;
+            rdfs:comment "Un objeto ritual es usado por participante(s)."@es ;
+            rdfs:label "es usado por"@es .
+
+
 ###  http://example.org/festividades#estaConformadaPor
 :estaConformadaPor rdf:type owl:ObjectProperty ;
+                   owl:inverseOf :perteneceA ;
                    rdfs:domain :Nacion ;
                    rdfs:range :Lugar ;
                    rdfs:comment "Distritos o comunidades que conforman una nación."@es ;
@@ -142,10 +184,11 @@ xsd:date rdf:type rdfs:Datatype .
 
 
 ###  http://example.org/festividades#estaEn
-:estaEn rdf:type owl:ObjectProperty ;
+:estaEn rdf:type owl:ObjectProperty ,
+                 owl:TransitiveProperty ;
         rdfs:domain :Lugar ;
         rdfs:range :Lugar ;
-        rdfs:comment "Un lugar está contenido geográficamente dentro de otro lugar"@es ;
+        rdfs:comment "Un lugar está contenido geográficamente dentro de otro lugar. Transitiva: si A está en B y B está en C, entonces A está en C."@es ;
         rdfs:label "está ubicado en"@es .
 
 
@@ -157,6 +200,7 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  http://example.org/festividades#participaEn
 :participaEn rdf:type owl:ObjectProperty ;
+             owl:inverseOf :realizadoPor ;
              rdfs:domain :Participante ;
              rdfs:range :EventoRitual ;
              rdfs:comment "Relación general de participación."@es ;
@@ -179,6 +223,14 @@ xsd:date rdf:type rdfs:Datatype .
             rdfs:label "pertenece a"@es .
 
 
+###  http://example.org/festividades#portaObjeto
+:portaObjeto rdf:type owl:ObjectProperty ;
+             rdfs:domain :Participante ;
+             rdfs:range :ObjetoRitual ;
+             rdfs:comment "Objeto portado por participante."@es ;
+             rdfs:label "porta objeto"@es .
+
+
 ###  http://example.org/festividades#realizadoPor
 :realizadoPor rdf:type owl:ObjectProperty ;
               rdfs:domain :EventoRitual ;
@@ -197,8 +249,16 @@ xsd:date rdf:type rdfs:Datatype .
 :sucedeInmediatamenteA rdf:type owl:ObjectProperty ;
                        rdfs:domain :EventoRitual ;
                        rdfs:range :EventoRitual ;
-                       rdfs:comment "Secuencia temporal estricta."@es ;
+                       rdfs:comment "Sucesión temporal directa. NO transitiva porque 'inmediatamente' implica sin intermedios."@es ;
                        rdfs:label "sucede inmediatamente a"@es .
+
+
+###  http://example.org/festividades#tieneParte
+:tieneParte rdf:type owl:ObjectProperty ;
+            rdfs:domain :ObjetoRitual ;
+            rdfs:range :ObjetoRitual ;
+            rdfs:comment "Relaciona un objeto compuesto con sus componentes. Permite modelar objetos rituales que están formados por múltiples partes."@es ;
+            rdfs:label "tiene parte"@es .
 
 
 ###  http://example.org/festividades#usaObjetoRitual
@@ -216,9 +276,23 @@ xsd:date rdf:type rdfs:Datatype .
                rdfs:label "usa vestimenta"@es .
 
 
+###  http://example.org/festividades#utilizaObjeto
+:utilizaObjeto rdf:type owl:ObjectProperty ;
+               rdfs:domain :EventoRitual ;
+               rdfs:range :ObjetoRitual ;
+               rdfs:comment "Relaciona un evento con objetos utilizados."@es ;
+               rdfs:label "utiliza objeto"@es .
+
+
 #################################################################
 #    Data properties
 #################################################################
+
+###  http://example.org/festividades#autor
+:autor rdf:type owl:DatatypeProperty ;
+       rdfs:domain :FuenteBibliografica ;
+       rdfs:range xsd:string .
+
 
 ###  http://example.org/festividades#cantidadAproximada
 :cantidadAproximada rdf:type owl:DatatypeProperty ;
@@ -226,8 +300,17 @@ xsd:date rdf:type rdfs:Datatype .
                     rdfs:range xsd:string .
 
 
+###  http://example.org/festividades#hechoDeRitual
+:hechoDeRitual rdf:type owl:DatatypeProperty ;
+               rdfs:domain :ObjetoRitual ;
+               rdfs:range xsd:string ;
+               rdfs:comment "Material del que está hecho el objeto ritual."@es ;
+               rdfs:label "hecho de"@es .
+
+
 ###  http://example.org/festividades#tieneAltitudMetros
-:tieneAltitudMetros rdf:type owl:DatatypeProperty ;
+:tieneAltitudMetros rdf:type owl:DatatypeProperty ,
+                             owl:FunctionalProperty ;
                     rdfs:domain :Lugar ;
                     rdfs:range xsd:integer ;
                     rdfs:comment "Altitud sobre el nivel del mar en metros."@es ;
@@ -242,10 +325,23 @@ xsd:date rdf:type rdfs:Datatype .
                   rdfs:label "tiene descripción"@es .
 
 
+###  http://example.org/festividades#tieneDuracionHoras
+:tieneDuracionHoras rdf:type owl:DatatypeProperty ,
+                             owl:FunctionalProperty ;
+                    rdfs:domain :EventoRitual ;
+                    rdfs:range xsd:decimal ;
+                    rdfs:comment "Duración en horas. Funcional: un evento tiene UNA SOLA duración."@es ;
+                    rdfs:label "tiene duración en horas"@es .
+
+
 ###  http://example.org/festividades#tieneFecha
-:tieneFecha rdf:type owl:DatatypeProperty ;
+:tieneFecha rdf:type owl:DatatypeProperty ,
+                     owl:FunctionalProperty ;
+            rdfs:domain :EventoRitual ;
             rdfs:range xsd:date ;
-            rdfs:label "tieneFecha" .
+            rdfs:comment "Fecha específica. Formato: YYYY-MM-DD."@es ;
+            rdfs:label "tiene fecha"@es ,
+                       "tieneFecha" .
 
 
 ###  http://example.org/festividades#tieneFechaCaptura
@@ -254,6 +350,23 @@ xsd:date rdf:type rdfs:Datatype .
                    rdfs:range xsd:dateTime ;
                    rdfs:comment "Marca de tiempo EXIF o momento exacto en que se documentó el evento."@es ;
                    rdfs:label "tiene fecha y hora de captura"@es .
+
+
+###  http://example.org/festividades#tieneHoraInicio
+:tieneHoraInicio rdf:type owl:DatatypeProperty ,
+                          owl:FunctionalProperty ;
+                 rdfs:domain :EventoRitual ;
+                 rdfs:range xsd:time ;
+                 rdfs:comment "Hora de inicio. Formato: HH:MM:SS."@es ;
+                 rdfs:label "tiene hora de inicio"@es .
+
+
+###  http://example.org/festividades#tieneImportancia
+:tieneImportancia rdf:type owl:DatatypeProperty ;
+                  rdfs:domain owl:Thing ;
+                  rdfs:range xsd:string ;
+                  rdfs:comment "Nivel de importancia: 'central' (núcleo de la festividad), 'secundario' (importante pero no esencial), 'menor' (complementario)."@es ;
+                  rdfs:label "tiene importancia"@es .
 
 
 ###  http://example.org/festividades#tieneNombreArchivo
@@ -315,8 +428,13 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#Apu
 :Apu rdf:type owl:Class ;
      rdfs:subClassOf :LugarSagrado ;
-     rdfs:comment "Espíritu protector de montaña en la cosmovisión andina, asociado a nevados."@es ;
+     rdfs:comment "Espíritu protector de montaña en la cosmovisión andina, asociado a nevados. Un apu (espíritu de montaña) no es un participante humano, objeto o fuente."@es ;
      rdfs:label "Apu"@es .
+
+
+###  http://example.org/festividades#Articulo
+:Articulo rdf:type owl:Class ;
+          rdfs:subClassOf :FuenteBibliografica .
 
 
 ###  http://example.org/festividades#Colectivo
@@ -342,12 +460,14 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#Danzante
 :Danzante rdf:type owl:Class ;
           rdfs:subClassOf :Individuo ;
+          owl:disjointWith :Peregrino ;
           rdfs:comment "Participante que ejecuta danzas rituales."@es ;
           rdfs:label "Danzante"@es .
 
 
 ###  http://example.org/festividades#EventoRitual
 :EventoRitual rdf:type owl:Class ;
+              owl:disjointWith :FuenteBibliografica ;
               rdfs:label "EventoRitual" .
 
 
@@ -357,11 +477,47 @@ xsd:date rdf:type rdfs:Datatype .
             rdfs:label "Festividad" .
 
 
+###  http://example.org/festividades#FuenteBibliografica
+:FuenteBibliografica rdf:type owl:Class ;
+                     rdfs:subClassOf :RecursoMultimedia ;
+                     owl:disjointWith :Lugar ,
+                                      :ObjetoRitual ,
+                                      :Participante ,
+                                      :PracticaCultural ;
+                     rdfs:comment "Artículo académico o libro relacionado."@es .
+
+
+###  http://example.org/festividades#ImagenReligiosa
+:ImagenReligiosa rdf:type owl:Class ;
+                 rdfs:subClassOf :ObjetoRitual ;
+                 rdfs:comment "Representaciones sagradas de Cristo, santos o deidades veneradas en procesiones."@es ;
+                 rdfs:label "Imagen Religiosa"@es .
+
+
 ###  http://example.org/festividades#Individuo
 :Individuo rdf:type owl:Class ;
            rdfs:subClassOf :Participante ;
            rdfs:comment "Participante individual (persona)."@es ;
            rdfs:label "Individuo"@es .
+
+
+###  http://example.org/festividades#InsigniaRitual
+:InsigniaRitual rdf:type owl:Class ;
+                rdfs:subClassOf :ObjetoRitual ;
+                rdfs:comment "Objetos que marcan identidad colectiva o fe: estandartes, cruces de peregrinación."@es ;
+                rdfs:label "Insignia Ritual"@es .
+
+
+###  http://example.org/festividades#Instrumento
+:Instrumento rdf:type owl:Class ;
+             rdfs:subClassOf :ObjetoRitual ;
+             rdfs:comment "Instrumentos musicales o herramientas ceremoniales."@es ;
+             rdfs:label "Instrumento"@es .
+
+
+###  http://example.org/festividades#Libro
+:Libro rdf:type owl:Class ;
+       rdfs:subClassOf :FuenteBibliografica .
 
 
 ###  http://example.org/festividades#Lugar
@@ -384,13 +540,28 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  http://example.org/festividades#ObjetoRitual
 :ObjetoRitual rdf:type owl:Class ;
+              owl:disjointWith :Participante ,
+                               :PracticaCultural ;
               rdfs:comment "Artefacto material utilizado en ceremonias con significado simbólico."@es ;
               rdfs:label "Objeto Ritual"@es .
 
 
+###  http://example.org/festividades#OfrendaMaterial
+:OfrendaMaterial rdf:type owl:Class ;
+                 rdfs:subClassOf :ObjetoRitual ;
+                 rdfs:comment "Objetos ofrecidos a deidades: coca, chicha, etc."@es ;
+                 rdfs:label "Ofrenda Material"@es .
+
+
+###  http://example.org/festividades#PaginaWeb
+:PaginaWeb rdf:type owl:Class ;
+           rdfs:subClassOf :FuenteBibliografica .
+
+
 ###  http://example.org/festividades#Participante
 :Participante rdf:type owl:Class ;
-              rdfs:comment "Actor individual o colectivo que toma parte en la festividad del Señor de Qoyllu Rit'i."@es ;
+              owl:disjointWith :PracticaCultural ;
+              rdfs:comment "Actor individual o colectivo que toma parte en la festividad del Señor de Qoyllu Rit'i. Un participante no puede ser simultáneamente un objeto ritual, práctica cultural o fuente bibliográfica."@es ;
               rdfs:label "Participante"@es .
 
 
@@ -399,6 +570,12 @@ xsd:date rdf:type rdfs:Datatype .
            rdfs:subClassOf :Individuo ;
            rdfs:comment "Participante que realiza la peregrinación sin un rol ritual específico."@es ;
            rdfs:label "Peregrino"@es .
+
+
+###  http://example.org/festividades#Periodicidad
+:Periodicidad rdf:type owl:Class ;
+              rdfs:comment "Patrón de repetición de un evento."@es ;
+              rdfs:label "Periodicidad"@es .
 
 
 ###  http://example.org/festividades#PracticaCultural
@@ -431,12 +608,18 @@ xsd:date rdf:type rdfs:Datatype .
 #    Individuals
 #################################################################
 
+###  http://example.org/festividades#Anual
+:Anual rdf:type owl:NamedIndividual ,
+                :Periodicidad ;
+       rdfs:label "Anual"@es .
+
+
 ###  http://example.org/festividades#Ausangate
 :Ausangate rdf:type owl:NamedIndividual ,
                     :Apu ;
            :contiene :ColquePunku ;
-           rdfs:comment "Apu Ausangate es el espíritu protector de la montaña más alta de la región Cusco (6384 msnm). En la cosmovisión andina, es uno de los apus más importantes. El nevado Ausangate contiene el glaciar Colque Punku, donde se realizan rituales durante Qoyllur Rit'i."@es ,
-                        "Ausangate"@es ;
+           :tieneImportancia "central"@es ;
+           rdfs:comment "Apu Ausangate es el espíritu protector de la montaña más alta de la región Cusco (6384 msnm). En la cosmovisión andina, es uno de los apus más importantes. El nevado Ausangate contiene el glaciar Colque Punku, donde se realizan rituales durante Qoyllur Rit'i."@es ;
            geo:lat -13.7833 ;
            geo:long -71.2500 .
 
@@ -446,6 +629,8 @@ xsd:date rdf:type rdfs:Datatype .
                                  :EventoRitual ;
                         :ocurreEnLugar :ColquePunku ,
                                        :SantuarioQoylluriti ;
+                        :tieneDuracionHoras 3.0 ;
+                        :tieneImportancia "central"@es ;
                         :tieneOrdenEvento 1 ;
                         rdfs:comment "Descenso desde el glaciar Colque Punku al santuario del Señor de Qoyllu Rit'i."@es ;
                         rdfs:label "Bajada del Colque Punku (2025)"@es .
@@ -465,9 +650,19 @@ xsd:date rdf:type rdfs:Datatype .
                                             :EventoRitual ;
                                    :ocurreEnLugar :Mahuayani ,
                                                   :SantuarioQoylluriti ;
+                                   :tieneDuracionHoras 5.0 ;
+                                   :tieneImportancia "central"@es ;
                                    :tieneOrdenEvento 1 ;
                                    rdfs:comment "Ascenso desde Mahuayani hasta el santuario del Señor de Qoyllu Rit'i."@es ;
                                    rdfs:label "Caminata Mahuayani-Santuario (2025)"@es .
+
+
+###  http://example.org/festividades#CamisaBlanca
+:CamisaBlanca rdf:type owl:NamedIndividual ,
+                       :Vestimenta ;
+              :esParteDe :TrajeUkumari ;
+              rdfs:comment "Camisa blanca usada debajo del pellón."@es ;
+              rdfs:label "Camisa blanca"@es .
 
 
 ###  http://example.org/festividades#CantoQespiCruz_2025
@@ -521,6 +716,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#Ccatcca
 :Ccatcca rdf:type owl:NamedIndividual ,
                   :Lugar ;
+         :tieneImportancia "menor"@es ;
          rdfs:comment "Localidad andina mencionada como punto de paso en la ruta hacia el Santuario del Señor de Qoyllur Rit’i."@es ;
          rdfs:label "Ccatcca" ;
          geo:lat -13.6018199 ;
@@ -552,6 +748,7 @@ xsd:date rdf:type rdfs:Datatype .
                                                      :EventoRitual ;
                                             :ocurreEnLugar :SantuarioQoylluriti ;
                                             :realizadoPor :NacionPaucartambo ;
+                                            :tieneImportancia "secundaria"@es ;
                                             :tieneOrdenEvento 4 ;
                                             rdfs:comment "Actos de veneración al Señor de Qoyllur Rit'i dentro del templo principal del santuario."@es ;
                                             rdfs:label "Veneración en el templo del santuario (2025)"@es .
@@ -566,6 +763,14 @@ xsd:date rdf:type rdfs:Datatype .
              geo:long -71.6544414 .
 
 
+###  http://example.org/festividades#Chuzos
+:Chuzos rdf:type owl:NamedIndividual ,
+                 :Vestimenta ;
+        :hechoDeRitual "cuero con taches metálicos" ;
+        rdfs:comment "Zapatos de fútbol usados antiguamente para no resbalar en la nieve. Representaban las garras del oso. Ya no se usan en la actualidad."@es ;
+        rdfs:label "Chuzos"@es .
+
+
 ###  http://example.org/festividades#ColquePunku
 :ColquePunku rdf:type owl:NamedIndividual ,
                       :Lugar ,
@@ -573,6 +778,7 @@ xsd:date rdf:type rdfs:Datatype .
              :esParteDelApu :Ausangate ;
              :estaEn :Ausangate ;
              :tieneAltitudMetros 5200 ;
+             :tieneImportancia "central"@es ;
              rdfs:comment "Glaciar asociado a rituales de altura durante la peregrinación de Qoyllur Rit’i. El glaciar Colque Punku ha sido escenario de ascensos rituales de los ukukus y otros grupos vinculados a prácticas simbólicas relacionadas con el hielo y la montaña."@es ;
              rdfs:label "Glaciar Colque Punku"@es ;
              geo:lat -13.7900 ;
@@ -594,9 +800,19 @@ xsd:date rdf:type rdfs:Datatype .
                     :antesDe :PasoCasaPrioste ;
                     :ocurreEnLugar :PlazaCcatcca ;
                     :realizadoPor :Ukumaris_Paucartambo_2025 ;
+                    :tieneImportancia "menor"@es ;
                     :tieneOrdenEvento 6 ;
                     rdfs:comment "Descanso y comida (asado con mote) en la plaza de Ccatcca para reponer fuerzas antes de continuar el viaje."@es ;
                     rdfs:label "Comida comunitaria en Ccatcca (2025)"@es .
+
+
+###  http://example.org/festividades#CruzCobreUkuku
+:CruzCobreUkuku rdf:type owl:NamedIndividual ,
+                         :ObjetoRitual ;
+                :esParteDe :TrajeUkumari ;
+                :hechoDeRitual "cobre" ;
+                rdfs:comment "Cruz de cobre portada en el pecho del ukuku."@es ;
+                rdfs:label "Cruz de cobre del ukuku"@es .
 
 
 ###  http://example.org/festividades#DanzaUkumari
@@ -619,6 +835,7 @@ xsd:date rdf:type rdfs:Datatype .
                                    :EventoRitual ;
                           :ocurreEnLugar :CeldaUkukusPaucartambo ;
                           :realizadoPor :Ukumaris_Paucartambo_2025 ;
+                          :tieneImportancia "menor"@es ;
                           :tieneOrdenEvento 6 ;
                           rdfs:comment "Descanso, comida y preparación en la celda de los Ukukus en el bofedal del santuario, antes de la subida nocturna al glaciar."@es ;
                           rdfs:label "Descanso en celda de Ukukus (2025)"@es .
@@ -629,6 +846,7 @@ xsd:date rdf:type rdfs:Datatype .
                                   :EventoRitual ;
                          :ocurreEnLugar :Yanaqancha ;
                          :realizadoPor :NacionPaucartambo ;
+                         :tieneImportancia "secundaria"@es ;
                          :tieneOrdenEvento 4 ;
                          rdfs:comment "Descanso prolongado de 4 horas en Yanaqancha. Aquí se deja la imagen del Señor de Tayankani y la Nación se viste nuevamente."@es ;
                          rdfs:label "Descanso en Yanaqancha (2025)"@es .
@@ -733,12 +951,15 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#FestividadQoylluriti
 :FestividadQoylluriti rdf:type owl:NamedIndividual ,
                                :Festividad ;
-                      rdfs:comment "Peregrinación andina de carácter ritual que se realiza anualmente en el área de Sinakara en honor al Señor de Qoyllur Rit’i."@es ;
+                      :esPeriodicoCon :Anual ;
+                      :ocurreEnLugar :Ausangate ,
+                                     :ColquePunku ,
+                                     :SantuarioQoylluriti ,
+                                     :Sinakara ;
+                      :tieneDuracionHoras 120.0 ;
+                      :tieneImportancia "central"@es ;
+                      rdfs:comment "Peregrinación andina de carácter ritual que se realiza anualmente en el área de Sinakara en honor al Señor de Qoyllur Rit'i. La festividad tiene una duración aproximada de 5 días (120 horas), comenzando con la llegada de peregrinos y culminando con el retorno a sus comunidades. Es una de las festividades religiosas más importantes de los Andes peruanos, congregando a decenas de miles de peregrinos de múltiples naciones. La festividad sincretiza elementos del catolicismo colonial con tradiciones andinas ancestrales, siendo el culto al Apu Ausangate un eje fundamental. Incluye eventos clave como la subida ritual al glaciar Colque Punku, la lomada (caminata nocturna de 24 horas), procesiones, misas especiales y complejos sistemas de intercambio simbólico entre comunidades participantes."@es ;
                       rdfs:label "Festividad del Señor de Qoyllur Rit'i"@es .
-
-
-###  http://example.org/festividades#Foto1
-:Foto1 rdf:type owl:NamedIndividual .
 
 
 ###  http://example.org/festividades#GrutaTayankani
@@ -759,13 +980,32 @@ xsd:date rdf:type rdfs:Datatype .
                  rdfs:label "Gruta de Yanaqancha"@es .
 
 
+###  http://example.org/festividades#GuantesUkuku
+:GuantesUkuku rdf:type owl:NamedIndividual ,
+                       :Vestimenta ;
+              :esParteDe :TrajeUkumari ;
+              rdfs:comment "Guantes usados durante la subida al glaciar."@es ;
+              rdfs:label "Guantes del ukuku"@es .
+
+
 ###  http://example.org/festividades#Huancarani
 :Huancarani rdf:type owl:NamedIndividual ,
                      :Lugar ;
+            :tieneImportancia "menor"@es ;
             rdfs:comment "Distrito de Paucartambo. Cruce vial crucial donde la Nación se reúne y espera a todos los danzantes."@es ;
             rdfs:label "Huancarani" ;
             geo:lat -13.5002777 ;
             geo:long -71.6749143 .
+
+
+###  http://example.org/festividades#Huaqollo
+:Huaqollo rdf:type owl:NamedIndividual ,
+                   :Vestimenta ;
+          :esParteDe :TrajeUkumari ;
+          :hechoDeRitual "lana tejida" ;
+          :tieneNombreLocal "huaqollo"@qu ;
+          rdfs:comment "Careta tejida de lana que cubre el rostro del ukuku."@es ;
+          rdfs:label "Huaqollo"@es .
 
 
 ###  http://example.org/festividades#IglesiaCcatcca
@@ -782,6 +1022,7 @@ xsd:date rdf:type rdfs:Datatype .
 :IglesiaPaucartambo rdf:type owl:NamedIndividual ,
                              :Lugar ;
                     :estaEn :Paucartambo ;
+                    :tieneImportancia "menor"@es ;
                     rdfs:comment "Iglesia principal de Paucartambo."@es ;
                     rdfs:label "Iglesia de Paucartambo"@es ;
                     geo:lat -13.3177508 ;
@@ -795,6 +1036,7 @@ xsd:date rdf:type rdfs:Datatype .
                   :estaEn :Tayancani ;
                   :ocurreEnLugar :IntiAlabado_2025 ;
                   :realizadoPor :NacionPaucartambo ;
+                  :tieneImportancia "central"@es ;
                   :tieneNombreLocal "Inti Lloksimuy" ;
                   :tieneOrdenEvento 1 ;
                   rdfs:comment "Dualidad evento-lugar: ritual de saludo al sol al amanecer que se realiza en el lugar homónimo. Como evento: ceremonia solar. Como lugar: sitio en las alturas de Tayankani donde se espera la salida del sol."@es ;
@@ -827,6 +1069,8 @@ xsd:date rdf:type rdfs:Datatype .
                       :Yanaqancha ,
                       :Yanaqocha ;
              :sigueRuta :Lomada_2025 ;
+             :tieneDuracionHoras 24.0 ;
+             :tieneImportancia "central"@es ;
              :tieneNombreLocal "lomada" ,
                                "loman pureq" ;
              :tieneOrdenEvento 5 ;
@@ -838,6 +1082,7 @@ xsd:date rdf:type rdfs:Datatype .
 :MachuCruz rdf:type owl:NamedIndividual ,
                     :Lugar ,
                     :LugarSagrado ;
+           :tieneImportancia "menor"@es ;
            rdfs:comment "Punto fijo con una cruz a poco más de una hora del santuario. Lugar de pausa para comer maíz y queso en señal de despedida."@es ;
            rdfs:label "Machu Cruz"@es ;
            geo:lat -13.5900 ;
@@ -847,6 +1092,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#Mahuayani
 :Mahuayani rdf:type owl:NamedIndividual ,
                     :Lugar ;
+           :tieneImportancia "secundaria"@es ;
            rdfs:comment "Punto de inicio de la caminata al santuario del Señor de Qoyllu Rit'i."@es ;
            rdfs:label "Mahuayani" ;
            geo:lat -13.6052187 ;
@@ -857,6 +1103,7 @@ xsd:date rdf:type rdfs:Datatype .
 :Mamachapata rdf:type owl:NamedIndividual ,
                       :Lugar ;
              :estaEn :SantuarioQoylluriti ;
+             :tieneImportancia "central"@es ;
              rdfs:comment "Área dentro del recinto del santuario hacia donde se dirige la procesión con la imagen del Señor de Tayankani."@es ;
              rdfs:label "Mamachapata"@es ;
              geo:lat -13.598889 ;
@@ -869,6 +1116,7 @@ xsd:date rdf:type rdfs:Datatype .
                               :antesDe :RomeriaPaucartambo_2025_06_15 ;
                               :ocurreEnLugar :IglesiaPaucartambo ;
                               :realizadoPor :NacionPaucartambo ;
+                              :tieneImportancia "secundaria"@es ;
                               :tieneOrdenEvento 1 ;
                               rdfs:comment "Misa de envío a las 7:00 AM en la Iglesia de Paucartambo antes de la partida de la peregrinación."@es ;
                               rdfs:label "Misa inicial en Paucartambo (2025)"@es .
@@ -880,6 +1128,7 @@ xsd:date rdf:type rdfs:Datatype .
                  :antesDe :SubidaColquePunku_2025 ;
                  :ocurreEnLugar :SantuarioQoylluriti ;
                  :realizadoPor :Ukumaris_Paucartambo_2025 ;
+                 :tieneImportancia "secundaria"@es ;
                  :tieneOrdenEvento 2 ;
                  rdfs:comment "Misa especial para los ukukus"@es ;
                  rdfs:label "Misa de Ukukus (2025)"@es .
@@ -930,6 +1179,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#Ocongate
 :Ocongate rdf:type owl:NamedIndividual ,
                    :Lugar ;
+          :tieneImportancia "secundaria"@es ;
           rdfs:comment "Localidad de paso en la ruta hacia desde Paucartambo Mahuayani. También, es el destino final de la peregrinación del Señor de Qoyllu Rit'i."@es ;
           rdfs:label "Ocongate" ;
           geo:lat -13.639444 ;
@@ -957,6 +1207,7 @@ xsd:date rdf:type rdfs:Datatype .
                        :antesDe :VisitaIglesiaCcatcca_2025 ;
                        :ocurreEnLugar :Huancarani ;
                        :realizadoPor :NacionPaucartambo ;
+                       :tieneImportancia "menor"@es ;
                        :tieneOrdenEvento 4 ;
                        rdfs:comment "Reunión y espera de todos los danzantes de la Nación Paucartambo en el cruce vial de Huancarani."@es ;
                        rdfs:label "Parada en Huancarani (2025)"@es .
@@ -974,10 +1225,22 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#Paucartambo
 :Paucartambo rdf:type owl:NamedIndividual ,
                       :Lugar ;
+             :tieneImportancia "central"@es ;
              rdfs:comment "Paucartambo es un pueblo andino de la región Cusco con una vida ritual intensa, en torno a festividades como la Virgen del Carmen y su participación regional en la peregrinación al Señor de Qoyllur Rit’i. Funciona como espacio de reunión, organización y partida de danzantes y peregrinos."@es ;
              rdfs:label "Paucartambo" ;
              geo:lat -13.3126625 ;
              geo:long -71.614552 .
+
+
+###  http://example.org/festividades#Pellon
+:Pellon rdf:type owl:NamedIndividual ,
+                 :Vestimenta ;
+        :esParteDe :TrajeUkumari ;
+        :hechoDeRitual "lana" ;
+        :tieneNombreLocal "bellón"@es ,
+                          "pellón"@qu ;
+        rdfs:comment "Traje principal del ukuku, también llamado bellón."@es ;
+        rdfs:label "Pellón"@es .
 
 
 ###  http://example.org/festividades#PlazaCcatcca
@@ -1004,6 +1267,7 @@ xsd:date rdf:type rdfs:Datatype .
 :PlazaPaucartambo rdf:type owl:NamedIndividual ,
                            :Lugar ;
                   :estaEn :Paucartambo ;
+                  :tieneImportancia "menor"@es ;
                   rdfs:comment "Plaza principal de Paucartambo donde se realiza el ritual público de vestimenta de los danzantes Ukukus antes de la partida hacia el santuario."@es ;
                   rdfs:label "Plaza de Armas de Paucartambo"@es ;
                   geo:lat -13.3178313 ;
@@ -1015,6 +1279,7 @@ xsd:date rdf:type rdfs:Datatype .
                                         :EventoRitual ;
                                :ocurreEnLugar :PlazaOcongate ;
                                :realizadoPor :NacionPaucartambo ;
+                               :tieneImportancia "secundaria" ;
                                :tieneOrdenEvento 5 ;
                                rdfs:comment "Procesión final en Ocongate que marca el término oficial de la festividad para la Nación Paucartambo."@es ;
                                rdfs:label "Procesión de entrada a Ocongate (2025)"@es .
@@ -1030,10 +1295,21 @@ xsd:date rdf:type rdfs:Datatype .
                            rdfs:label "Procesión a Mamachapata (2025)"@es .
 
 
+###  http://example.org/festividades#Puyka
+:Puyka rdf:type owl:NamedIndividual ,
+                :Instrumento ;
+       :esParteDe :TrajeUkumari ;
+       :hechoDeRitual "caña" ;
+       :tieneNombreLocal "puyka"@qu ;
+       rdfs:comment "Especie de caña para hacer ruido. Representa el sonido que hacen los hombres-oso al agruparse."@es ;
+       rdfs:label "Puyka"@es .
+
+
 ###  http://example.org/festividades#QespiCruz
 :QespiCruz rdf:type owl:NamedIndividual ,
                     :Lugar ,
                     :LugarSagrado ;
+           :tieneImportancia "menor"@es ;
            rdfs:comment "Hito importante en la ruta de la lomada, punto de paso y posiblemente lugar de ritual"@es ;
            rdfs:label "Q'espi Cruz" ;
            geo:lat -13.5700 ;
@@ -1054,6 +1330,7 @@ xsd:date rdf:type rdfs:Datatype .
                                          :EventoRitual ;
                                 :ocurreEnLugar :Yanaqocha ;
                                 :realizadoPor :NacionPaucartambo ;
+                                :tieneImportancia "secundaria"@es ;
                                 :tieneOrdenEvento 3 ;
                                 rdfs:comment "Rituales de despedida entre miembros de la Nación en la Laguna Yanaqocha, corriendo y abrazándose."@es ;
                                 rdfs:label "Ritual de despedida en Yanaqocha (2025)"@es .
@@ -1086,6 +1363,7 @@ xsd:date rdf:type rdfs:Datatype .
                                 :ocurreEnLugar :PlazaPaucartambo ;
                                 :realizadoPor :NacionPaucartambo ,
                                               :Ukumaris_Paucartambo_2025 ;
+                                :tieneImportancia "secundaria"@es ;
                                 :tieneOrdenEvento 3 ;
                                 rdfs:comment "Acto público donde los danzantes se visten con sus trajes ceremoniales en la plaza de Paucartambo, anunciando la partida de la Nación."@es ;
                                 rdfs:label "Ritual de vestimenta de danzantes (2025)"@es .
@@ -1096,6 +1374,7 @@ xsd:date rdf:type rdfs:Datatype .
                                         :EventoRitual ;
                                :antesDe :RitualVestimentaDanzantes_2025 ;
                                :ocurreEnLugar :CementerioPaucartambo ;
+                               :tieneImportancia "menor"@es ;
                                :tieneOrdenEvento 2 ;
                                rdfs:comment "Romería y anuncio público antes de la partida"@es ;
                                rdfs:label "Romería en Paucartambo (2025)"@es .
@@ -1116,8 +1395,17 @@ xsd:date rdf:type rdfs:Datatype .
                                :Mamachapata ,
                                :Pachakunapata ;
                      :estaEn :Sinakara ;
+                     :tieneImportancia "central"@es ;
                      rdfs:comment "Santuario de alta montaña donde se concentra la peregrinación anual del Señor de Qoyllur Rit’i."@es ;
                      rdfs:label "Santuario del Señor de Qoyllur Rit'i"@es .
+
+
+###  http://example.org/festividades#SilbatoUkuku
+:SilbatoUkuku rdf:type owl:NamedIndividual ,
+                       :Instrumento ;
+              :esParteDe :TrajeUkumari ;
+              rdfs:comment "Silbato usado para hacer saber que el ukuku está presente."@es ;
+              rdfs:label "Silbato del ukuku"@es .
 
 
 ###  http://example.org/festividades#Sinakara
@@ -1127,6 +1415,7 @@ xsd:date rdf:type rdfs:Datatype .
           :contiene :SantuarioQoylluriti ;
           :estaEn :Ausangate ;
           :tieneAltitudMetros 4650 ;
+          :tieneImportancia "central"@es ;
           rdfs:comment "Área montañosa sagrada ubicada en las faldas del nevado Ausangate, donde se encuentra el Santuario del Señor de Qoyllur Rit'i. Sinakara es el centro geográfico de la peregrinación anual y concentra los eventos principales de la festividad."@es ;
           rdfs:label "Sinakara"@es ;
           geo:lat -13.6500 ;
@@ -1135,8 +1424,10 @@ xsd:date rdf:type rdfs:Datatype .
 
 ###  http://example.org/festividades#Sorriago
 :Sorriago rdf:type owl:NamedIndividual ,
-                   :ObjetoRitual ;
-          rdfs:comment "Látigo ceremonial de cuero trenzado."@es ;
+                   :Instrumento ;
+          :esParteDe :TrajeUkumari ;
+          :hechoDeRitual "cuero trenzado" ;
+          rdfs:comment "Látigo ceremonial de cuero trenzado portado por el ukuku."@es ;
           rdfs:label "Sorriago"@es .
 
 
@@ -1145,6 +1436,8 @@ xsd:date rdf:type rdfs:Datatype .
                                  :EventoRitual ;
                         :ocurreEnLugar :ColquePunku ;
                         :realizadoPor :Ukumaris_Paucartambo_2025 ;
+                        :tieneDuracionHoras 6.5 ;
+                        :tieneImportancia "central"@es ;
                         :tieneOrdenEvento 1 ;
                         rdfs:comment "Ascenso nocturno al glaciar Colque Punku"@es ;
                         rdfs:label "Subida al Colque Punku (2025)"@es .
@@ -1153,6 +1446,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#Tayancani
 :Tayancani rdf:type owl:NamedIndividual ,
                     :Lugar ;
+           :tieneImportancia "secundaria"@es ;
            rdfs:comment "Localidad donde se deposita la imagen al final de la peregrinación"@es ;
            rdfs:label "Tayancani" ;
            geo:lat -13.5547 ;
@@ -1162,7 +1456,17 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#TrajeUkumari
 :TrajeUkumari rdf:type owl:NamedIndividual ,
                        :Vestimenta ;
-              rdfs:comment "Vestimenta ceremonial de lana gruesa (COMPLETAR)"@es ;
+              :tieneParte :CamisaBlanca ,
+                          :CruzCobreUkuku ,
+                          :GuantesUkuku ,
+                          :Huaqollo ,
+                          :Pellon ,
+                          :Puyka ,
+                          :SilbatoUkuku ,
+                          :Sorriago ,
+                          :Umakhara ;
+              :hechoDeRitual "lana"@es ;
+              rdfs:comment "Vestimenta ceremonial completa del ukuku que incluye: pellón (traje principal de lana), huaqollo (careta tejida de lana que cubre el rostro), umak'ara (pedazo de cuero en la cabeza), sorriago (látigo ceremonial de cuero trenzado), cruz de cobre portada en el pecho, silbato para anunciarse, puyka (caña para hacer ruido que imita a los osos), guantes y camisa blanca. El conjunto representa al oso andino y sus funciones rituales."@es ;
               rdfs:label "Traje de Ukumari"@es .
 
 
@@ -1184,7 +1488,26 @@ xsd:date rdf:type rdfs:Datatype .
                            :usaObjetoRitual :Sorriago ;
                            :usaVestimenta :TrajeUkumari ;
                            :cantidadAproximada "40-60" ;
+                           :tieneImportancia "central"@es ;
                            rdfs:label "Ukumaris de Paucartambo (2025)"@es .
+
+
+###  http://example.org/festividades#Umakhara
+:Umakhara rdf:type owl:NamedIndividual ,
+                   :Vestimenta ;
+          :esParteDe :TrajeUkumari ;
+          :hechoDeRitual "cuero" ;
+          :tieneNombreLocal "umak'ara"@qu ,
+                            "umaqhara"@qu ;
+          rdfs:comment "Pedazo de cuero colocado en la cabeza del ukuku."@es ;
+          rdfs:label "Umak'ara"@es .
+
+
+###  http://example.org/festividades#Unesco
+:Unesco rdf:type owl:NamedIndividual ,
+                 :PaginaWeb ;
+        :documentaLugar :SantuarioQoylluriti ;
+        rdfs:label "Unesco"@es .
 
 
 ###  http://example.org/festividades#ViajeVehicular_Paucartambo_Mahuayani_2025
@@ -1210,6 +1533,7 @@ xsd:date rdf:type rdfs:Datatype .
                            :antesDe :ComidaCcatcca_2025 ;
                            :ocurreEnLugar :IglesiaCcatcca ;
                            :realizadoPor :Ukumaris_Paucartambo_2025 ;
+                           :tieneImportancia "menor"@es ;
                            :tieneOrdenEvento 5 ;
                            rdfs:comment "Visita ritual a la iglesia del pueblo de Ccatcca, marcando el paso de los Ukumari en su ruta hacia el santuario."@es ;
                            rdfs:label "Visita a la iglesia de Ccatcca (2025)"@es .
@@ -1218,6 +1542,7 @@ xsd:date rdf:type rdfs:Datatype .
 ###  http://example.org/festividades#Yanaqancha
 :Yanaqancha rdf:type owl:NamedIndividual ,
                      :Lugar ;
+            :tieneImportancia "menor"@es ;
             rdfs:comment "Lugar de descanso prolongado (4 horas) durante la Lomada. Aquí se deja la imagen del Señor de Tayankani."@es ;
             rdfs:label "Yanaqancha"@es ;
             geo:lat -13.5800 ;
@@ -1228,10 +1553,42 @@ xsd:date rdf:type rdfs:Datatype .
 :Yanaqocha rdf:type owl:NamedIndividual ,
                     :Lugar ,
                     :LugarSagrado ;
+           :tieneImportancia "secundaria"@es ;
            rdfs:comment "Laguna donde se realizan rituales de despedida entre miembros de la Nación durante la Lomada."@es ;
            rdfs:label "Laguna Yanaqocha"@es ;
            geo:lat -13.5850 ;
            geo:long -71.1800 .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Apu
+                :FuenteBibliografica
+                :ObjetoRitual
+                :Participante
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Articulo
+                :Libro
+                :PaginaWeb
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :ImagenReligiosa
+                :InsigniaRitual
+                :Instrumento
+                :OfrendaMaterial
+                :Vestimenta
+              )
+] .
 
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi
