@@ -151,6 +151,114 @@ select.hsel{background:var(--surface2);border:1px solid var(--border);border-rad
   cursor:pointer;-webkit-tap-highlight-color:transparent}
 .bnb i{font-size:1rem}
 .bnb.on{color:var(--accent)}
+
+/* ── SPLASH ── */
+#splash{position:fixed;inset:0;background:var(--bg);z-index:10000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:2rem;text-align:center;gap:0}
+#splash.out{animation:splashOut .5s ease forwards}
+@keyframes splashOut{to{opacity:0;pointer-events:none}}
+
+.splash-icon{font-size:3rem;color:var(--accent);margin-bottom:1.2rem;
+  animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.splash-title{font-size:1.5rem;font-weight:700;color:var(--text);margin-bottom:.3rem}
+.splash-subtitle{font-size:.82rem;color:var(--muted);letter-spacing:.5px;
+  text-transform:uppercase;margin-bottom:1.5rem}
+.splash-desc{font-size:.88rem;line-height:1.75;color:#adbac7;max-width:520px;
+  margin-bottom:2rem}
+.splash-how{background:var(--surface2);border:1px solid var(--border);
+  border-radius:10px;padding:1rem 1.25rem;max-width:420px;width:100%;
+  margin-bottom:2rem;text-align:left}
+.splash-how h3{font-size:.72rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.5px;color:var(--muted);margin-bottom:.7rem;
+  display:flex;align-items:center;gap:6px}
+.splash-how ul{list-style:none;display:flex;flex-direction:column;gap:.45rem}
+.splash-how li{font-size:.82rem;color:#adbac7;display:flex;align-items:flex-start;gap:.6rem}
+.splash-how li i{color:var(--accent);width:14px;flex-shrink:0;margin-top:2px}
+.splash-btn{background:var(--accent);color:#000;border:none;border-radius:8px;
+  padding:.75rem 2.5rem;font-size:.95rem;font-weight:700;cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transition:opacity .15s}
+.splash-btn:hover{opacity:.85}
+
+/* ── ABOUT PANEL ── */
+.ptabs{display:flex;border-bottom:1px solid var(--border);flex-shrink:0}
+.ptab{flex:1;padding:.6rem;font-size:.75rem;font-weight:600;text-transform:uppercase;
+  letter-spacing:.4px;color:var(--muted);background:none;border:none;cursor:pointer;
+  border-bottom:2px solid transparent;transition:color .15s,border-color .15s;
+  -webkit-tap-highlight-color:transparent}
+.ptab.on{color:var(--accent);border-bottom-color:var(--accent)}
+#about-scroll{
+  flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:none;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+#about-scroll::-webkit-scrollbar{width:4px}
+#about-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+#about-scroll.show{display:flex;flex-direction:column}
+#info-scroll.hide{display:none}
+#info-scroll{flex:1}
+.about-body{padding:1.1rem;display:flex;flex-direction:column;gap:1.25rem}
+.about-section h3{font-size:.72rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.5px;color:var(--accent);margin-bottom:.5rem;
+  display:flex;align-items:center;gap:5px}
+.about-section p{font-size:.82rem;line-height:1.7;color:#adbac7}
+.about-section p+p{margin-top:.6rem}
+.about-tag{display:inline-block;font-size:.68rem;padding:.15rem .5rem;
+  background:rgba(212,160,23,.12);border:1px solid rgba(212,160,23,.3);
+  color:var(--accent);border-radius:20px;margin:.2rem .15rem}
+
+
+/* ── TECH FOOTER ── */
+.tech-footer{
+  margin:0 -1.1rem -1.1rem;
+  padding:.9rem 1.1rem;
+  border-top:1px solid var(--border);
+  background:var(--bg);
+  display:flex;
+  flex-direction:column;
+  gap:.55rem;
+}
+.tf-row{
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+  flex-wrap:wrap;
+}
+.tf-label{
+  font-size:.65rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.5px;
+  color:var(--muted);
+  white-space:nowrap;
+  min-width:60px;
+}
+.tf-chips{display:flex;gap:.3rem;flex-wrap:wrap;}
+.tf-chip{
+  font-size:.67rem;
+  padding:.18rem .5rem;
+  border-radius:4px;
+  font-family:monospace;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  color:#adbac7;
+  white-space:nowrap;
+}
+.tf-chip i{margin-right:3px;font-size:.6rem;}
+.tf-chip.hi{
+  background:rgba(56,139,253,.1);
+  border-color:rgba(56,139,253,.3);
+  color:#79c0ff;
+}
+.tf-chip.gold{
+  background:rgba(212,160,23,.1);
+  border-color:rgba(212,160,23,.3);
+  color:var(--accent);
+}
+.tf-divider{height:1px;background:var(--border);margin:.1rem 0;}
+.tf-note{font-size:.68rem;color:var(--muted);line-height:1.5;}
+.tf-note a{color:var(--accent);text-decoration:none;}
+.tf-note a:hover{text-decoration:underline;}
+
 </style>
 </head>
 <body>
@@ -193,12 +301,92 @@ select.hsel{background:var(--surface2);border:1px solid var(--border);border-rad
   </div>
   <div id="panel" class="hidden">
     <div class="ptop">
-      <span><i class="fas fa-circle-nodes" style="color:var(--accent);margin-right:4px"></i>Detalle</span>
+      <span><i class="fas fa-circle-nodes" style="color:var(--accent);margin-right:4px"></i>Panel</span>
       <button class="ibtn" id="btn-close"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="ptabs">
+      <button class="ptab on" id="tab-detalle" onclick="switchTab('detalle')">Detalle</button>
+      <button class="ptab" id="tab-about" onclick="switchTab('about')">Acerca de</button>
     </div>
     <div id="info-scroll">
       <div class="empty"><i class="fas fa-hand-pointer"></i>
         <p>Toca cualquier nodo para ver su información y relaciones</p></div>
+    </div>
+    <!-- ABOUT TAB -->
+    <div id="about-scroll">
+      <div class="about-body">
+        <div class="about-section">
+          <h3><i class="fas fa-mountain"></i> La festividad</h3>
+          <p>El Señor de Qoyllur Rit'i es una peregrinación andina que sincretiza el catolicismo
+          colonial con tradiciones ancestrales en torno al Apu Ausangate, espíritu protector de
+          la montaña más alta del Cusco (6,384 msnm). La festividad reúne a múltiples
+          <em>naciones</em> —comunidades con identidad ritual propia— que participan con danzas,
+          vestimentas ceremoniales y rituales específicos.</p>
+          <p>Entre sus elementos centrales destacan la subida nocturna de los Ukumaris al glaciar
+          Colque Punku (5,200 msnm) y la <em>Lomada</em>, una caminata ritual de 24 horas con
+          hitos sagrados distribuidos a lo largo de la ruta. La festividad fue declarada
+          Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO.</p>
+        </div>
+        <div class="about-section">
+          <h3><i class="fas fa-code-branch"></i> El proyecto</h3>
+          <p>Esta visualización es parte de una investigación sobre <strong>grafos de conocimiento
+          para el patrimonio inmaterial peruano</strong>. El grafo fue construido a partir de
+          trabajo de campo etnográfico con la Nación Paucartambo durante la edición 2025 de
+          la festividad.</p>
+          <p>La ontología modela entidades y relaciones en OWL/RDF e integra un sistema RAG
+          (<em>Retrieval-Augmented Generation</em>) para la documentación y consulta del
+          conocimiento cultural.</p>
+        </div>
+        <div class="about-section">
+          <h3><i class="fas fa-shapes"></i> Tipos de entidad</h3>
+          <p>
+            <span class="about-tag">Evento Ritual</span>
+            <span class="about-tag">Lugar Sagrado</span>
+            <span class="about-tag">Apu</span>
+            <span class="about-tag">Nación</span>
+            <span class="about-tag">Ukumari</span>
+            <span class="about-tag">Objeto Ritual</span>
+            <span class="about-tag">Danza</span>
+            <span class="about-tag">Vestimenta</span>
+          </p>
+          <p style="margin-top:.6rem">Cada color en el grafo corresponde a un tipo de entidad.
+          Usa la leyenda en este panel para mostrar u ocultar categorías.</p>
+        </div>
+      </div>
+        <!-- TECH FOOTER -->
+        <div class="tech-footer">
+          <div class="tf-row">
+            <span class="tf-label">Proyecto</span>
+            <div class="tf-chips">
+              <span class="tf-chip gold"><i class="fas fa-database"></i>RAG</span>
+              <span class="tf-chip gold"><i class="fas fa-circle-nodes"></i>Knowledge Graph</span>
+              <span class="tf-chip gold"><i class="fas fa-landmark"></i>Patrimonio Inmaterial</span>
+            </div>
+          </div>
+          <div class="tf-row">
+            <span class="tf-label">Ontología</span>
+            <div class="tf-chips">
+              <span class="tf-chip hi"><i class="fas fa-file-code"></i>OWL 2</span>
+              <span class="tf-chip hi"><i class="fas fa-code"></i>Turtle (.ttl)</span>
+              <span class="tf-chip hi"><i class="fas fa-link"></i>RDF/RDFS</span>
+              <span class="tf-chip hi"><i class="fas fa-map-marker-alt"></i>geo:lat/long</span>
+            </div>
+          </div>
+          <div class="tf-row">
+            <span class="tf-label">Stack</span>
+            <div class="tf-chips">
+              <span class="tf-chip"><i class="fas fa-diagram-project"></i>vis-network</span>
+              <span class="tf-chip"><i class="fas fa-atom"></i>rdflib.js</span>
+              <span class="tf-chip"><i class="fab fa-github"></i>GitHub Pages</span>
+            </div>
+          </div>
+          <div class="tf-divider"></div>
+          <div class="tf-note">
+            Datos de campo · Nación Paucartambo · Qoyllur Rit'i 2025.
+            La ontología modela eventos rituales, lugares, participantes
+            y objetos ceremoniales de la festividad.
+          </div>
+        </div>
     </div>
     <div id="legend">
       <div class="ltitle"><i class="fas fa-palette" style="margin-right:3px"></i>Leyenda</div>
@@ -215,6 +403,36 @@ select.hsel{background:var(--surface2);border:1px solid var(--border);border-rad
     <button class="bnb" id="bn-search"><i class="fas fa-search"></i><span>Buscar</span></button>
   </div>
 </nav>
+
+
+<!-- ═══ SPLASH ═══ -->
+<div id="splash">
+  <i class="fas fa-mountain splash-icon"></i>
+  <div class="splash-title">Qoyllur Rit'i</div>
+  <div class="splash-subtitle">Grafo de conocimiento · Patrimonio Inmaterial</div>
+  <p class="splash-desc">
+    Cada año, decenas de miles de peregrinos ascienden hasta los 4,650 m del nevado Ausangate
+    en los Andes del Cusco para celebrar al Señor de Qoyllur Rit'i. Durante cinco días,
+    naciones de distintas comunidades danzan, realizan rituales de altura y recorren rutas
+    sagradas en una de las festividades religiosas más importantes de los Andes peruanos.
+    <br><br>
+    Esta visualización organiza ese conocimiento como un grafo de entidades y relaciones,
+    parte de un proyecto de investigación sobre grafos de conocimiento para el patrimonio
+    inmaterial peruano.
+  </p>
+  <div class="splash-how">
+    <h3><i class="fas fa-compass"></i> Cómo explorar</h3>
+    <ul>
+      <li><i class="fas fa-hand-pointer"></i> <span>Toca un nodo para ver su descripción y relaciones</span></li>
+      <li><i class="fas fa-expand-arrows-alt"></i> <span>Doble clic para aislar el vecindario de un nodo</span></li>
+      <li><i class="fas fa-search"></i> <span>Busca cualquier entidad por nombre</span></li>
+      <li><i class="fas fa-palette"></i> <span>Filtra por tipo desde la leyenda en el panel</span></li>
+    </ul>
+  </div>
+  <button class="splash-btn" id="splash-btn">
+    <i class="fas fa-project-diagram" style="margin-right:6px"></i>Explorar el grafo
+  </button>
+</div>
 
 <div id="loading">
   <i class="fas fa-mountain fa-pulse"></i>
@@ -1947,6 +2165,33 @@ document.getElementById('panel').addEventListener('touchend',function(e){
 },{passive:true});
 
 window.selNode=selNode;
+
+// ── SPLASH ──────────────────────────────────────────────────────────────
+document.getElementById('splash-btn').onclick = function(){
+  var s = document.getElementById('splash');
+  s.classList.add('out');
+  setTimeout(function(){ s.style.display='none'; }, 500);
+};
+
+// ── TAB SWITCHER ─────────────────────────────────────────────────────────
+window.switchTab = function(tab){
+  var info  = document.getElementById('info-scroll');
+  var about = document.getElementById('about-scroll');
+  var tdet  = document.getElementById('tab-detalle');
+  var tabt  = document.getElementById('tab-about');
+  if(tab==='detalle'){
+    info.classList.remove('hide');
+    about.classList.remove('show');
+    tdet.classList.add('on');
+    tabt.classList.remove('on');
+  } else {
+    info.classList.add('hide');
+    about.classList.add('show');
+    tdet.classList.remove('on');
+    tabt.classList.add('on');
+  }
+};
+
 })();
 </script>
 </body>
