@@ -1,289 +1,612 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qoyllur Rit'i - Grafo y Mapa Interactivo</title>
-    
-    <!-- vis-network -->
-    <script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
-    
-    <!-- rdflib para parsear TTL -->
-    <script src="https://cdn.jsdelivr.net/npm/rdflib@2.2.33/dist/rdflib.min.js"></script>
-    
-    <!-- Font Awesome para iconos -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
-    <!-- Leaflet para mapas -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background: #f0f2f5;
-            color: #1e293b;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
-        #header {
-            background: white;
-            padding: 0.8rem 1.5rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 10;
-        }
-        h1 {
-            font-size: 1.4rem;
-            color: #0f3b5e;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        h1 i { color: #d4a017; }
-        .subtitle {
-            font-size: 0.8rem;
-            color: #64748b;
-        }
-        #controls {
-            display: flex;
-            gap: 0.8rem;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-        .view-tabs {
-            display: flex;
-            background: #f1f5f9;
-            border-radius: 8px;
-            padding: 2px;
-            border: 1px solid #e2e8f0;
-        }
-        .view-tab {
-            padding: 0.5rem 1rem;
-            border: none;
-            background: transparent;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: #64748b;
-        }
-        .view-tab.active {
-            background: white;
-            color: #0f3b5e;
-            font-weight: 500;
-        }
-        .filter-group {
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            background: #f8fafc;
-            padding: 0.3rem;
-            border-radius: 8px;
-            border: 1px solid #e2e8f0;
-        }
-        select, input, button {
-            padding: 0.4rem 0.8rem;
-            border-radius: 6px;
-            border: 1px solid #e2e8f0;
-            background: white;
-            color: #1e293b;
-            font-size: 0.9rem;
-            cursor: pointer;
-        }
-        input { width: 200px; }
-        button {
-            background: #0f3b5e;
-            color: white;
-            font-weight: 500;
-        }
-        .main-container {
-            display: flex;
-            flex: 1;
-            overflow: hidden;
-        }
-        #sidebar {
-            width: 320px;
-            background: white;
-            border-right: 1px solid #e2e8f0;
-            display: flex;
-            flex-direction: column;
-            transition: width 0.2s;
-        }
-        #sidebar.collapsed { width: 40px; }
-        .sidebar-header {
-            padding: 1rem;
-            border-bottom: 1px solid #e2e8f0;
-            display: flex;
-            justify-content: space-between;
-            background: #f8fafc;
-        }
-        #info-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 1rem;
-        }
-        #view-container {
-            flex: 1;
-            position: relative;
-        }
-        .view {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            display: none;
-        }
-        .view.active { display: block; }
-        #network, #map { width: 100%; height: 100%; }
-        #stats {
-            position: fixed;
-            bottom: 20px;
-            left: 340px;
-            background: white;
-            padding: 0.8rem 1.2rem;
-            border-radius: 30px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            display: flex;
-            gap: 1.5rem;
-            border: 1px solid #e2e8f0;
-            z-index: 30;
-        }
-        #stats .stat-value { font-weight: 700; color: #0f3b5e; }
-        #loading {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 2rem 3rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            z-index: 2000;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-        .entity-title {
-            font-size: 1.3rem;
-            color: #0f3b5e;
-            margin-bottom: 0.5rem;
-        }
-        .type-badge {
-            background: #e9f2f9;
-            color: #0f3b5e;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            display: inline-block;
-            margin: 0.2rem;
-        }
-        .entity-description {
-            background: #f8fafc;
-            padding: 1rem;
-            border-radius: 8px;
-            margin: 1rem 0;
-            border-left: 3px solid #d4a017;
-        }
-        .no-selection {
-            text-align: center;
-            color: #94a3b8;
-            padding: 2rem;
-        }
-        #sidebar.collapsed ~ #view-container #stats { left: 60px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Qoyllur Rit'i — Grafo de Conocimiento</title>
+<script src="https://unpkg.com/vis-network@9.1.6/standalone/umd/vis-network.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rdflib@2.2.33/dist/rdflib.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<style>
+/* ─────────────────────────────────────────────
+   RESET & BASE
+───────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+:root {
+  --bg:        #0d1117;
+  --surface:   #161b22;
+  --surface2:  #21262d;
+  --border:    #30363d;
+  --text:      #e6edf3;
+  --text-muted:#8b949e;
+  --accent:    #d4a017;
+  --accent2:   #1f6feb;
+  --panel-w:   340px;
+  --header-h:  52px;
+  /* tipo colors */
+  --c-evento:  #388bfd;
+  --c-lugar:   #3fb950;
+  --c-sagrado: #a5d6ff;
+  --c-apu:     #bc8cff;
+  --c-nacion:  #ffa657;
+  --c-ukumari: #ff7b72;
+  --c-objeto:  #e3b341;
+  --c-danza:   #f778ba;
+  --c-vestim:  #79c0ff;
+  --c-default: #6e7681;
+}
+html, body {
+  height: 100%; height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+/* ─────────────────────────────────────────────
+   HEADER
+───────────────────────────────────────────── */
+#header {
+  height: var(--header-h);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  gap: 0.75rem;
+  z-index: 50;
+  flex-shrink: 0;
+}
+#header h1 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+#header h1 i { color: var(--accent); }
+#header .sep {
+  width: 1px; height: 22px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+/* search */
+.search-wrap {
+  display: flex;
+  align-items: center;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0 0.6rem;
+  gap: 0.4rem;
+  flex: 1;
+  max-width: 280px;
+  min-width: 0;
+}
+.search-wrap i { color: var(--text-muted); font-size: 0.8rem; }
+.search-wrap input {
+  background: none;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-size: 0.85rem;
+  width: 100%;
+  padding: 0.38rem 0;
+}
+.search-wrap input::placeholder { color: var(--text-muted); }
+/* filter select */
+.hdr-select {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-size: 0.82rem;
+  padding: 0.38rem 0.6rem;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+/* icon buttons */
+.icon-btn {
+  width: 32px; height: 32px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface2);
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: color .15s, background .15s;
+}
+.icon-btn:hover { color: var(--text); background: var(--border); }
+.icon-btn.active { color: var(--accent); border-color: var(--accent); }
+/* header spacer on mobile */
+#hdr-spacer { flex: 1; }
+
+/* ─────────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────────── */
+#app {
+  display: flex;
+  flex: 1;
+  height: calc(100dvh - var(--header-h));
+  overflow: hidden;
+  position: relative;
+}
+
+/* ─────────────────────────────────────────────
+   CANVAS
+───────────────────────────────────────────── */
+#network-wrap {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+}
+#network {
+  width: 100%; height: 100%;
+}
+
+/* ─────────────────────────────────────────────
+   PANEL (desktop: sidebar | mobile: drawer)
+───────────────────────────────────────────── */
+#panel {
+  width: var(--panel-w);
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  overflow: hidden;
+  transition: transform .25s ease, width .25s ease;
+}
+#panel.hidden { transform: translateX(var(--panel-w)); width: 0; border: none; }
+
+.panel-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+.panel-top span {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+
+#info-scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+#info-scroll::-webkit-scrollbar { width: 4px; }
+#info-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+/* ─────────────────────────────────────────────
+   ENTITY CARD
+───────────────────────────────────────────── */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--text-muted);
+  gap: 0.8rem;
+  padding: 2rem;
+  text-align: center;
+}
+.empty-state i { font-size: 2.5rem; opacity: .25; }
+.empty-state p { font-size: 0.85rem; line-height: 1.5; }
+
+.e-card { padding: 1.25rem; }
+
+.e-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+.e-icon {
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+.e-name {
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--text);
+}
+.e-id {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-family: monospace;
+}
+
+.e-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+.badge {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 20px;
+  font-weight: 500;
+  border: 1px solid;
+}
+.badge-type {
+  background: rgba(255,255,255,.04);
+  border-color: var(--border);
+  color: var(--text-muted);
+}
+.badge-imp-central   { background: rgba(63,185,80,.12);  border-color: rgba(63,185,80,.4);  color: #3fb950; }
+.badge-imp-secundaria{ background: rgba(255,166,87,.12); border-color: rgba(255,166,87,.4); color: #ffa657; }
+.badge-imp-menor     { background: rgba(255,123,114,.12);border-color: rgba(255,123,114,.4);color: #ff7b72; }
+
+.e-desc {
+  font-size: 0.83rem;
+  line-height: 1.65;
+  color: #adbac7;
+  background: var(--surface2);
+  padding: 0.85rem;
+  border-radius: 6px;
+  border-left: 3px solid var(--accent);
+  margin-bottom: 1rem;
+}
+
+.e-section-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.rel-list { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 1rem; }
+.rel-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.65rem;
+  background: var(--surface2);
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: border-color .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.rel-item:hover { border-color: var(--border); }
+.rel-pred {
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  font-style: italic;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.rel-target {
+  font-size: 0.8rem;
+  color: var(--accent2);
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────────
+   LEGEND
+───────────────────────────────────────────── */
+#legend {
+  border-top: 1px solid var(--border);
+  padding: 0.85rem 1rem;
+  flex-shrink: 0;
+}
+.legend-title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+.legend-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3rem 0.5rem;
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 2px 4px;
+  border-radius: 4px;
+  -webkit-tap-highlight-color: transparent;
+}
+.legend-item:hover { background: var(--surface2); }
+.legend-item.dimmed { opacity: .35; }
+.legend-dot {
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+/* ─────────────────────────────────────────────
+   STATS BAR
+───────────────────────────────────────────── */
+#stats {
+  position: absolute;
+  bottom: 14px;
+  left: 14px;
+  background: rgba(22,27,34,.9);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.45rem 0.85rem;
+  display: flex;
+  gap: 1.1rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  z-index: 10;
+  pointer-events: none;
+}
+#stats b { color: var(--text); }
+
+/* ─────────────────────────────────────────────
+   FAB CLUSTER (zoom / fit / toggle-panel)
+───────────────────────────────────────────── */
+#fab-cluster {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 20;
+}
+.fab {
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  -webkit-tap-highlight-color: transparent;
+  transition: color .15s, background .15s;
+  box-shadow: 0 2px 8px rgba(0,0,0,.4);
+}
+.fab:hover { color: var(--text); background: var(--border); }
+.fab.accent { background: var(--accent); color: #000; border-color: var(--accent); }
+
+/* ─────────────────────────────────────────────
+   MOBILE BOTTOM SHEET (panel as sheet)
+───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  #panel {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    width: 100% !important;
+    height: 72dvh;
+    border: none;
+    border-top: 1px solid var(--border);
+    border-radius: 16px 16px 0 0;
+    transform: translateY(100%);
+    transition: transform .3s cubic-bezier(.32,.72,0,1);
+    z-index: 200;
+  }
+  #panel.open { transform: translateY(0); }
+  #panel.hidden { transform: translateY(100%); width: 100% !important; }
+
+  /* drag handle */
+  #panel::before {
+    content: '';
+    display: block;
+    width: 36px; height: 4px;
+    background: var(--border);
+    border-radius: 2px;
+    margin: 10px auto 0;
+    flex-shrink: 0;
+  }
+
+  /* bottom nav */
+  #bottom-nav {
+    display: flex !important;
+  }
+  #network-wrap {
+    padding-bottom: 56px;
+  }
+  #stats { bottom: 70px; }
+  #fab-cluster { bottom: 70px; }
+
+  /* hide desktop panel toggle in header */
+  #btn-panel-toggle { display: none; }
+
+  /* search full width */
+  .search-wrap { max-width: 100%; }
+  #hdr-filter-select { display: none; }
+}
+
+/* ─────────────────────────────────────────────
+   BOTTOM NAV (mobile only)
+───────────────────────────────────────────── */
+#bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 56px;
+  background: var(--surface);
+  border-top: 1px solid var(--border);
+  z-index: 150;
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+.bnav-inner {
+  display: flex;
+  height: 100%;
+}
+.bnav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.62rem;
+  font-weight: 500;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.bnav-btn i { font-size: 1.05rem; }
+.bnav-btn.active { color: var(--accent); }
+
+/* ─────────────────────────────────────────────
+   LOADING
+───────────────────────────────────────────── */
+#loading {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  z-index: 9999;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+#loading i { font-size: 2rem; color: var(--accent); }
+#loading-bar {
+  width: 160px; height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+#loading-bar-inner {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 2px;
+  width: 0%;
+  transition: width .3s;
+}
+</style>
 </head>
 <body>
-    <div id="header">
-        <div>
-            <h1><i class="fas fa-mountain"></i> Qoyllur Rit'i - Grafo y Mapa</h1>
-            <div class="subtitle">Exploración interactiva de la festividad andina</div>
-        </div>
-        <div id="controls">
-            <div class="view-tabs">
-                <button class="view-tab active" id="btn-grafo"><i class="fas fa-project-diagram"></i> Grafo</button>
-                <button class="view-tab" id="btn-mapa"><i class="fas fa-map-marked-alt"></i> Mapa</button>
-            </div>
-            <div class="filter-group">
-                <i class="fas fa-search"></i>
-                <input type="text" id="search-box" placeholder="Buscar...">
-            </div>
-            <div class="filter-group">
-                <i class="fas fa-tag"></i>
-                <select id="filter-type">
-                    <option value="all">Todos</option>
-                    <option value="EventoRitual">Eventos</option>
-                    <option value="Lugar">Lugares</option>
-                    <option value="Participante">Participantes</option>
-                    <option value="Ukumari">Ukumaris</option>
-                </select>
-            </div>
-            <button id="reset-btn"><i class="fas fa-eye"></i> Restablecer</button>
-        </div>
-    </div>
-    
-    <div class="main-container">
-        <div id="sidebar">
-            <div class="sidebar-header">
-                <h3><i class="fas fa-info-circle"></i> Información</h3>
-                <button id="toggle-sidebar"><i class="fas fa-chevron-left"></i></button>
-            </div>
-            <div id="info-content">
-                <div class="no-selection">
-                    <i class="fas fa-hand-pointer"></i>
-                    <p>Haz clic en cualquier nodo</p>
-                </div>
-            </div>
-        </div>
-        
-        <div id="view-container">
-            <div id="graph-view" class="view active">
-                <div id="network"></div>
-            </div>
-            <div id="map-view" class="view">
-                <div id="map"></div>
-            </div>
-        </div>
-    </div>
-    
-    <div id="stats">
-        <div><i class="fas fa-circle-nodes"></i> Nodos: <span id="node-count">0</span></div>
-        <div><i class="fas fa-link"></i> Relaciones: <span id="edge-count">0</span></div>
-        <div><i class="fas fa-map-pin"></i> Lugares: <span id="place-count">0</span></div>
-    </div>
-    
-    <div id="loading"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
 
-    <script>
-        // ====================================================================
-        // ESPERAR A QUE TODO EL DOM ESTÉ CARGADO
-        // ====================================================================
-        window.onload = function() {
-            
-            // Verificar elementos críticos
-            const elementos = ['node-count', 'edge-count', 'place-count', 'search-box', 
-                              'filter-type', 'reset-btn', 'sidebar', 'info-content',
-                              'graph-view', 'map-view', 'btn-grafo', 'btn-mapa', 
-                              'toggle-sidebar', 'network', 'map', 'loading'];
-            
-            for (let id of elementos) {
-                if (!document.getElementById(id)) {
-                    console.error('Elemento faltante:', id);
-                    document.getElementById('loading').innerHTML = 'Error: elemento ' + id + ' no encontrado';
-                    return;
-                }
-            }
-            
-            // ====================================================================
-            // DATOS TTL (SOLO LAS PRIMERAS LÍNEAS PARA PRUEBA - REEMPLAZAR CON EL COMPLETO)
-            // ====================================================================
-            const TTL_DATA = `@prefix : <http://example.org/festividades#> .
+<!-- ═══ HEADER ═══ -->
+<div id="header">
+  <h1><i class="fas fa-mountain"></i> Qoyllur Rit'i</h1>
+  <div class="sep"></div>
+  <div class="search-wrap">
+    <i class="fas fa-search"></i>
+    <input id="search-box" type="text" placeholder="Buscar nodo...">
+  </div>
+  <select class="hdr-select" id="hdr-filter-select" title="Filtrar por tipo">
+    <option value="all">Todos los tipos</option>
+    <option value="EventoRitual">Eventos</option>
+    <option value="Lugar">Lugares</option>
+    <option value="LugarSagrado">L. Sagrados</option>
+    <option value="Apu">Apus</option>
+    <option value="Nacion">Naciones</option>
+    <option value="Ukumari">Ukumaris</option>
+    <option value="ObjetoRitual">Objetos</option>
+    <option value="Danza">Danzas</option>
+    <option value="Vestimenta">Vestimenta</option>
+  </select>
+  <button class="icon-btn" id="btn-fit" title="Centrar vista"><i class="fas fa-compress-arrows-alt"></i></button>
+  <button class="icon-btn" id="btn-panel-toggle" title="Panel de información"><i class="fas fa-sidebar"></i></button>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app">
+  <!-- Canvas -->
+  <div id="network-wrap">
+    <div id="network"></div>
+    <!-- Stats -->
+    <div id="stats">
+      <span>Nodos: <b id="node-count">—</b></span>
+      <span>Relaciones: <b id="edge-count">—</b></span>
+    </div>
+    <!-- FABs -->
+    <div id="fab-cluster">
+      <button class="fab" id="fab-zoom-in"  title="Acercar"><i class="fas fa-plus"></i></button>
+      <button class="fab" id="fab-zoom-out" title="Alejar"><i class="fas fa-minus"></i></button>
+      <button class="fab accent" id="fab-fit2" title="Encuadrar todo"><i class="fas fa-expand-arrows-alt"></i></button>
+    </div>
+  </div>
+
+  <!-- Panel info -->
+  <div id="panel" class="hidden">
+    <div class="panel-top">
+      <span><i class="fas fa-circle-nodes" style="margin-right:5px;color:var(--accent)"></i>Detalle</span>
+      <button class="icon-btn" id="btn-close-panel"><i class="fas fa-times"></i></button>
+    </div>
+    <div id="info-scroll">
+      <div class="empty-state">
+        <i class="fas fa-hand-pointer"></i>
+        <p>Toca o haz clic en cualquier nodo para explorar su información y relaciones</p>
+      </div>
+    </div>
+    <div id="legend">
+      <div class="legend-title"><i class="fas fa-palette" style="margin-right:4px"></i>Tipos de entidad</div>
+      <div class="legend-grid" id="legend-grid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ BOTTOM NAV (mobile) ═══ -->
+<nav id="bottom-nav">
+  <div class="bnav-inner">
+    <button class="bnav-btn active" id="bnav-grafo">
+      <i class="fas fa-project-diagram"></i><span>Grafo</span>
+    </button>
+    <button class="bnav-btn" id="bnav-info">
+      <i class="fas fa-info-circle"></i><span>Info</span>
+    </button>
+    <button class="bnav-btn" id="bnav-fit">
+      <i class="fas fa-compress-arrows-alt"></i><span>Centrar</span>
+    </button>
+    <button class="bnav-btn" id="bnav-search">
+      <i class="fas fa-search"></i><span>Buscar</span>
+    </button>
+  </div>
+</nav>
+
+<!-- ═══ LOADING ═══ -->
+<div id="loading">
+  <i class="fas fa-mountain fa-pulse"></i>
+  <span id="loading-msg">Cargando ontología...</span>
+  <div id="loading-bar"><div id="loading-bar-inner"></div></div>
+</div>
+
+<script>
+window.onload = function() {
+
+const TTL_DATA = `@prefix : <http://example.org/festividades#> .
 @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -1708,402 +2031,439 @@ xsd:time rdf:type rdfs:Datatype .
 ] .
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi`;
+TTL_PLACEHOLDER
 
-            // ====================================================================
-            // CONFIGURACIÓN
-            // ====================================================================
-            
-            const COLORES_TIPOS = {
-                'EventoRitual': '#2c5f8d',
-                'Lugar': '#48bb78',
-                'LugarSagrado': '#38a169',
-                'Apu': '#9f7aea',
-                'Participante': '#ed8936',
-                'Ukumari': '#dd6b20',
-                'Danzante': '#f56565',
-                'ObjetoRitual': '#d4af37',
-                'Vestimenta': '#b8941f',
-                'Danza': '#e53e3e',
-                'Nacion': '#3182ce',
-                'default': '#718096'
-            };
-            
-            const ICONOS_TIPOS = {
-                'EventoRitual': 'fa-calendar-alt',
-                'Lugar': 'fa-map-marker-alt',
-                'LugarSagrado': 'fa-place-of-worship',
-                'Apu': 'fa-mountain',
-                'Ukumari': 'fa-paw',
-                'Danzante': 'fa-user-tie',
-                'ObjetoRitual': 'fa-mask',
-                'Vestimenta': 'fa-tshirt',
-                'Danza': 'fa-music',
-                'Nacion': 'fa-flag',
-                'default': 'fa-tag'
-            };
-            
-            // ====================================================================
-            // VARIABLES GLOBALES
-            // ====================================================================
-            
-            let network;
-            let map;
-            let markers = [];
-            let allNodes = [];
-            let allEdges = [];
-            let nodesDataset;
-            let edgesDataset;
-            let store = $rdf.graph();
-            let entidades = new Map();
-            let lugaresConCoordenadas = [];
-            
-            // ====================================================================
-            // FUNCIONES AUXILIARES
-            // ====================================================================
-            
-            document.getElementById('toggle-sidebar').onclick = function() {
-                const sidebar = document.getElementById('sidebar');
-                sidebar.classList.toggle('collapsed');
-                const icon = document.querySelector('#toggle-sidebar i');
-                icon.className = sidebar.classList.contains('collapsed') ? 'fas fa-chevron-right' : 'fas fa-chevron-left';
-            };
-            
-            document.getElementById('btn-grafo').onclick = function() {
-                document.querySelectorAll('.view-tab').forEach(tab => tab.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById('graph-view').classList.add('active');
-                document.getElementById('map-view').classList.remove('active');
-            };
-            
-            document.getElementById('btn-mapa').onclick = function() {
-                document.querySelectorAll('.view-tab').forEach(tab => tab.classList.remove('active'));
-                this.classList.add('active');
-                document.getElementById('map-view').classList.add('active');
-                document.getElementById('graph-view').classList.remove('active');
-                if (map) setTimeout(() => map.invalidateSize(), 100);
-            };
-            
-            // ====================================================================
-            // CARGAR TTL
-            // ====================================================================
-            
-            async function cargarTTL() {
-                try {
-                    document.getElementById('loading').style.display = 'flex';
-                    
-                    if (!TTL_DATA || TTL_DATA.length < 1000) {
-                        throw new Error('Los datos TTL están vacíos o son muy cortos');
-                    }
-                    
-                    const baseURI = 'http://example.org/festividades#';
-                    $rdf.parse(TTL_DATA, store, baseURI, 'text/turtle');
-                    
-                    procesarGrafo();
-                    inicializarVisualizacion();
-                    inicializarMapa();
-                    
-                    document.getElementById('loading').style.display = 'none';
-                    
-                } catch (error) {
-                    console.error('Error:', error);
-                    document.getElementById('loading').innerHTML = `
-                        <div style="color:#e53e3e">
-                            <i class="fas fa-exclamation-triangle"></i>
-                            Error: ${error.message}
-                        </div>
-                    `;
-                }
-            }
-            
-            // ====================================================================
-            // PROCESAR GRAFO
-            // ====================================================================
-            
-            function procesarGrafo() {
-                const RDFS = $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
-                const RDF = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
-                const FEST = $rdf.Namespace('http://example.org/festividades#');
-                const GEO = $rdf.Namespace('http://www.w3.org/2003/01/geo/wgs84_pos#');
-                
-                const sujetos = new Set();
-                store.statements.forEach(st => {
-                    if (st.subject.value.includes('festividades#')) sujetos.add(st.subject.value);
-                });
-                
-                sujetos.forEach(sujetoURI => {
-                    const id = sujetoURI.split('#')[1];
-                    if (!id || id.length < 2) return;
-                    
-                    const subject = $rdf.sym(sujetoURI);
-                    
-                    const labels = store.each(subject, RDFS('label'), null);
-                    const label = labels[0]?.value || id;
-                    
-                    const comments = store.each(subject, RDFS('comment'), null);
-                    const comment = comments[0]?.value || '';
-                    
-                    const tipos = store.each(subject, RDF('type'), null)
-                        .map(t => t.value.split('#')[1])
-                        .filter(t => t && t !== 'NamedIndividual');
-                    
-                    const importancia = store.each(subject, FEST('tieneImportancia'), null)[0]?.value || null;
-                    
-                    const lat = store.each(subject, GEO('lat'), null)[0]?.value;
-                    const lon = store.each(subject, GEO('long'), null)[0]?.value;
-                    
-                    const relaciones = [];
-                    store.statements.forEach(st => {
-                        if (st.subject.value === sujetoURI && st.predicate.value.includes('festividades#')) {
-                            const pred = st.predicate.value.split('#')[1];
-                            const obj = st.object.value.split('#')[1];
-                            if (obj) relaciones.push({ predicado: pred, objeto: obj });
-                        }
-                    });
-                    
-                    entidades.set(id, {
-                        id, label, comment, tipos,
-                        tieneImportancia: importancia,
-                        lat: lat ? parseFloat(lat) : null,
-                        lon: lon ? parseFloat(lon) : null,
-                        relaciones
-                    });
-                    
-                    if (lat && lon) {
-                        lugaresConCoordenadas.push({ id, label, lat: parseFloat(lat), lon: parseFloat(lon), tipos, comment });
-                    }
-                });
-                
-                document.getElementById('place-count').textContent = lugaresConCoordenadas.length;
-            }
-            
-            // ====================================================================
-            // INICIALIZAR MAPA
-            // ====================================================================
-            
-            function inicializarMapa() {
-                if (lugaresConCoordenadas.length === 0) {
-                    console.log('No hay lugares con coordenadas');
-                    return;
-                }
-                
-                // Asegurarse de que el contenedor del mapa existe y es visible
-                const mapContainer = document.getElementById('map');
-                if (!mapContainer) {
-                    console.error('Contenedor del mapa no encontrado');
-                    return;
-                }
-                
-                // Inicializar mapa
-                map = L.map('map').setView([-13.5, -71.5], 9);
-                
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap'
-                }).addTo(map);
-                
-                console.log(`Añadiendo ${lugaresConCoordenadas.length} marcadores al mapa`);
-                
-                lugaresConCoordenadas.forEach(lugar => {
-                    const icono = L.divIcon({
-                        html: `<i class="fas ${ICONOS_TIPOS[lugar.tipos[0]] || 'fa-map-marker-alt'}" style="color: ${COLORES_TIPOS[lugar.tipos[0]] || '#718096'}; font-size: 24px; text-shadow: 0 0 5px white;"></i>`,
-                        className: 'marcador-custom',
-                        iconSize: [30, 30],
-                        iconAnchor: [15, 15],
-                        popupAnchor: [0, -15]
-                    });
-                    
-                    const marker = L.marker([lugar.lat, lugar.lon], { icon: icono }).addTo(map);
-                    
-                    marker.bindPopup(`
-                        <strong>${lugar.label}</strong><br>
-                        ${lugar.tipos.join(', ')}<br>
-                        <small>${lugar.comment ? lugar.comment.substring(0, 100) + '...' : ''}</small>
-                    `);
-                    
-                    marker.on('click', () => mostrarInfoNodo(lugar.id));
-                    
-                    markers.push({ id: lugar.id, marker });
-                });
-                
-                // Forzar actualización del mapa
-                setTimeout(() => {
-                    map.invalidateSize();
-                }, 200);
-            }
-            
-            // ====================================================================
-            // INICIALIZAR VISUALIZACIÓN
-            // ====================================================================
-            
-            function inicializarVisualizacion() {
-                entidades.forEach((ent, id) => {
-                    allNodes.push({
-                        id, 
-                        label: ent.label,
-                        title: ent.comment || ent.label,
-                        color: COLORES_TIPOS[ent.tipos[0]] || COLORES_TIPOS.default,
-                        tipos: ent.tipos,
-                        importancia: ent.tieneImportancia,
-                        data: ent
-                    });
-                });
-                
-                entidades.forEach((ent, id) => {
-                    ent.relaciones.forEach(rel => {
-                        if (entidades.has(rel.objeto)) {
-                            allEdges.push({
-                                from: id, 
-                                to: rel.objeto,
-                                label: rel.predicado,
-                                arrows: 'to',
-                                font: { size: 10, color: '#64748b' },
-                                color: { color: '#cbd5e1' }
-                            });
-                        }
-                    });
-                });
-                
-                nodesDataset = new vis.DataSet(allNodes);
-                edgesDataset = new vis.DataSet(allEdges);
-                
-                document.getElementById('node-count').textContent = allNodes.length;
-                document.getElementById('edge-count').textContent = allEdges.length;
-                
-                crearRed();
-            }
-            
-            function crearRed() {
-                const container = document.getElementById('network');
-                
-                network = new vis.Network(container, {
-                    nodes: nodesDataset,
-                    edges: edgesDataset
-                }, {
-                    nodes: { 
-                        shape: 'dot', 
-                        size: 20, 
-                        font: { size: 12, color: '#1e293b' },
-                        borderWidth: 2,
-                        shadow: true
-                    },
-                    edges: { 
-                        width: 1.5, 
-                        color: { color: '#cbd5e1', highlight: '#0f3b5e' },
-                        smooth: { type: 'continuous' }
-                    },
-                    physics: {
-                        forceAtlas2Based: {
-                            gravitationalConstant: -30,
-                            springLength: 120
-                        },
-                        stabilization: { iterations: 100 }
-                    },
-                    interaction: {
-                        hover: true,
-                        navigationButtons: true
-                    }
-                });
-                
-                network.on('click', function(params) {
-                    if (params.nodes.length) {
-                        mostrarInfoNodo(params.nodes[0]);
-                    } else {
-                        mostrarInfoNodo(null);
-                    }
-                });
-            }
-            
-            // ====================================================================
-            // MOSTRAR INFO
-            // ====================================================================
-            
-            function mostrarInfoNodo(nodeId) {
-                const content = document.getElementById('info-content');
-                
-                if (!nodeId || !entidades.has(nodeId)) {
-                    content.innerHTML = '<div class="no-selection"><i class="fas fa-hand-pointer"></i><p>Haz clic en cualquier nodo o marcador</p></div>';
-                    return;
-                }
-                
-                const ent = entidades.get(nodeId);
-                
-                let importanceClass = '';
-                if (ent.tieneImportancia?.includes('central')) importanceClass = 'importance-central';
-                else if (ent.tieneImportancia?.includes('secundaria')) importanceClass = 'importance-secundaria';
-                else if (ent.tieneImportancia?.includes('menor')) importanceClass = 'importance-menor';
-                
-                const tiposHTML = ent.tipos.map(t => 
-                    `<span class="type-badge"><i class="fas ${ICONOS_TIPOS[t] || 'fa-tag'}"></i> ${t}</span>`
-                ).join('');
-                
-                const coordsHTML = ent.lat ? 
-                    `<div><i class="fas fa-map-pin"></i> ${ent.lat.toFixed(4)}, ${ent.lon.toFixed(4)}</div>` : '';
-                
-                content.innerHTML = `
-                    <div class="entity-card">
-                        <div class="entity-title">
-                            <i class="fas ${ICONOS_TIPOS[ent.tipos[0]] || 'fa-tag'}"></i> 
-                            ${ent.label}
-                        </div>
-                        <div class="entity-types">${tiposHTML}</div>
-                        ${ent.tieneImportancia ? `<div class="importance-badge ${importanceClass}">${ent.tieneImportancia}</div>` : ''}
-                        ${coordsHTML}
-                        <div class="entity-description">${ent.comment || 'Sin descripción disponible'}</div>
-                    </div>
-                `;
-            }
-            
-            // ====================================================================
-            // FILTROS
-            // ====================================================================
-            
-            function aplicarFiltros() {
-                const tipo = document.getElementById('filter-type').value;
-                const busqueda = document.getElementById('search-box').value.toLowerCase();
-                
-                const filtrados = allNodes.filter(n => {
-                    if (tipo !== 'all' && !n.tipos.includes(tipo)) return false;
-                    if (busqueda && !n.label.toLowerCase().includes(busqueda) && !n.id.toLowerCase().includes(busqueda)) return false;
-                    return true;
-                });
-                
-                const ids = new Set(filtrados.map(n => n.id));
-                nodesDataset.clear();
-                edgesDataset.clear();
-                nodesDataset.add(filtrados);
-                edgesDataset.add(allEdges.filter(e => ids.has(e.from) && ids.has(e.to)));
-                
-                document.getElementById('node-count').textContent = filtrados.length;
-                document.getElementById('edge-count').textContent = allEdges.filter(e => ids.has(e.from) && ids.has(e.to)).length;
-                
-                if (map) {
-                    markers.forEach(m => {
-                        if (ids.has(m.id)) {
-                            map.addLayer(m.marker);
-                        } else {
-                            map.removeLayer(m.marker);
-                        }
-                    });
-                }
-            }
-            
-            document.getElementById('filter-type').addEventListener('change', aplicarFiltros);
-            document.getElementById('search-box').addEventListener('input', aplicarFiltros);
-            
-            document.getElementById('reset-btn').addEventListener('click', () => {
-                document.getElementById('filter-type').value = 'all';
-                document.getElementById('search-box').value = '';
-                aplicarFiltros();
-                if (network) network.fit();
-                if (map) map.setView([-13.5, -71.5], 9);
-                mostrarInfoNodo(null);
-            });
-            
-            // ====================================================================
-            // INICIAR
-            // ====================================================================
-            
-            cargarTTL();
-        };
-    </script>
+// ─── TIPO CONFIG ───────────────────────────────────────
+const TIPO_CONFIG = {
+  EventoRitual:  { color:'#388bfd', bg:'rgba(56,139,253,.15)', icon:'fa-calendar-alt',   label:'Evento Ritual'  },
+  Lugar:         { color:'#3fb950', bg:'rgba(63,185,80,.15)',  icon:'fa-map-marker-alt', label:'Lugar'          },
+  LugarSagrado:  { color:'#a5d6ff', bg:'rgba(165,214,255,.12)',icon:'fa-place-of-worship',label:'Lugar Sagrado' },
+  Apu:           { color:'#bc8cff', bg:'rgba(188,140,255,.15)',icon:'fa-mountain',        label:'Apu'            },
+  Nacion:        { color:'#ffa657', bg:'rgba(255,166,87,.15)', icon:'fa-flag',            label:'Nación'         },
+  Ukumari:       { color:'#ff7b72', bg:'rgba(255,123,114,.15)',icon:'fa-paw',             label:'Ukumari'        },
+  Danzante:      { color:'#ff9960', bg:'rgba(255,153,96,.15)', icon:'fa-user-tie',        label:'Danzante'       },
+  ObjetoRitual:  { color:'#e3b341', bg:'rgba(227,179,65,.15)', icon:'fa-mask',            label:'Objeto Ritual'  },
+  Vestimenta:    { color:'#79c0ff', bg:'rgba(121,192,255,.15)',icon:'fa-tshirt',          label:'Vestimenta'     },
+  Danza:         { color:'#f778ba', bg:'rgba(247,120,186,.15)',icon:'fa-music',           label:'Danza'          },
+  Instrumento:   { color:'#d2a8ff', bg:'rgba(210,168,255,.15)',icon:'fa-drum',            label:'Instrumento'    },
+  Festividad:    { color:'#ffd700', bg:'rgba(255,215,0,.15)',  icon:'fa-star',            label:'Festividad'     },
+  _default:      { color:'#6e7681', bg:'rgba(110,118,129,.12)',icon:'fa-circle',          label:'Otro'           }
+};
+
+function getTipoConf(tipos) {
+  for (const t of (tipos||[])) if (TIPO_CONFIG[t]) return TIPO_CONFIG[t];
+  return TIPO_CONFIG._default;
+}
+
+// ─── SIZE BY IMPORTANCE ───
+function getNodeSize(imp) {
+  if (!imp) return 14;
+  if (imp.includes('central'))    return 28;
+  if (imp.includes('secundaria')) return 20;
+  return 13;
+}
+
+// ─── STATE ─────────────────────────────────────────────
+let network, nodesDataset, edgesDataset;
+let allNodes = [], allEdges = [];
+let entidades = new Map();
+let hiddenTypes = new Set();
+let selectedNode = null;
+
+// ─── LOAD ──────────────────────────────────────────────
+progress(20, 'Parseando ontología...');
+
+setTimeout(() => {
+  const store = $rdf.graph();
+  try {
+    $rdf.parse(TTL_DATA, store, 'http://example.org/festividades#', 'text/turtle');
+  } catch(e) {
+    document.getElementById('loading-msg').textContent = 'Error al parsear TTL: ' + e.message;
+    return;
+  }
+
+  progress(50, 'Construyendo grafo...');
+
+  const RDFS = $rdf.Namespace('http://www.w3.org/2000/01/rdf-schema#');
+  const RDF  = $rdf.Namespace('http://www.w3.org/1999/02/22-rdf-syntax-ns#');
+  const FEST = $rdf.Namespace('http://example.org/festividades#');
+
+  const sujetos = new Set();
+  store.statements.forEach(st => {
+    if (st.subject.value.includes('festividades#')) sujetos.add(st.subject.value);
+  });
+
+  sujetos.forEach(uri => {
+    const id = uri.split('#')[1];
+    if (!id || id.length < 2) return;
+    const subj = $rdf.sym(uri);
+    const labels  = store.each(subj, RDFS('label'), null);
+    const label   = labels[0]?.value || id;
+    const comments= store.each(subj, RDFS('comment'), null);
+    const comment = comments[0]?.value || '';
+    const tipos   = store.each(subj, RDF('type'), null)
+      .map(t => t.value.split('#')[1]).filter(t => t && t !== 'NamedIndividual');
+    const imp     = store.each(subj, FEST('tieneImportancia'), null)[0]?.value || null;
+    const rels    = [];
+    store.statements.forEach(st => {
+      if (st.subject.value === uri && st.predicate.value.includes('festividades#')) {
+        const pred = st.predicate.value.split('#')[1];
+        const obj  = st.object.value.split('#')[1];
+        if (obj && pred !== 'type') rels.push({ pred, obj });
+      }
+    });
+    entidades.set(id, { id, label, comment, tipos, imp, rels });
+  });
+
+  progress(75, 'Renderizando...');
+
+  buildNodes();
+  buildEdges();
+  buildLegend();
+
+  nodesDataset = new vis.DataSet(allNodes);
+  edgesDataset = new vis.DataSet(allEdges);
+
+  document.getElementById('node-count').textContent = allNodes.length;
+  document.getElementById('edge-count').textContent = allEdges.length;
+
+  setTimeout(() => {
+    initNetwork();
+    progress(100, 'Listo');
+    setTimeout(() => { document.getElementById('loading').style.display = 'none'; }, 300);
+  }, 50);
+
+}, 50);
+
+function progress(pct, msg) {
+  document.getElementById('loading-bar-inner').style.width = pct + '%';
+  if (msg) document.getElementById('loading-msg').textContent = msg;
+}
+
+// ─── BUILD NODES ───────────────────────────────────────
+function buildNodes() {
+  allNodes = [];
+  entidades.forEach((ent, id) => {
+    const conf = getTipoConf(ent.tipos);
+    const size = getNodeSize(ent.imp);
+    allNodes.push({
+      id,
+      label: ent.label,
+      title: ent.label,
+      color: {
+        background: conf.color,
+        border: conf.color,
+        highlight: { background: '#fff', border: conf.color },
+        hover:      { background: conf.color + 'cc', border: conf.color }
+      },
+      size,
+      tipos: ent.tipos,
+      imp: ent.imp,
+      font: {
+        color: '#e6edf3',
+        size: size > 20 ? 13 : 11,
+        face: '-apple-system, BlinkMacSystemFont, Segoe UI, sans-serif'
+      },
+      borderWidth: 2,
+      shadow: { enabled: true, size: 6, color: conf.color + '44', x:0, y:2 }
+    });
+  });
+}
+
+function buildEdges() {
+  allEdges = [];
+  const seen = new Set();
+  entidades.forEach((ent, id) => {
+    ent.rels.forEach(r => {
+      if (!entidades.has(r.obj)) return;
+      const key = id + '|' + r.pred + '|' + r.obj;
+      if (seen.has(key)) return;
+      seen.add(key);
+      allEdges.push({
+        from: id, to: r.obj,
+        label: r.pred,
+        arrows: { to: { enabled: true, scaleFactor: .6 } },
+        font: { size: 9, color: '#6e7681', strokeWidth: 2, strokeColor: '#0d1117' },
+        color: { color: '#30363d', highlight: '#58a6ff', opacity: .8 },
+        smooth: { type: 'continuous', roundness: .2 },
+        width: 1.2,
+        selectionWidth: 2.5
+      });
+    });
+  });
+}
+
+// ─── LEGEND ────────────────────────────────────────────
+function buildLegend() {
+  const usedTypes = new Set();
+  entidades.forEach(ent => ent.tipos.forEach(t => usedTypes.add(t)));
+  const grid = document.getElementById('legend-grid');
+  grid.innerHTML = '';
+  Object.entries(TIPO_CONFIG).forEach(([tipo, conf]) => {
+    if (tipo === '_default') return;
+    if (!usedTypes.has(tipo)) return;
+    const el = document.createElement('div');
+    el.className = 'legend-item';
+    el.dataset.tipo = tipo;
+    el.innerHTML = `<div class="legend-dot" style="background:${conf.color}"></div><span>${conf.label}</span>`;
+    el.onclick = () => toggleTypeFilter(tipo, el);
+    grid.appendChild(el);
+  });
+}
+
+function toggleTypeFilter(tipo, el) {
+  if (hiddenTypes.has(tipo)) {
+    hiddenTypes.delete(tipo);
+    el.classList.remove('dimmed');
+  } else {
+    hiddenTypes.add(tipo);
+    el.classList.add('dimmed');
+  }
+  applyFilters();
+}
+
+// ─── NETWORK ───────────────────────────────────────────
+function initNetwork() {
+  const container = document.getElementById('network');
+  network = new vis.Network(container, { nodes: nodesDataset, edges: edgesDataset }, {
+    nodes: { shape: 'dot', scaling: { min: 8, max: 32 } },
+    edges: { smooth: { type: 'continuous', roundness: .25 } },
+    physics: {
+      solver: 'forceAtlas2Based',
+      forceAtlas2Based: {
+        gravitationalConstant: -55,
+        centralGravity: 0.006,
+        springLength: 130,
+        springConstant: 0.04,
+        damping: 0.4,
+        avoidOverlap: 0.6
+      },
+      stabilization: { iterations: 120, updateInterval: 25 }
+    },
+    interaction: {
+      hover: true,
+      tooltipDelay: 200,
+      zoomView: true,
+      dragView: true,
+      multiselect: false,
+      keyboard: { enabled: true, bindToWindow: false }
+    }
+  });
+
+  network.on('click', p => {
+    if (p.nodes.length) selectNode(p.nodes[0]);
+    else deselectNode();
+  });
+
+  network.on('doubleClick', p => {
+    if (p.nodes.length) focusNeighbors(p.nodes[0]);
+  });
+
+  network.on('stabilizationIterationsDone', () => {
+    network.setOptions({ physics: { enabled: false } });
+  });
+}
+
+// ─── SELECT NODE ───────────────────────────────────────
+function selectNode(id) {
+  selectedNode = id;
+  const ent = entidades.get(id);
+  if (!ent) return;
+
+  // highlight in graph
+  const connectedEdges = network.getConnectedEdges(id);
+  const connectedNodes = network.getConnectedNodes(id);
+  const allNodeIds = nodesDataset.getIds();
+
+  nodesDataset.update(allNodeIds.map(nid => ({
+    id: nid,
+    opacity: (nid === id || connectedNodes.includes(nid)) ? 1 : .18
+  })));
+
+  openPanel();
+  renderCard(ent);
+
+  // mobile: open bottom sheet
+  if (window.innerWidth <= 640) {
+    document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('bnav-info').classList.add('active');
+  }
+}
+
+function deselectNode() {
+  selectedNode = null;
+  // restore opacity
+  const allNodeIds = nodesDataset.getIds();
+  nodesDataset.update(allNodeIds.map(nid => ({ id: nid, opacity: 1 })));
+  renderEmpty();
+}
+
+function focusNeighbors(id) {
+  const neighbors = [id, ...network.getConnectedNodes(id)];
+  const neighborSet = new Set(neighbors);
+  const allNodeIds = nodesDataset.getIds();
+  nodesDataset.update(allNodeIds.map(nid => ({
+    id: nid,
+    opacity: neighborSet.has(nid) ? 1 : .1
+  })));
+  network.fit({ nodes: neighbors, animation: { duration:600, easingFunction:'easeInOutCubic' } });
+}
+
+// ─── RENDER CARD ───────────────────────────────────────
+function renderCard(ent) {
+  const conf = getTipoConf(ent.tipos);
+  let impBadge = '';
+  if (ent.imp) {
+    const cls = ent.imp.includes('central') ? 'badge-imp-central'
+              : ent.imp.includes('secundaria') ? 'badge-imp-secundaria'
+              : 'badge-imp-menor';
+    impBadge = `<span class="badge ${cls}">${ent.imp}</span>`;
+  }
+  const typeBadges = ent.tipos
+    .filter(t => TIPO_CONFIG[t])
+    .map(t => `<span class="badge badge-type">${TIPO_CONFIG[t].label || t}</span>`)
+    .join('');
+
+  // relations grouped by predicate
+  const relGroups = {};
+  ent.rels.forEach(r => {
+    if (!entidades.has(r.obj)) return;
+    if (!relGroups[r.pred]) relGroups[r.pred] = [];
+    relGroups[r.pred].push(r.obj);
+  });
+  const relHTML = Object.entries(relGroups).map(([pred, objs]) =>
+    objs.map(obj => {
+      const target = entidades.get(obj);
+      const tc = getTipoConf(target?.tipos);
+      return `<div class="rel-item" onclick="selectNode('${obj}')">
+        <span class="rel-pred">${pred}</span>
+        <i class="fas ${tc.icon}" style="color:${tc.color};font-size:.75rem;flex-shrink:0"></i>
+        <span class="rel-target">${target?.label || obj}</span>
+      </div>`;
+    }).join('')
+  ).join('');
+
+  document.getElementById('info-scroll').innerHTML = `
+    <div class="e-card">
+      <div class="e-header">
+        <div class="e-icon" style="background:${conf.bg};color:${conf.color}">
+          <i class="fas ${conf.icon}"></i>
+        </div>
+        <div>
+          <div class="e-name">${ent.label}</div>
+          <div class="e-id">${ent.id}</div>
+        </div>
+      </div>
+      <div class="e-badges">${typeBadges}${impBadge}</div>
+      ${ent.comment ? `<div class="e-desc">${ent.comment}</div>` : ''}
+      ${relHTML ? `
+        <div class="e-section-title"><i class="fas fa-link"></i> Relaciones (${ent.rels.filter(r=>entidades.has(r.obj)).length})</div>
+        <div class="rel-list">${relHTML}</div>
+      ` : ''}
+    </div>`;
+}
+
+function renderEmpty() {
+  document.getElementById('info-scroll').innerHTML = `
+    <div class="empty-state">
+      <i class="fas fa-hand-pointer"></i>
+      <p>Toca o haz clic en cualquier nodo para explorar su información y relaciones</p>
+    </div>`;
+}
+
+// ─── PANEL ─────────────────────────────────────────────
+function openPanel() {
+  const p = document.getElementById('panel');
+  p.classList.remove('hidden');
+  if (window.innerWidth <= 640) p.classList.add('open');
+}
+function closePanel() {
+  const p = document.getElementById('panel');
+  if (window.innerWidth <= 640) {
+    p.classList.remove('open');
+  } else {
+    p.classList.add('hidden');
+  }
+  deselectNode();
+}
+
+document.getElementById('btn-close-panel').onclick = closePanel;
+document.getElementById('btn-panel-toggle').onclick = () => {
+  document.getElementById('panel').classList.toggle('hidden');
+};
+
+// ─── FILTERS ───────────────────────────────────────────
+function applyFilters() {
+  const q    = document.getElementById('search-box').value.toLowerCase().trim();
+  const tipo = document.getElementById('hdr-filter-select').value;
+
+  const filtered = allNodes.filter(n => {
+    if (hiddenTypes.size && n.tipos.every(t => hiddenTypes.has(t))) return false;
+    if (tipo !== 'all' && !n.tipos.includes(tipo)) return false;
+    if (q && !n.label.toLowerCase().includes(q) && !n.id.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  const ids = new Set(filtered.map(n => n.id));
+  nodesDataset.clear(); edgesDataset.clear();
+  nodesDataset.add(filtered);
+  edgesDataset.add(allEdges.filter(e => ids.has(e.from) && ids.has(e.to)));
+  document.getElementById('node-count').textContent = filtered.length;
+  document.getElementById('edge-count').textContent = allEdges.filter(e => ids.has(e.from) && ids.has(e.to)).length;
+}
+
+let searchTimer;
+document.getElementById('search-box').addEventListener('input', () => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    applyFilters();
+    // if exact match, select it
+    const q = document.getElementById('search-box').value.toLowerCase().trim();
+    if (q.length > 2) {
+      const match = allNodes.find(n => n.label.toLowerCase().includes(q));
+      if (match && network) {
+        network.focus(match.id, { scale: 1.2, animation: { duration: 500, easingFunction: 'easeInOutCubic' } });
+        selectNode(match.id);
+      }
+    }
+  }, 300);
+});
+
+document.getElementById('hdr-filter-select').addEventListener('change', applyFilters);
+
+// ─── FABs ──────────────────────────────────────────────
+const fitFn = () => network?.fit({ animation: { duration:500, easingFunction:'easeInOutCubic' } });
+document.getElementById('btn-fit').onclick = fitFn;
+document.getElementById('fab-fit2').onclick = fitFn;
+document.getElementById('bnav-fit').onclick  = fitFn;
+document.getElementById('fab-zoom-in').onclick  = () => network?.moveTo({ scale: network.getScale() * 1.3 });
+document.getElementById('fab-zoom-out').onclick = () => network?.moveTo({ scale: network.getScale() * 0.77 });
+
+// ─── BOTTOM NAV ────────────────────────────────────────
+document.getElementById('bnav-grafo').onclick = () => {
+  closePanel();
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('bnav-grafo').classList.add('active');
+};
+document.getElementById('bnav-info').onclick = () => {
+  openPanel();
+  document.querySelectorAll('.bnav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('bnav-info').classList.add('active');
+};
+document.getElementById('bnav-search').onclick = () => {
+  document.getElementById('search-box').focus();
+};
+
+// swipe down to close panel on mobile
+let touchStartY = 0;
+document.getElementById('panel').addEventListener('touchstart', e => {
+  touchStartY = e.touches[0].clientY;
+}, { passive: true });
+document.getElementById('panel').addEventListener('touchend', e => {
+  if (e.changedTouches[0].clientY - touchStartY > 70) closePanel();
+}, { passive: true });
+
+}; // end window.onload
+</script>
 </body>
 </html>
