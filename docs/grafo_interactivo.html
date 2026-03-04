@@ -19,11 +19,8 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        /* ===== ESTILOS ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -55,9 +52,7 @@
             gap: 8px;
         }
         
-        h1 i {
-            color: #d4a017;
-        }
+        h1 i { color: #d4a017; }
         
         .subtitle {
             font-size: 0.8rem;
@@ -101,9 +96,7 @@
             font-weight: 500;
         }
         
-        .view-tab i {
-            font-size: 1rem;
-        }
+        .view-tab i { font-size: 1rem; }
         
         .filter-group {
             display: flex;
@@ -149,13 +142,9 @@
             font-weight: 500;
         }
         
-        button:hover {
-            background: #1a4b72;
-        }
+        button:hover { background: #1a4b72; }
         
-        button i {
-            margin-right: 4px;
-        }
+        button i { margin-right: 4px; }
         
         .main-container {
             display: flex;
@@ -174,9 +163,7 @@
             z-index: 20;
         }
         
-        #sidebar.collapsed {
-            width: 40px;
-        }
+        #sidebar.collapsed { width: 40px; }
         
         .sidebar-header {
             padding: 1rem;
@@ -205,9 +192,7 @@
             border-radius: 4px;
         }
         
-        .toggle-sidebar:hover {
-            background: #e2e8f0;
-        }
+        .toggle-sidebar:hover { background: #e2e8f0; }
         
         #info-content {
             flex: 1;
@@ -230,24 +215,16 @@
             display: none;
         }
         
-        .view.active {
-            display: block;
-        }
+        .view.active { display: block; }
         
-        #network {
+        #network, #map {
             width: 100%;
             height: 100%;
         }
         
-        #map {
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-        }
+        #map { z-index: 1; }
         
-        .entity-card {
-            background: white;
-        }
+        .entity-card { background: white; }
         
         .entity-title {
             font-size: 1.3rem;
@@ -325,13 +302,9 @@
             gap: 8px;
         }
         
-        .coordinates i {
-            color: #e53e3e;
-        }
+        .coordinates i { color: #e53e3e; }
         
-        .relations-section {
-            margin-top: 1rem;
-        }
+        .relations-section { margin-top: 1rem; }
         
         .relations-section h4 {
             font-size: 0.9rem;
@@ -411,9 +384,7 @@
             gap: 6px;
         }
         
-        #stats .stat i {
-            color: #d4a017;
-        }
+        #stats .stat i { color: #d4a017; }
         
         #stats .stat-value {
             font-weight: 700;
@@ -437,9 +408,7 @@
             gap: 1rem;
         }
         
-        #loading i {
-            color: #d4a017;
-        }
+        #loading i { color: #d4a017; }
         
         .leaflet-popup-content {
             font-family: 'Segoe UI', sans-serif;
@@ -452,35 +421,22 @@
             margin-bottom: 4px;
         }
         
-        #sidebar.collapsed ~ #view-container #stats {
-            left: 60px;
-        }
-        
-        .error-container {
-            padding: 2rem;
-            text-align: center;
-            color: #991b1b;
-        }
+        #sidebar.collapsed ~ #view-container #stats { left: 60px; }
     </style>
 </head>
 <body>
     <div id="header">
         <div>
-            <h1>
-                <i class="fas fa-mountain"></i>
-                Qoyllur Rit'i - Grafo y Mapa
-            </h1>
+            <h1><i class="fas fa-mountain"></i> Qoyllur Rit'i - Grafo y Mapa</h1>
             <div class="subtitle">Exploración interactiva de la festividad andina</div>
         </div>
         <div id="controls">
             <div class="view-tabs">
                 <button class="view-tab active" onclick="cambiarVista('grafo')">
-                    <i class="fas fa-project-diagram"></i>
-                    Grafo
+                    <i class="fas fa-project-diagram"></i> Grafo
                 </button>
                 <button class="view-tab" onclick="cambiarVista('mapa')">
-                    <i class="fas fa-map-marked-alt"></i>
-                    Mapa
+                    <i class="fas fa-map-marked-alt"></i> Mapa
                 </button>
             </div>
             
@@ -512,20 +468,14 @@
                 </select>
             </div>
             
-            <button id="reset-btn">
-                <i class="fas fa-eye"></i>
-                Restablecer
-            </button>
+            <button id="reset-btn"><i class="fas fa-eye"></i> Restablecer</button>
         </div>
     </div>
     
     <div class="main-container">
         <div id="sidebar">
             <div class="sidebar-header">
-                <h3>
-                    <i class="fas fa-info-circle"></i>
-                    Información
-                </h3>
+                <h3><i class="fas fa-info-circle"></i> Información</h3>
                 <button class="toggle-sidebar" onclick="toggleSidebar()">
                     <i class="fas fa-chevron-left"></i>
                 </button>
@@ -549,24 +499,12 @@
     </div>
     
     <div id="stats">
-        <div class="stat">
-            <i class="fas fa-circle-nodes"></i>
-            Nodos: <span class="stat-value" id="node-count">0</span>
-        </div>
-        <div class="stat">
-            <i class="fas fa-link"></i>
-            Relaciones: <span class="stat-value" id="edge-count">0</span>
-        </div>
-        <div class="stat">
-            <i class="fas fa-map-pin"></i>
-            Lugares: <span class="stat-value" id="place-count">0</span>
-        </div>
+        <div class="stat"><i class="fas fa-circle-nodes"></i> Nodos: <span class="stat-value" id="node-count">0</span></div>
+        <div class="stat"><i class="fas fa-link"></i> Relaciones: <span class="stat-value" id="edge-count">0</span></div>
+        <div class="stat"><i class="fas fa-map-pin"></i> Lugares: <span class="stat-value" id="place-count">0</span></div>
     </div>
     
-    <div id="loading">
-        <i class="fas fa-spinner fa-spin"></i>
-        Cargando grafo de conocimiento...
-    </div>
+    <div id="loading"><i class="fas fa-spinner fa-spin"></i> Cargando grafo de conocimiento...</div>
     
     <script>
         // ====================================================================
@@ -575,7 +513,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             
             // ====================================================================
-            // DATOS TTL EMBEBIDOS - ¡COPIA AQUÍ TODO EL CONTENIDO DE TU ARCHIVO TTL!
+            // DATOS TTL EMBEBIDOS (CONTENIDO COMPLETO DE qoyllurity.ttl)
             // ====================================================================
             const TTL_DATA = `@prefix : <http://example.org/festividades#> .
 @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
@@ -585,6 +523,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @base <http://example.org/festividades#> .
+
 <http://www.semanticweb.org/jvera/ontologies/2026/1/untitled-ontology-10> rdf:type owl:Ontology .
 
 #################################################################
@@ -594,10 +533,8 @@
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#lat
 geo:lat rdf:type owl:AnnotationProperty .
 
-
 ###  http://www.w3.org/2003/01/geo/wgs84_pos#long
 geo:long rdf:type owl:AnnotationProperty .
-
 
 #################################################################
 #    Datatypes
@@ -606,10 +543,8 @@ geo:long rdf:type owl:AnnotationProperty .
 ###  http://www.w3.org/2001/XMLSchema#date
 xsd:date rdf:type rdfs:Datatype .
 
-
 ###  http://www.w3.org/2001/XMLSchema#time
 xsd:time rdf:type rdfs:Datatype .
-
 
 #################################################################
 #    Object Properties
@@ -623,13 +558,11 @@ xsd:time rdf:type rdfs:Datatype .
          rdfs:comment "Orden temporal. Transitiva: si A es antes de B y B es antes de C, entonces A es antes de C."@es ;
          rdfs:label "antes de"@es .
 
-
 ###  http://example.org/festividades#conduceA
 :conduceA rdf:type owl:ObjectProperty ;
           rdfs:domain :Lugar ;
           rdfs:range :Lugar ;
           rdfs:label "conduce a"@es .
-
 
 ###  http://example.org/festividades#contiene
 :contiene rdf:type owl:ObjectProperty ;
@@ -639,7 +572,6 @@ xsd:time rdf:type rdfs:Datatype .
           rdfs:comment "Indica que un lugar contiene geográficamente a otro."@es ;
           rdfs:label "contiene"@es .
 
-
 ###  http://example.org/festividades#defineMarcoTemporal
 :defineMarcoTemporal rdf:type owl:ObjectProperty ;
                      rdfs:domain :EventoRitual ;
@@ -647,13 +579,11 @@ xsd:time rdf:type rdfs:Datatype .
                      rdfs:comment "Este evento ritual define el tiempo en que ocurren otros eventos rituales"@es ;
                      rdfs:label "define marco temporal" .
 
-
 ###  http://example.org/festividades#desde
 :desde rdf:type owl:ObjectProperty ;
        rdfs:domain :Lugar ;
        rdfs:range :Lugar ;
        rdfs:label "desde"@es .
-
 
 ###  http://example.org/festividades#documentaEvento
 :documentaEvento rdf:type owl:ObjectProperty ;
@@ -662,14 +592,12 @@ xsd:time rdf:type rdfs:Datatype .
                  rdfs:comment "Relaciona un recurso multimedia con el evento ritual específico que captura."@es ;
                  rdfs:label "documenta evento"@es .
 
-
 ###  http://example.org/festividades#documentaLugar
 :documentaLugar rdf:type owl:ObjectProperty ;
                 rdfs:domain :RecursoMultimedia ;
                 rdfs:range :Lugar ;
                 rdfs:comment "Relaciona un recurso multimedia con el lugar específico donde fue capturado."@es ;
                 rdfs:label "documenta lugar"@es .
-
 
 ###  http://example.org/festividades#documentaParticipante
 :documentaParticipante rdf:type owl:ObjectProperty ;
@@ -678,7 +606,6 @@ xsd:time rdf:type rdfs:Datatype .
                        rdfs:comment "Relaciona un recurso multimedia con participantes individuales o colectivos que aparecen en él."@es ;
                        rdfs:label "documenta participante"@es .
 
-
 ###  http://example.org/festividades#documentaPracticaCultural
 :documentaPracticaCultural rdf:type owl:ObjectProperty ;
                            rdfs:domain :RecursoMultimedia ;
@@ -686,14 +613,12 @@ xsd:time rdf:type rdfs:Datatype .
                            rdfs:comment "Relaciona un recurso multimedia con prácticas culturales específicas que muestra."@es ;
                            rdfs:label "documenta práctica cultural"@es .
 
-
 ###  http://example.org/festividades#ejecutaDanza
 :ejecutaDanza rdf:type owl:ObjectProperty ;
               rdfs:domain :Danzante ;
               rdfs:range :Danza ;
               rdfs:comment "Relación entre un danzante y la danza en la que participa."@es ,
                            "ejecuta danza"@es .
-
 
 ###  http://example.org/festividades#esParteDe
 :esParteDe rdf:type owl:ObjectProperty ;
@@ -704,7 +629,6 @@ xsd:time rdf:type rdfs:Datatype .
            rdfs:comment "Indica que un objeto es componente de otro objeto mayor. Transitiva: si A es parte de B y B es parte de C, entonces A es parte de C."@es ;
            rdfs:label "es parte de"@es .
 
-
 ###  http://example.org/festividades#esParteDeConjunto
 :esParteDeConjunto rdf:type owl:ObjectProperty ;
                    rdfs:domain :RecursoMultimedia ;
@@ -712,12 +636,10 @@ xsd:time rdf:type rdfs:Datatype .
                    rdfs:comment "Agrupa recursos multimedia relacionados (ej: todas las fotos de un mismo evento)."@es ;
                    rdfs:label "es parte de conjunto"@es .
 
-
 ###  http://example.org/festividades#esParteDeFestividad
 :esParteDeFestividad rdf:type owl:ObjectProperty ;
                      rdfs:domain :EventoRitual ;
                      rdfs:range :Festividad .
-
 
 ###  http://example.org/festividades#esParteDelApu
 :esParteDelApu rdf:type owl:ObjectProperty ;
@@ -726,13 +648,11 @@ xsd:time rdf:type rdfs:Datatype .
                rdfs:comment "Indica que un lugar sagrado forma parte de un apu (espíritu de montaña)."@es ;
                rdfs:label "es parte del apu"@es .
 
-
 ###  http://example.org/festividades#esPeriodicoCon
 :esPeriodicoCon rdf:type owl:ObjectProperty ;
                 rdfs:domain :EventoRitual ;
                 rdfs:range :Periodicidad ;
                 rdfs:label "es periódico con"@es .
-
 
 ###  http://example.org/festividades#esPortadoPor
 :esPortadoPor rdf:type owl:ObjectProperty ;
@@ -742,7 +662,6 @@ xsd:time rdf:type rdfs:Datatype .
               rdfs:comment "Un objeto es portado por participante(s)."@es ;
               rdfs:label "es portado por"@es .
 
-
 ###  http://example.org/festividades#esUsadoPor
 :esUsadoPor rdf:type owl:ObjectProperty ;
             owl:inverseOf :usaObjetoRitual ;
@@ -750,7 +669,6 @@ xsd:time rdf:type rdfs:Datatype .
             rdfs:range :Participante ;
             rdfs:comment "Un objeto ritual es usado por participante(s)."@es ;
             rdfs:label "es usado por"@es .
-
 
 ###  http://example.org/festividades#estaConformadaPor
 :estaConformadaPor rdf:type owl:ObjectProperty ;
@@ -760,7 +678,6 @@ xsd:time rdf:type rdfs:Datatype .
                    rdfs:comment "Distritos o comunidades que conforman una nación."@es ;
                    rdfs:label "está conformada por"@es .
 
-
 ###  http://example.org/festividades#estaEn
 :estaEn rdf:type owl:ObjectProperty ,
                  owl:TransitiveProperty ;
@@ -769,12 +686,10 @@ xsd:time rdf:type rdfs:Datatype .
         rdfs:comment "Un lugar está contenido geográficamente dentro de otro lugar. Transitiva: si A está en B y B está en C, entonces A está en C."@es ;
         rdfs:label "está ubicado en"@es .
 
-
 ###  http://example.org/festividades#ocurreEnLugar
 :ocurreEnLugar rdf:type owl:ObjectProperty ;
                rdfs:domain :EventoRitual ;
                rdfs:range :Lugar .
-
 
 ###  http://example.org/festividades#participaEn
 :participaEn rdf:type owl:ObjectProperty ;
@@ -784,14 +699,12 @@ xsd:time rdf:type rdfs:Datatype .
              rdfs:comment "Relación general de participación."@es ;
              rdfs:label "participa en"@es .
 
-
 ###  http://example.org/festividades#pasaPor
 :pasaPor rdf:type owl:ObjectProperty ;
          rdfs:domain :Lugar ;
          rdfs:range :Lugar ;
          rdfs:comment "Indica que un trayecto/ruta pasa por un lugar específico"@es ;
          rdfs:label "pasa por"@es .
-
 
 ###  http://example.org/festividades#perteneceA
 :perteneceA rdf:type owl:ObjectProperty ;
@@ -800,14 +713,12 @@ xsd:time rdf:type rdfs:Datatype .
             rdfs:comment "Relación de un participante con su nación."@es ;
             rdfs:label "pertenece a"@es .
 
-
 ###  http://example.org/festividades#portaObjeto
 :portaObjeto rdf:type owl:ObjectProperty ;
              rdfs:domain :Participante ;
              rdfs:range :ObjetoRitual ;
              rdfs:comment "Objeto portado por participante."@es ;
              rdfs:label "porta objeto"@es .
-
 
 ###  http://example.org/festividades#realizadoPor
 :realizadoPor rdf:type owl:ObjectProperty ;
@@ -816,12 +727,10 @@ xsd:time rdf:type rdfs:Datatype .
               rdfs:comment "Especifica el participante principal de un evento."@es ;
               rdfs:label "realizado por"@es .
 
-
 ###  http://example.org/festividades#sigueRuta
 :sigueRuta rdf:type owl:ObjectProperty ;
            rdfs:domain :EventoRitual ;
            rdfs:range :Lugar .
-
 
 ###  http://example.org/festividades#sucedeInmediatamenteA
 :sucedeInmediatamenteA rdf:type owl:ObjectProperty ;
@@ -830,7 +739,6 @@ xsd:time rdf:type rdfs:Datatype .
                        rdfs:comment "Sucesión temporal directa. NO transitiva porque 'inmediatamente' implica sin intermedios."@es ;
                        rdfs:label "sucede inmediatamente a"@es .
 
-
 ###  http://example.org/festividades#tieneParte
 :tieneParte rdf:type owl:ObjectProperty ;
             rdfs:domain :ObjetoRitual ;
@@ -838,13 +746,11 @@ xsd:time rdf:type rdfs:Datatype .
             rdfs:comment "Relaciona un objeto compuesto con sus componentes. Permite modelar objetos rituales que están formados por múltiples partes."@es ;
             rdfs:label "tiene parte"@es .
 
-
 ###  http://example.org/festividades#usaObjetoRitual
 :usaObjetoRitual rdf:type owl:ObjectProperty ;
                  rdfs:domain :Participante ;
                  rdfs:range :ObjetoRitual ;
                  rdfs:label "usa objeto ritual"@es .
-
 
 ###  http://example.org/festividades#usaVestimenta
 :usaVestimenta rdf:type owl:ObjectProperty ;
@@ -853,14 +759,12 @@ xsd:time rdf:type rdfs:Datatype .
                rdfs:comment "Relación entre un danzante y su traje ceremonial."@es ;
                rdfs:label "usa vestimenta"@es .
 
-
 ###  http://example.org/festividades#utilizaObjeto
 :utilizaObjeto rdf:type owl:ObjectProperty ;
                rdfs:domain :EventoRitual ;
                rdfs:range :ObjetoRitual ;
                rdfs:comment "Relaciona un evento con objetos utilizados."@es ;
                rdfs:label "utiliza objeto"@es .
-
 
 #################################################################
 #    Data properties
@@ -871,12 +775,10 @@ xsd:time rdf:type rdfs:Datatype .
        rdfs:domain :FuenteBibliografica ;
        rdfs:range xsd:string .
 
-
 ###  http://example.org/festividades#cantidadAproximada
 :cantidadAproximada rdf:type owl:DatatypeProperty ;
                     rdfs:domain :Danzante ;
                     rdfs:range xsd:string .
-
 
 ###  http://example.org/festividades#hechoDeRitual
 :hechoDeRitual rdf:type owl:DatatypeProperty ;
@@ -884,7 +786,6 @@ xsd:time rdf:type rdfs:Datatype .
                rdfs:range xsd:string ;
                rdfs:comment "Material del que está hecho el objeto ritual."@es ;
                rdfs:label "hecho de"@es .
-
 
 ###  http://example.org/festividades#tieneAltitudMetros
 :tieneAltitudMetros rdf:type owl:DatatypeProperty ,
@@ -894,14 +795,12 @@ xsd:time rdf:type rdfs:Datatype .
                     rdfs:comment "Altitud sobre el nivel del mar en metros."@es ;
                     rdfs:label "tiene altitud en metros"@es .
 
-
 ###  http://example.org/festividades#tieneDescripcion
 :tieneDescripcion rdf:type owl:DatatypeProperty ;
                   rdfs:domain :RecursoMultimedia ;
                   rdfs:range xsd:string ;
                   rdfs:comment "Descripción textual del contenido del recurso, observaciones de campo, etc."@es ;
                   rdfs:label "tiene descripción"@es .
-
 
 ###  http://example.org/festividades#tieneDuracionHoras
 :tieneDuracionHoras rdf:type owl:DatatypeProperty ,
@@ -910,7 +809,6 @@ xsd:time rdf:type rdfs:Datatype .
                     rdfs:range xsd:decimal ;
                     rdfs:comment "Duración en horas. Funcional: un evento tiene UNA SOLA duración."@es ;
                     rdfs:label "tiene duración en horas"@es .
-
 
 ###  http://example.org/festividades#tieneFecha
 :tieneFecha rdf:type owl:DatatypeProperty ,
@@ -921,14 +819,12 @@ xsd:time rdf:type rdfs:Datatype .
             rdfs:label "tiene fecha"@es ,
                        "tieneFecha" .
 
-
 ###  http://example.org/festividades#tieneFechaCaptura
 :tieneFechaCaptura rdf:type owl:DatatypeProperty ;
                    rdfs:domain :RecursoMultimedia ;
                    rdfs:range xsd:dateTime ;
                    rdfs:comment "Marca de tiempo EXIF o momento exacto en que se documentó el evento."@es ;
                    rdfs:label "tiene fecha y hora de captura"@es .
-
 
 ###  http://example.org/festividades#tieneHoraInicio
 :tieneHoraInicio rdf:type owl:DatatypeProperty ,
@@ -938,14 +834,12 @@ xsd:time rdf:type rdfs:Datatype .
                  rdfs:comment "Hora de inicio. Formato: HH:MM:SS."@es ;
                  rdfs:label "tiene hora de inicio"@es .
 
-
 ###  http://example.org/festividades#tieneImportancia
 :tieneImportancia rdf:type owl:DatatypeProperty ;
                   rdfs:domain owl:Thing ;
                   rdfs:range xsd:string ;
                   rdfs:comment "Nivel de importancia: 'central' (núcleo de la festividad), 'secundario' (importante pero no esencial), 'menor' (complementario)."@es ;
                   rdfs:label "tiene importancia"@es .
-
 
 ###  http://example.org/festividades#tieneNombreArchivo
 :tieneNombreArchivo rdf:type owl:DatatypeProperty ;
@@ -954,13 +848,11 @@ xsd:time rdf:type rdfs:Datatype .
                     rdfs:comment "Nombre original del archivo multimedia."@es ;
                     rdfs:label "tiene nombre de archivo"@es .
 
-
 ###  http://example.org/festividades#tieneNombreConjunto
 :tieneNombreConjunto rdf:type owl:DatatypeProperty ;
                      rdfs:domain :ConjuntoMultimedia ;
                      rdfs:range xsd:string ;
                      rdfs:label "tiene nombre del conjunto"@es .
-
 
 ###  http://example.org/festividades#tieneNombreLocal
 :tieneNombreLocal rdf:type owl:DatatypeProperty ;
@@ -968,20 +860,17 @@ xsd:time rdf:type rdfs:Datatype .
                               :Lugar ;
                   rdfs:range xsd:string .
 
-
 ###  http://example.org/festividades#tieneOrden
 :tieneOrden rdf:type owl:DatatypeProperty ;
             rdfs:domain :EventoRitual ;
             rdfs:range xsd:integer ;
             rdfs:comment "Orden secuencial de los marcos temporales (días) en la festividad"@es .
 
-
 ###  http://example.org/festividades#tieneOrdenEvento
 :tieneOrdenEvento rdf:type owl:DatatypeProperty ;
                   rdfs:domain :EventoRitual ;
                   rdfs:range xsd:integer ;
                   rdfs:comment "Orden del evento dentro de su marco temporal específico"@es .
-
 
 ###  http://example.org/festividades#tieneTipoArchivo
 :tieneTipoArchivo rdf:type owl:DatatypeProperty ;
@@ -990,14 +879,12 @@ xsd:time rdf:type rdfs:Datatype .
                   rdfs:comment "Formato MIME del recurso (image/jpeg, video/mp4, audio/mpeg, etc.)."@es ;
                   rdfs:label "tiene tipo de archivo"@es .
 
-
 ###  http://example.org/festividades#tieneURL
 :tieneURL rdf:type owl:DatatypeProperty ;
           rdfs:domain :RecursoMultimedia ;
           rdfs:range xsd:anyURI ;
           rdfs:comment "Enlace directo al archivo multimedia almacenado (ej: en GitHub, servidor, etc.)."@es ;
           rdfs:label "tiene URL de acceso"@es .
-
 
 #################################################################
 #    Classes
@@ -1009,11 +896,9 @@ xsd:time rdf:type rdfs:Datatype .
      rdfs:comment "Espíritu protector de montaña en la cosmovisión andina, asociado a nevados. Un apu (espíritu de montaña) no es un participante humano, objeto o fuente."@es ;
      rdfs:label "Apu"@es .
 
-
 ###  http://example.org/festividades#Articulo
 :Articulo rdf:type owl:Class ;
           rdfs:subClassOf :FuenteBibliografica .
-
 
 ###  http://example.org/festividades#Colectivo
 :Colectivo rdf:type owl:Class ;
@@ -1021,19 +906,16 @@ xsd:time rdf:type rdfs:Datatype .
            rdfs:comment "Participante colectivo (grupo, comunidad)."@es ;
            rdfs:label "Colectivo"@es .
 
-
 ###  http://example.org/festividades#ConjuntoMultimedia
 :ConjuntoMultimedia rdf:type owl:Class ;
                     rdfs:comment "Colección o álbum de recursos multimedia relacionados temáticamente (por evento, día, lugar, etc.)."@es ;
                     rdfs:label "Conjunto Multimedia"@es .
-
 
 ###  http://example.org/festividades#Danza
 :Danza rdf:type owl:Class ;
        rdfs:subClassOf :PracticaCultural ;
        rdfs:comment "Práctica ritual relativamente estable, compuesta por un repertorio definido de movimientos, vestimenta, música y roles. Funciona como una forma de participación colectiva dentro de una festividad, articulando a personas, comunidades y territorios a través de la performance ritual. En el contexto de Qoyllur Rit’i, una danza se entiende como una tradición o comparsa asociada a una nación o comunidad específica, que se ejecuta en eventos rituales concretos: misas, ingresos ceremoniales, ascensos y descensos rituales, o caminatas colectivas."@es ;
        rdfs:label "Danza"@es .
-
 
 ###  http://example.org/festividades#Danzante
 :Danzante rdf:type owl:Class ;
@@ -1042,18 +924,15 @@ xsd:time rdf:type rdfs:Datatype .
           rdfs:comment "Participante que ejecuta danzas rituales."@es ;
           rdfs:label "Danzante"@es .
 
-
 ###  http://example.org/festividades#EventoRitual
 :EventoRitual rdf:type owl:Class ;
               owl:disjointWith :FuenteBibliografica ;
               rdfs:label "EventoRitual" .
 
-
 ###  http://example.org/festividades#Festividad
 :Festividad rdf:type owl:Class ;
             rdfs:comment "Celebración ritual de carácter anual o periódico." ;
             rdfs:label "Festividad" .
-
 
 ###  http://example.org/festividades#FuenteBibliografica
 :FuenteBibliografica rdf:type owl:Class ;
@@ -1064,13 +943,11 @@ xsd:time rdf:type rdfs:Datatype .
                                       :PracticaCultural ;
                      rdfs:comment "Artículo académico o libro relacionado."@es .
 
-
 ###  http://example.org/festividades#ImagenReligiosa
 :ImagenReligiosa rdf:type owl:Class ;
                  rdfs:subClassOf :ObjetoRitual ;
                  rdfs:comment "Representaciones sagradas de Cristo, santos o deidades veneradas en procesiones."@es ;
                  rdfs:label "Imagen Religiosa"@es .
-
 
 ###  http://example.org/festividades#Individuo
 :Individuo rdf:type owl:Class ;
@@ -1078,13 +955,11 @@ xsd:time rdf:type rdfs:Datatype .
            rdfs:comment "Participante individual (persona)."@es ;
            rdfs:label "Individuo"@es .
 
-
 ###  http://example.org/festividades#InsigniaRitual
 :InsigniaRitual rdf:type owl:Class ;
                 rdfs:subClassOf :ObjetoRitual ;
                 rdfs:comment "Objetos que marcan identidad colectiva o fe: estandartes, cruces de peregrinación."@es ;
                 rdfs:label "Insignia Ritual"@es .
-
 
 ###  http://example.org/festividades#Instrumento
 :Instrumento rdf:type owl:Class ;
@@ -1092,16 +967,13 @@ xsd:time rdf:type rdfs:Datatype .
              rdfs:comment "Instrumentos musicales o herramientas ceremoniales."@es ;
              rdfs:label "Instrumento"@es .
 
-
 ###  http://example.org/festividades#Libro
 :Libro rdf:type owl:Class ;
        rdfs:subClassOf :FuenteBibliografica .
 
-
 ###  http://example.org/festividades#Lugar
 :Lugar rdf:type owl:Class ;
        rdfs:label "Lugar" .
-
 
 ###  http://example.org/festividades#LugarSagrado
 :LugarSagrado rdf:type owl:Class ;
@@ -1109,12 +981,10 @@ xsd:time rdf:type rdfs:Datatype .
               rdfs:comment "Lugar con significado ritual o religioso en la cosmovisión andina."@es ;
               rdfs:label "Lugar Sagrado"@es .
 
-
 ###  http://example.org/festividades#Nacion
 :Nacion rdf:type owl:Class ;
         rdfs:subClassOf :Colectivo ;
         rdfs:label "Nacion" .
-
 
 ###  http://example.org/festividades#ObjetoRitual
 :ObjetoRitual rdf:type owl:Class ;
@@ -1123,18 +993,15 @@ xsd:time rdf:type rdfs:Datatype .
               rdfs:comment "Artefacto material utilizado en ceremonias con significado simbólico."@es ;
               rdfs:label "Objeto Ritual"@es .
 
-
 ###  http://example.org/festividades#OfrendaMaterial
 :OfrendaMaterial rdf:type owl:Class ;
                  rdfs:subClassOf :ObjetoRitual ;
                  rdfs:comment "Objetos ofrecidos a deidades: coca, chicha, etc."@es ;
                  rdfs:label "Ofrenda Material"@es .
 
-
 ###  http://example.org/festividades#PaginaWeb
 :PaginaWeb rdf:type owl:Class ;
            rdfs:subClassOf :FuenteBibliografica .
-
 
 ###  http://example.org/festividades#Participante
 :Participante rdf:type owl:Class ;
@@ -1142,31 +1009,26 @@ xsd:time rdf:type rdfs:Datatype .
               rdfs:comment "Actor individual o colectivo que toma parte en la festividad del Señor de Qoyllu Rit'i. Un participante no puede ser simultáneamente un objeto ritual, práctica cultural o fuente bibliográfica."@es ;
               rdfs:label "Participante"@es .
 
-
 ###  http://example.org/festividades#Peregrino
 :Peregrino rdf:type owl:Class ;
            rdfs:subClassOf :Individuo ;
            rdfs:comment "Participante que realiza la peregrinación sin un rol ritual específico."@es ;
            rdfs:label "Peregrino"@es .
 
-
 ###  http://example.org/festividades#Periodicidad
 :Periodicidad rdf:type owl:Class ;
               rdfs:comment "Patrón de repetición de un evento."@es ;
               rdfs:label "Periodicidad"@es .
-
 
 ###  http://example.org/festividades#PracticaCultural
 :PracticaCultural rdf:type owl:Class ;
                   rdfs:comment "Manifestación cultural de carácter ritual, artístico o tradicional dentro del contexto de la Festividad del Señor de Qoyllu Rit'i."@es ;
                   rdfs:label "Práctica Cultural"@es .
 
-
 ###  http://example.org/festividades#RecursoMultimedia
 :RecursoMultimedia rdf:type owl:Class ;
                    rdfs:comment "Documentación visual, sonora o audiovisual de la festividad. Incluye fotografías, videos, grabaciones de audio y otros materiales de campo recolectados durante la investigación etnográfica."@es ;
                    rdfs:label "RecursoMultimedia" .
-
 
 ###  http://example.org/festividades#Ukumari
 :Ukumari rdf:type owl:Class ;
@@ -1174,13 +1036,11 @@ xsd:time rdf:type rdfs:Datatype .
          rdfs:comment "Danzante ritual asociado al oso andino, conocido también como ukuku. En Qoyllur Rit’i, el ukumari constituye una identidad ritual integral que articula práctica de danza, dimensión espiritual y funciones sociales específicas dentro del orden ceremonial."@es ;
          rdfs:label "Ukumari (Ukuku)" .
 
-
 ###  http://example.org/festividades#Vestimenta
 :Vestimenta rdf:type owl:Class ;
             rdfs:subClassOf :ObjetoRitual ;
             rdfs:comment "Indumentaria ceremonial."@es ;
             rdfs:label "Vestimenta"@es .
-
 
 #################################################################
 #    Individuals
@@ -1191,7 +1051,6 @@ xsd:time rdf:type rdfs:Datatype .
                 :Periodicidad ;
        rdfs:label "Anual"@es .
 
-
 ###  http://example.org/festividades#Ausangate
 :Ausangate rdf:type owl:NamedIndividual ,
                     :Apu ;
@@ -1200,7 +1059,6 @@ xsd:time rdf:type rdfs:Datatype .
            rdfs:comment "Apu Ausangate es el espíritu protector de la montaña más alta de la región Cusco (6384 msnm). En la cosmovisión andina, es uno de los apus más importantes. El nevado Ausangate contiene el glaciar Colque Punku, donde se realizan rituales durante Qoyllur Rit'i."@es ;
            geo:lat -13.7833 ;
            geo:long -71.2500 .
-
 
 ###  http://example.org/festividades#BajadaColquePunku_2025
 :BajadaColquePunku_2025 rdf:type owl:NamedIndividual ,
@@ -1213,7 +1071,6 @@ xsd:time rdf:type rdfs:Datatype .
                         rdfs:comment "Descenso desde el glaciar Colque Punku al santuario del Señor de Qoyllu Rit'i."@es ;
                         rdfs:label "Bajada del Colque Punku (2025)"@es .
 
-
 ###  http://example.org/festividades#Caicay
 :Caicay rdf:type owl:NamedIndividual ,
                  :Lugar ;
@@ -1221,7 +1078,6 @@ xsd:time rdf:type rdfs:Datatype .
         rdfs:label "Caicay" ;
         geo:lat -13.5968962 ;
         geo:long -71.7021203 .
-
 
 ###  http://example.org/festividades#Caminata_Mahuayani_Santuario_2025
 :Caminata_Mahuayani_Santuario_2025 rdf:type owl:NamedIndividual ,
@@ -1234,14 +1090,12 @@ xsd:time rdf:type rdfs:Datatype .
                                    rdfs:comment "Ascenso desde Mahuayani hasta el santuario del Señor de Qoyllu Rit'i."@es ;
                                    rdfs:label "Caminata Mahuayani-Santuario (2025)"@es .
 
-
 ###  http://example.org/festividades#CamisaBlanca
 :CamisaBlanca rdf:type owl:NamedIndividual ,
                        :Vestimenta ;
               :esParteDe :TrajeUkumari ;
               rdfs:comment "Camisa blanca usada debajo del pellón."@es ;
               rdfs:label "Camisa blanca"@es .
-
 
 ###  http://example.org/festividades#CantoQespiCruz_2025
 :CantoQespiCruz_2025 rdf:type owl:NamedIndividual ,
@@ -1252,7 +1106,6 @@ xsd:time rdf:type rdfs:Datatype .
                      rdfs:comment "A medianoche, toda la Nación canta la 'Canción de Despedida de los Qapaq Qollas' en Q'espi Cruz."@es ;
                      rdfs:label "Canto en Q'espi Cruz (2025)"@es .
 
-
 ###  http://example.org/festividades#CapillaTayankani
 :CapillaTayankani rdf:type owl:NamedIndividual ,
                            :Lugar ;
@@ -1261,7 +1114,6 @@ xsd:time rdf:type rdfs:Datatype .
                   rdfs:label "Capilla de Tayankani"@es ;
                   geo:lat -13.5547 ;
                   geo:long -71.1503 .
-
 
 ###  http://example.org/festividades#CasaPriosteOcongate
 :CasaPriosteOcongate rdf:type owl:NamedIndividual ,
@@ -1272,7 +1124,6 @@ xsd:time rdf:type rdfs:Datatype .
                      geo:lat -13.6394 ;
                      geo:long -71.3878 .
 
-
 ###  http://example.org/festividades#Ccapi
 :Ccapi rdf:type owl:NamedIndividual ,
                 :Lugar ;
@@ -1281,7 +1132,6 @@ xsd:time rdf:type rdfs:Datatype .
        geo:lat -13.855023 ;
        geo:long -72.0903192 .
 
-
 ###  http://example.org/festividades#Ccarhuayo
 :Ccarhuayo rdf:type owl:NamedIndividual ,
                     :Lugar ;
@@ -1289,7 +1139,6 @@ xsd:time rdf:type rdfs:Datatype .
            rdfs:label "Ccarhuayo" ;
            geo:lat -13.614549 ;
            geo:long -71.4342762 .
-
 
 ###  http://example.org/festividades#Ccatcca
 :Ccatcca rdf:type owl:NamedIndividual ,
@@ -1300,7 +1149,6 @@ xsd:time rdf:type rdfs:Datatype .
          geo:lat -13.6018199 ;
          geo:long -71.575295 .
 
-
 ###  http://example.org/festividades#CeldaUkukusPaucartambo
 :CeldaUkukusPaucartambo rdf:type owl:NamedIndividual ,
                                  :Lugar ;
@@ -1310,7 +1158,6 @@ xsd:time rdf:type rdfs:Datatype .
                         geo:lat -13.5986 ;
                         geo:long -71.1914 .
 
-
 ###  http://example.org/festividades#CementerioPaucartambo
 :CementerioPaucartambo rdf:type owl:NamedIndividual ,
                                 :Lugar ;
@@ -1319,7 +1166,6 @@ xsd:time rdf:type rdfs:Datatype .
                        rdfs:label "Cementerio de Paucartambo"@es ;
                        geo:lat -13.3209634 ;
                        geo:long -71.595932 .
-
 
 ###  http://example.org/festividades#CeremoniaVeneracion_Templo_Qoylluriti_2025
 :CeremoniaVeneracion_Templo_Qoylluriti_2025 rdf:type owl:NamedIndividual ,
@@ -1331,7 +1177,6 @@ xsd:time rdf:type rdfs:Datatype .
                                             rdfs:comment "Actos de veneración al Señor de Qoyllur Rit'i dentro del templo principal del santuario."@es ;
                                             rdfs:label "Veneración en el templo del santuario (2025)"@es .
 
-
 ###  http://example.org/festividades#Challabamba
 :Challabamba rdf:type owl:NamedIndividual ,
                       :Lugar ;
@@ -1340,14 +1185,12 @@ xsd:time rdf:type rdfs:Datatype .
              geo:lat -13.2115578 ;
              geo:long -71.6544414 .
 
-
 ###  http://example.org/festividades#Chuzos
 :Chuzos rdf:type owl:NamedIndividual ,
                  :Vestimenta ;
         :hechoDeRitual "cuero con taches metálicos" ;
         rdfs:comment "Zapatos de fútbol usados antiguamente para no resbalar en la nieve. Representaban las garras del oso. Ya no se usan en la actualidad."@es ;
         rdfs:label "Chuzos"@es .
-
 
 ###  http://example.org/festividades#ColquePunku
 :ColquePunku rdf:type owl:NamedIndividual ,
@@ -1362,7 +1205,6 @@ xsd:time rdf:type rdfs:Datatype .
              geo:lat -13.7900 ;
              geo:long -71.2400 .
 
-
 ###  http://example.org/festividades#Colquepata
 :Colquepata rdf:type owl:NamedIndividual ,
                      :Lugar ;
@@ -1370,7 +1212,6 @@ xsd:time rdf:type rdfs:Datatype .
             rdfs:label "Colquepata" ;
             geo:lat -13.4247328 ;
             geo:long -72.0058166 .
-
 
 ###  http://example.org/festividades#ComidaCcatcca_2025
 :ComidaCcatcca_2025 rdf:type owl:NamedIndividual ,
@@ -1383,7 +1224,6 @@ xsd:time rdf:type rdfs:Datatype .
                     rdfs:comment "Descanso y comida (asado con mote) en la plaza de Ccatcca para reponer fuerzas antes de continuar el viaje."@es ;
                     rdfs:label "Comida comunitaria en Ccatcca (2025)"@es .
 
-
 ###  http://example.org/festividades#CruzCobreUkuku
 :CruzCobreUkuku rdf:type owl:NamedIndividual ,
                          :ObjetoRitual ;
@@ -1392,13 +1232,11 @@ xsd:time rdf:type rdfs:Datatype .
                 rdfs:comment "Cruz de cobre portada en el pecho del ukuku."@es ;
                 rdfs:label "Cruz de cobre del ukuku"@es .
 
-
 ###  http://example.org/festividades#DanzaUkumari
 :DanzaUkumari rdf:type owl:NamedIndividual ,
                        :Danza ;
               rdfs:comment "Danza ritual asociada al oso andino, conocido también como ukuku. En Qoyllur Rit’i, los ukumari constituyen una identidad ritual integral que articula prácticas de danza, dimensión espiritual y funciones sociales específicas dentro del orden ceremonial."@es ;
               rdfs:label "Danza del Ukumari"@es .
-
 
 ###  http://example.org/festividades#DejaImagenEnCapillaTayancani_2025
 :DejaImagenEnCapillaTayancani_2025 rdf:type owl:NamedIndividual ,
@@ -1406,7 +1244,6 @@ xsd:time rdf:type rdfs:Datatype .
                                    :tieneOrdenEvento 3 ;
                                    rdfs:comment "Depósito de la imagen en la capilla de Tayancani"@es ;
                                    rdfs:label "Dejar imagen en capilla de Tayancani (2025)"@es .
-
 
 ###  http://example.org/festividades#DescansoCeldaUkukus_2025
 :DescansoCeldaUkukus_2025 rdf:type owl:NamedIndividual ,
@@ -1418,7 +1255,6 @@ xsd:time rdf:type rdfs:Datatype .
                           rdfs:comment "Descanso, comida y preparación en la celda de los Ukukus en el bofedal del santuario, antes de la subida nocturna al glaciar."@es ;
                           rdfs:label "Descanso en celda de Ukukus (2025)"@es .
 
-
 ###  http://example.org/festividades#DescansoYanaqancha_2025
 :DescansoYanaqancha_2025 rdf:type owl:NamedIndividual ,
                                   :EventoRitual ;
@@ -1429,7 +1265,6 @@ xsd:time rdf:type rdfs:Datatype .
                          rdfs:comment "Descanso prolongado de 4 horas en Yanaqancha. Aquí se deja la imagen del Señor de Tayankani y la Nación se viste nuevamente."@es ;
                          rdfs:label "Descanso en Yanaqancha (2025)"@es .
 
-
 ###  http://example.org/festividades#Dia1_SabadoPreparacion
 :Dia1_SabadoPreparacion rdf:type owl:NamedIndividual ,
                                  :EventoRitual ;
@@ -1439,7 +1274,6 @@ xsd:time rdf:type rdfs:Datatype .
                         :tieneOrden 1 ;
                         rdfs:comment "Sábado después de la Cuaresma. Dedicado a la gelación y ensayos en Paucartambo."@es ;
                         rdfs:label "Día 1: Sábado de preparación"@es .
-
 
 ###  http://example.org/festividades#Dia2_DomingoPartida
 :Dia2_DomingoPartida rdf:type owl:NamedIndividual ,
@@ -1457,7 +1291,6 @@ xsd:time rdf:type rdfs:Datatype .
                      rdfs:comment "Domingo. Incluye misa, romería, anuncio público y viaje en vehículo hasta Mahuayani."@es ;
                      rdfs:label "Día 2: Domingo de partida y viaje"@es .
 
-
 ###  http://example.org/festividades#Dia3_LunesAscenso
 :Dia3_LunesAscenso rdf:type owl:NamedIndividual ,
                             :EventoRitual ;
@@ -1474,7 +1307,6 @@ xsd:time rdf:type rdfs:Datatype .
                    rdfs:comment "Lunes. Caminata desde Mahuayani al santuario, Misa de Ukukus, ingreso por P'achakunapata y actividades en el santuario."@es ;
                    rdfs:label "Día 3: Lunes de ascenso al santuario"@es .
 
-
 ###  http://example.org/festividades#Dia4_MartesDescensoYLomada
 :Dia4_MartesDescensoYLomada rdf:type owl:NamedIndividual ,
                                      :EventoRitual ;
@@ -1489,7 +1321,6 @@ xsd:time rdf:type rdfs:Datatype .
                             rdfs:comment "Martes por la mañana. Comprende el descenso desde Colque Punku al santuario y el inicio de la caminata ritual de 24 horas (lomada)."@es ;
                             rdfs:label "Día 4: Martes de descenso e inicio de la lomada"@es .
 
-
 ###  http://example.org/festividades#Dia5_MiercolesAlba
 :Dia5_MiercolesAlba rdf:type owl:NamedIndividual ,
                              :EventoRitual ;
@@ -1502,7 +1333,6 @@ xsd:time rdf:type rdfs:Datatype .
                     :tieneOrden 7 ;
                     rdfs:comment "Amanecer del miércoles. Incluye el evento del Inti Alabado, la llegada a Tayankani y el retorno a Ocongate."@es ;
                     rdfs:label "Día 5: Miércoles del alba y finalización"@es .
-
 
 ###  http://example.org/festividades#Escalerachayoq
 :Escalerachayoq rdf:type owl:NamedIndividual ,
@@ -1517,14 +1347,12 @@ xsd:time rdf:type rdfs:Datatype .
                 geo:lat -13.5650 ;
                 geo:long -71.1600 .
 
-
 ###  http://example.org/festividades#EventoPrevioPeregrinaje_Paucartambo_2025_06_14
 :EventoPrevioPeregrinaje_Paucartambo_2025_06_14 rdf:type owl:NamedIndividual ,
                                                          :EventoRitual ;
                                                 :tieneOrdenEvento 1 ;
                                                 rdfs:comment "Preparativos, gelación y ensayos en Paucartambo." ;
                                                 rdfs:label "Evento previo al peregrinaje (2025)"@es .
-
 
 ###  http://example.org/festividades#FestividadQoylluriti
 :FestividadQoylluriti rdf:type owl:NamedIndividual ,
@@ -1539,7 +1367,6 @@ xsd:time rdf:type rdfs:Datatype .
                       rdfs:comment "Peregrinación andina de carácter ritual que se realiza anualmente en el área de Sinakara en honor al Señor de Qoyllur Rit'i. La festividad tiene una duración aproximada de 5 días (120 horas), comenzando con la llegada de peregrinos y culminando con el retorno a sus comunidades. Es una de las festividades religiosas más importantes de los Andes peruanos, congregando a decenas de miles de peregrinos de múltiples naciones. La festividad sincretiza elementos del catolicismo colonial con tradiciones andinas ancestrales, siendo el culto al Apu Ausangate un eje fundamental. Incluye eventos clave como la subida ritual al glaciar Colque Punku, la lomada (caminata nocturna de 24 horas), procesiones, misas especiales y complejos sistemas de intercambio simbólico entre comunidades participantes."@es ;
                       rdfs:label "Festividad del Señor de Qoyllur Rit'i"@es .
 
-
 ###  http://example.org/festividades#GrutaTayankani
 :GrutaTayankani rdf:type owl:NamedIndividual ,
                          :Lugar ;
@@ -1549,7 +1376,6 @@ xsd:time rdf:type rdfs:Datatype .
                 geo:lat -13.5550 ;
                 geo:long -71.1500 .
 
-
 ###  http://example.org/festividades#GrutaYanaqancha
 :GrutaYanaqancha rdf:type owl:NamedIndividual ,
                           :Lugar ;
@@ -1557,14 +1383,12 @@ xsd:time rdf:type rdfs:Datatype .
                  rdfs:comment "Gruta en Yanaqancha donde la Nación desciende bailando después del descanso."@es ;
                  rdfs:label "Gruta de Yanaqancha"@es .
 
-
 ###  http://example.org/festividades#GuantesUkuku
 :GuantesUkuku rdf:type owl:NamedIndividual ,
                        :Vestimenta ;
               :esParteDe :TrajeUkumari ;
               rdfs:comment "Guantes usados durante la subida al glaciar."@es ;
               rdfs:label "Guantes del ukuku"@es .
-
 
 ###  http://example.org/festividades#Huancarani
 :Huancarani rdf:type owl:NamedIndividual ,
@@ -1575,7 +1399,6 @@ xsd:time rdf:type rdfs:Datatype .
             geo:lat -13.5002777 ;
             geo:long -71.6749143 .
 
-
 ###  http://example.org/festividades#Huaqollo
 :Huaqollo rdf:type owl:NamedIndividual ,
                    :Vestimenta ;
@@ -1584,7 +1407,6 @@ xsd:time rdf:type rdfs:Datatype .
           :tieneNombreLocal "huaqollo"@qu ;
           rdfs:comment "Careta tejida de lana que cubre el rostro del ukuku."@es ;
           rdfs:label "Huaqollo"@es .
-
 
 ###  http://example.org/festividades#IglesiaCcatcca
 :IglesiaCcatcca rdf:type owl:NamedIndividual ,
@@ -1595,7 +1417,6 @@ xsd:time rdf:type rdfs:Datatype .
                 geo:lat -13.6425762 ;
                 geo:long -72.0779553 .
 
-
 ###  http://example.org/festividades#IglesiaPaucartambo
 :IglesiaPaucartambo rdf:type owl:NamedIndividual ,
                              :Lugar ;
@@ -1605,7 +1426,6 @@ xsd:time rdf:type rdfs:Datatype .
                     rdfs:label "Iglesia de Paucartambo"@es ;
                     geo:lat -13.3177508 ;
                     geo:long -71.6319747 .
-
 
 ###  http://example.org/festividades#IntiAlabado_2025
 :IntiAlabado_2025 rdf:type owl:NamedIndividual ,
@@ -1620,7 +1440,6 @@ xsd:time rdf:type rdfs:Datatype .
                   rdfs:comment "Dualidad evento-lugar: ritual de saludo al sol al amanecer que se realiza en el lugar homónimo. Como evento: ceremonia solar. Como lugar: sitio en las alturas de Tayankani donde se espera la salida del sol."@es ;
                   rdfs:label "Inti Alabado (2025)"@es .
 
-
 ###  http://example.org/festividades#IntiLloksimuy
 :IntiLloksimuy rdf:type owl:NamedIndividual ,
                         :Lugar ;
@@ -1629,7 +1448,6 @@ xsd:time rdf:type rdfs:Datatype .
                rdfs:label "Inti Lloksimuy"@es ;
                geo:lat -13.5600 ;
                geo:long -71.1550 .
-
 
 ###  http://example.org/festividades#Lomada_2025
 :Lomada_2025 rdf:type owl:NamedIndividual ,
@@ -1655,7 +1473,6 @@ xsd:time rdf:type rdfs:Datatype .
              rdfs:comment "Dualidad evento-trayecto: caminata ritual de 24 horas que es el camino físico con hitos rituales. Como evento: acción ritual. Como lugar: ruta con puntos específicos (Machu Cruz, Yanaqocha, Q'espi Cruz, etc.)."@es ;
              rdfs:label "Lomada / Loman Pureq (2025)"@es .
 
-
 ###  http://example.org/festividades#MachuCruz
 :MachuCruz rdf:type owl:NamedIndividual ,
                     :Lugar ,
@@ -1666,7 +1483,6 @@ xsd:time rdf:type rdfs:Datatype .
            geo:lat -13.5900 ;
            geo:long -71.1850 .
 
-
 ###  http://example.org/festividades#Mahuayani
 :Mahuayani rdf:type owl:NamedIndividual ,
                     :Lugar ;
@@ -1675,7 +1491,6 @@ xsd:time rdf:type rdfs:Datatype .
            rdfs:label "Mahuayani" ;
            geo:lat -13.6052187 ;
            geo:long -71.2350153 .
-
 
 ###  http://example.org/festividades#Mamachapata
 :Mamachapata rdf:type owl:NamedIndividual ,
@@ -1686,7 +1501,6 @@ xsd:time rdf:type rdfs:Datatype .
              rdfs:label "Mamachapata"@es ;
              geo:lat -13.598889 ;
              geo:long -71.191111 .
-
 
 ###  http://example.org/festividades#MisaInicial_Paucartambo_2025
 :MisaInicial_Paucartambo_2025 rdf:type owl:NamedIndividual ,
@@ -1699,7 +1513,6 @@ xsd:time rdf:type rdfs:Datatype .
                               rdfs:comment "Misa de envío a las 7:00 AM en la Iglesia de Paucartambo antes de la partida de la peregrinación."@es ;
                               rdfs:label "Misa inicial en Paucartambo (2025)"@es .
 
-
 ###  http://example.org/festividades#MisaUkukus_2025
 :MisaUkukus_2025 rdf:type owl:NamedIndividual ,
                           :EventoRitual ;
@@ -1711,7 +1524,6 @@ xsd:time rdf:type rdfs:Datatype .
                  rdfs:comment "Misa especial para los ukukus"@es ;
                  rdfs:label "Misa de Ukukus (2025)"@es .
 
-
 ###  http://example.org/festividades#Mollomarca
 :Mollomarca rdf:type owl:NamedIndividual ,
                      :Lugar ;
@@ -1721,14 +1533,12 @@ xsd:time rdf:type rdfs:Datatype .
             geo:lat -13.4343141 ;
             geo:long -71.6373547 .
 
-
 ###  http://example.org/festividades#NacionPaucartambo
 :NacionPaucartambo rdf:type owl:NamedIndividual ,
                             :Nacion ;
                    :participaEn :Lomada_2025 ;
                    rdfs:comment "Comunidad participante principal en la festividad del Señor de Qoyllu Rit'i."@es ;
                    rdfs:label "Nación Paucartambo"@es .
-
 
 ###  http://example.org/festividades#NocheLunesMartes_Glaciar
 :NocheLunesMartes_Glaciar rdf:type owl:NamedIndividual ,
@@ -1739,7 +1549,6 @@ xsd:time rdf:type rdfs:Datatype .
                           :tieneOrden 4 ;
                           rdfs:comment "Franja nocturna dedicada a la subida y permanencia en el glaciar Colque Punku para realizar rituales."@es ;
                           rdfs:label "Noche del lunes al martes (en el glaciar)"@es .
-
 
 ###  http://example.org/festividades#NocheMartesMiercoles_Lomada
 :NocheMartesMiercoles_Lomada rdf:type owl:NamedIndividual ,
@@ -1753,7 +1562,6 @@ xsd:time rdf:type rdfs:Datatype .
                              rdfs:comment "Franja nocturna en la que se desarrolla la parte central de la caminata de 24 horas, incluyendo hitos como Q'espi Cruz."@es ;
                              rdfs:label "Noche del martes al miércoles (durante la lomada)"@es .
 
-
 ###  http://example.org/festividades#Ocongate
 :Ocongate rdf:type owl:NamedIndividual ,
                    :Lugar ;
@@ -1762,7 +1570,6 @@ xsd:time rdf:type rdfs:Datatype .
           rdfs:label "Ocongate" ;
           geo:lat -13.639444 ;
           geo:long -71.387778 .
-
 
 ###  http://example.org/festividades#Pachakunapata
 :Pachakunapata rdf:type owl:NamedIndividual ,
@@ -1778,7 +1585,6 @@ xsd:time rdf:type rdfs:Datatype .
                geo:lat -13.598333 ;
                geo:long -71.190833 .
 
-
 ###  http://example.org/festividades#ParadaHuancarani_2025
 :ParadaHuancarani_2025 rdf:type owl:NamedIndividual ,
                                 :EventoRitual ;
@@ -1790,7 +1596,6 @@ xsd:time rdf:type rdfs:Datatype .
                        rdfs:comment "Reunión y espera de todos los danzantes de la Nación Paucartambo en el cruce vial de Huancarani."@es ;
                        rdfs:label "Parada en Huancarani (2025)"@es .
 
-
 ###  http://example.org/festividades#PasoCasaPrioste
 :PasoCasaPrioste rdf:type owl:NamedIndividual ,
                           :EventoRitual ;
@@ -1798,7 +1603,6 @@ xsd:time rdf:type rdfs:Datatype .
                  :tieneOrdenEvento 7 ;
                  rdfs:comment "Visita y ritual en la casa del prioste durante el camino entre Paucartambo y Mahuayani."@es ;
                  rdfs:label "Paso por la casa del prioste (2025)"@es .
-
 
 ###  http://example.org/festividades#Paucartambo
 :Paucartambo rdf:type owl:NamedIndividual ,
@@ -1808,7 +1612,6 @@ xsd:time rdf:type rdfs:Datatype .
              rdfs:label "Paucartambo" ;
              geo:lat -13.3126625 ;
              geo:long -71.614552 .
-
 
 ###  http://example.org/festividades#Pellon
 :Pellon rdf:type owl:NamedIndividual ,
@@ -1820,7 +1623,6 @@ xsd:time rdf:type rdfs:Datatype .
         rdfs:comment "Traje principal del ukuku, también llamado bellón."@es ;
         rdfs:label "Pellón"@es .
 
-
 ###  http://example.org/festividades#PlazaCcatcca
 :PlazaCcatcca rdf:type owl:NamedIndividual ,
                        :Lugar ;
@@ -1830,7 +1632,6 @@ xsd:time rdf:type rdfs:Datatype .
               geo:lat -13.6425762 ;
               geo:long -72.0779553 .
 
-
 ###  http://example.org/festividades#PlazaOcongate
 :PlazaOcongate rdf:type owl:NamedIndividual ,
                         :Lugar ;
@@ -1839,7 +1640,6 @@ xsd:time rdf:type rdfs:Datatype .
                rdfs:label "Plaza de Ocongate"@es ;
                geo:lat -13.6394 ;
                geo:long -71.3878 .
-
 
 ###  http://example.org/festividades#PlazaPaucartambo
 :PlazaPaucartambo rdf:type owl:NamedIndividual ,
@@ -1851,7 +1651,6 @@ xsd:time rdf:type rdfs:Datatype .
                   geo:lat -13.3178313 ;
                   geo:long -71.6013075 .
 
-
 ###  http://example.org/festividades#ProcesionEntradaOcongate_2025
 :ProcesionEntradaOcongate_2025 rdf:type owl:NamedIndividual ,
                                         :EventoRitual ;
@@ -1862,7 +1661,6 @@ xsd:time rdf:type rdfs:Datatype .
                                rdfs:comment "Procesión final en Ocongate que marca el término oficial de la festividad para la Nación Paucartambo."@es ;
                                rdfs:label "Procesión de entrada a Ocongate (2025)"@es .
 
-
 ###  http://example.org/festividades#ProcesionMamachapata_2025
 :ProcesionMamachapata_2025 rdf:type owl:NamedIndividual ,
                                     :EventoRitual ;
@@ -1872,7 +1670,6 @@ xsd:time rdf:type rdfs:Datatype .
                            rdfs:comment "Procesión con la imagen del Señor de Tayankani hacia el área de Mamachapata dentro del santuario. La Nación Paucartambo tiene el derecho histórico de ser los primeros en sacar esta imagen."@es ;
                            rdfs:label "Procesión a Mamachapata (2025)"@es .
 
-
 ###  http://example.org/festividades#Puyka
 :Puyka rdf:type owl:NamedIndividual ,
                 :Instrumento ;
@@ -1881,7 +1678,6 @@ xsd:time rdf:type rdfs:Datatype .
        :tieneNombreLocal "puyka"@qu ;
        rdfs:comment "Especie de caña para hacer ruido. Representa el sonido que hacen los hombres-oso al agruparse."@es ;
        rdfs:label "Puyka"@es .
-
 
 ###  http://example.org/festividades#QespiCruz
 :QespiCruz rdf:type owl:NamedIndividual ,
@@ -1893,7 +1689,6 @@ xsd:time rdf:type rdfs:Datatype .
            geo:lat -13.5700 ;
            geo:long -71.1650 .
 
-
 ###  http://example.org/festividades#QquchiyocWayqo
 :QquchiyocWayqo rdf:type owl:NamedIndividual ,
                          :Lugar ;
@@ -1901,7 +1696,6 @@ xsd:time rdf:type rdfs:Datatype .
                 rdfs:label "Qquchiyoc Wayq'o"@es ;
                 geo:lat -13.5750 ;
                 geo:long -71.1700 .
-
 
 ###  http://example.org/festividades#RitualDespedida_Yanaqocha_2025
 :RitualDespedida_Yanaqocha_2025 rdf:type owl:NamedIndividual ,
@@ -1913,7 +1707,6 @@ xsd:time rdf:type rdfs:Datatype .
                                 rdfs:comment "Rituales de despedida entre miembros de la Nación en la Laguna Yanaqocha, corriendo y abrazándose."@es ;
                                 rdfs:label "Ritual de despedida en Yanaqocha (2025)"@es .
 
-
 ###  http://example.org/festividades#RitualGrutaTayankani_2025
 :RitualGrutaTayankani_2025 rdf:type owl:NamedIndividual ,
                                     :EventoRitual ;
@@ -1923,7 +1716,6 @@ xsd:time rdf:type rdfs:Datatype .
                            rdfs:comment "Últimos rituales de los Ukukus en la gruta de Tayankani antes del ingreso procesional al pueblo."@es ;
                            rdfs:label "Ritual en gruta de Tayankani (2025)"@es .
 
-
 ###  http://example.org/festividades#RitualMachuCruz_2025
 :RitualMachuCruz_2025 rdf:type owl:NamedIndividual ,
                                :EventoRitual ;
@@ -1932,7 +1724,6 @@ xsd:time rdf:type rdfs:Datatype .
                       :tieneOrdenEvento 2 ;
                       rdfs:comment "Pausa ritual a poco más de una hora del santuario para comer maíz y queso, en acto simbólico de despedida del espacio sagrado."@es ;
                       rdfs:label "Ritual en Machu Cruz (2025)"@es .
-
 
 ###  http://example.org/festividades#RitualVestimentaDanzantes_2025
 :RitualVestimentaDanzantes_2025 rdf:type owl:NamedIndividual ,
@@ -1946,7 +1737,6 @@ xsd:time rdf:type rdfs:Datatype .
                                 rdfs:comment "Acto público donde los danzantes se visten con sus trajes ceremoniales en la plaza de Paucartambo, anunciando la partida de la Nación."@es ;
                                 rdfs:label "Ritual de vestimenta de danzantes (2025)"@es .
 
-
 ###  http://example.org/festividades#RomeriaPaucartambo_2025_06_15
 :RomeriaPaucartambo_2025_06_15 rdf:type owl:NamedIndividual ,
                                         :EventoRitual ;
@@ -1957,13 +1747,11 @@ xsd:time rdf:type rdfs:Datatype .
                                rdfs:comment "Romería y anuncio público antes de la partida"@es ;
                                rdfs:label "Romería en Paucartambo (2025)"@es .
 
-
 ###  http://example.org/festividades#RutaPaucartamboMahuayani
 :RutaPaucartamboMahuayani rdf:type owl:NamedIndividual ,
                                    :Lugar ;
                           rdfs:comment "Ruta terrestre seguida por la Nación Paucartambo en vehículo durante el viaje al santuario."@es ;
                           rdfs:label "Ruta Paucartambo - Mahuayani"@es .
-
 
 ###  http://example.org/festividades#SantuarioQoylluriti
 :SantuarioQoylluriti rdf:type owl:NamedIndividual ,
@@ -1977,14 +1765,12 @@ xsd:time rdf:type rdfs:Datatype .
                      rdfs:comment "Santuario de alta montaña donde se concentra la peregrinación anual del Señor de Qoyllur Rit’i."@es ;
                      rdfs:label "Santuario del Señor de Qoyllur Rit'i"@es .
 
-
 ###  http://example.org/festividades#SilbatoUkuku
 :SilbatoUkuku rdf:type owl:NamedIndividual ,
                        :Instrumento ;
               :esParteDe :TrajeUkumari ;
               rdfs:comment "Silbato usado para hacer saber que el ukuku está presente."@es ;
               rdfs:label "Silbato del ukuku"@es .
-
 
 ###  http://example.org/festividades#Sinakara
 :Sinakara rdf:type owl:NamedIndividual ,
@@ -1999,7 +1785,6 @@ xsd:time rdf:type rdfs:Datatype .
           geo:lat -13.6500 ;
           geo:long -71.1800 .
 
-
 ###  http://example.org/festividades#Sorriago
 :Sorriago rdf:type owl:NamedIndividual ,
                    :Instrumento ;
@@ -2007,7 +1792,6 @@ xsd:time rdf:type rdfs:Datatype .
           :hechoDeRitual "cuero trenzado" ;
           rdfs:comment "Látigo ceremonial de cuero trenzado portado por el ukuku."@es ;
           rdfs:label "Sorriago"@es .
-
 
 ###  http://example.org/festividades#SubidaColquePunku_2025
 :SubidaColquePunku_2025 rdf:type owl:NamedIndividual ,
@@ -2020,7 +1804,6 @@ xsd:time rdf:type rdfs:Datatype .
                         rdfs:comment "Ascenso nocturno al glaciar Colque Punku"@es ;
                         rdfs:label "Subida al Colque Punku (2025)"@es .
 
-
 ###  http://example.org/festividades#Tayancani
 :Tayancani rdf:type owl:NamedIndividual ,
                     :Lugar ;
@@ -2029,7 +1812,6 @@ xsd:time rdf:type rdfs:Datatype .
            rdfs:label "Tayancani" ;
            geo:lat -13.5547 ;
            geo:long -71.1503 .
-
 
 ###  http://example.org/festividades#TrajeUkumari
 :TrajeUkumari rdf:type owl:NamedIndividual ,
@@ -2047,7 +1829,6 @@ xsd:time rdf:type rdfs:Datatype .
               rdfs:comment "Vestimenta ceremonial completa del ukuku que incluye: pellón (traje principal de lana), huaqollo (careta tejida de lana que cubre el rostro), umak'ara (pedazo de cuero en la cabeza), sorriago (látigo ceremonial de cuero trenzado), cruz de cobre portada en el pecho, silbato para anunciarse, puyka (caña para hacer ruido que imita a los osos), guantes y camisa blanca. El conjunto representa al oso andino y sus funciones rituales."@es ;
               rdfs:label "Traje de Ukumari"@es .
 
-
 ###  http://example.org/festividades#TrasladoImagenSenorOcongate_Tayancani_2025
 :TrasladoImagenSenorOcongate_Tayancani_2025 rdf:type owl:NamedIndividual ,
                                                      :EventoRitual ;
@@ -2055,7 +1836,6 @@ xsd:time rdf:type rdfs:Datatype .
                                             :tieneOrdenEvento 4 ;
                                             rdfs:comment "Procesión con la imagen desde Tayancani hacia Ocongate"@es ;
                                             rdfs:label "Traslado de la imagen a Ocongate (2025)"@es .
-
 
 ###  http://example.org/festividades#Ukumaris_Paucartambo_2025
 :Ukumaris_Paucartambo_2025 rdf:type owl:NamedIndividual ,
@@ -2069,7 +1849,6 @@ xsd:time rdf:type rdfs:Datatype .
                            :tieneImportancia "central"@es ;
                            rdfs:label "Ukumaris de Paucartambo (2025)"@es .
 
-
 ###  http://example.org/festividades#Umakhara
 :Umakhara rdf:type owl:NamedIndividual ,
                    :Vestimenta ;
@@ -2080,13 +1859,11 @@ xsd:time rdf:type rdfs:Datatype .
           rdfs:comment "Pedazo de cuero colocado en la cabeza del ukuku."@es ;
           rdfs:label "Umak'ara"@es .
 
-
 ###  http://example.org/festividades#Unesco
 :Unesco rdf:type owl:NamedIndividual ,
                  :PaginaWeb ;
         :documentaLugar :SantuarioQoylluriti ;
         rdfs:label "Unesco"@es .
-
 
 ###  http://example.org/festividades#ViajeVehicular_Paucartambo_Mahuayani_2025
 :ViajeVehicular_Paucartambo_Mahuayani_2025 rdf:type owl:NamedIndividual ,
@@ -2104,7 +1881,6 @@ xsd:time rdf:type rdfs:Datatype .
                                            rdfs:comment "Dualidad evento-lugar: viaje ritual en vehículo desde Paucartambo hasta Mahuayani que sigue una ruta física específica con paradas rituales."@es ;
                                            rdfs:label "Viaje vehicular a Mahuayani (2025)"@es .
 
-
 ###  http://example.org/festividades#VisitaIglesiaCcatcca_2025
 :VisitaIglesiaCcatcca_2025 rdf:type owl:NamedIndividual ,
                                     :EventoRitual ;
@@ -2116,7 +1892,6 @@ xsd:time rdf:type rdfs:Datatype .
                            rdfs:comment "Visita ritual a la iglesia del pueblo de Ccatcca, marcando el paso de los Ukumari en su ruta hacia el santuario."@es ;
                            rdfs:label "Visita a la iglesia de Ccatcca (2025)"@es .
 
-
 ###  http://example.org/festividades#Yanaqancha
 :Yanaqancha rdf:type owl:NamedIndividual ,
                      :Lugar ;
@@ -2125,7 +1900,6 @@ xsd:time rdf:type rdfs:Datatype .
             rdfs:label "Yanaqancha"@es ;
             geo:lat -13.5800 ;
             geo:long -71.1750 .
-
 
 ###  http://example.org/festividades#Yanaqocha
 :Yanaqocha rdf:type owl:NamedIndividual ,
@@ -2136,7 +1910,6 @@ xsd:time rdf:type rdfs:Datatype .
            rdfs:label "Laguna Yanaqocha"@es ;
            geo:lat -13.5850 ;
            geo:long -71.1800 .
-
 
 #################################################################
 #    General axioms
@@ -2150,14 +1923,12 @@ xsd:time rdf:type rdfs:Datatype .
               )
 ] .
 
-
 [ rdf:type owl:AllDisjointClasses ;
   owl:members ( :Articulo
                 :Libro
                 :PaginaWeb
               )
 ] .
-
 
 [ rdf:type owl:AllDisjointClasses ;
   owl:members ( :ImagenReligiosa
@@ -2167,7 +1938,6 @@ xsd:time rdf:type rdfs:Datatype .
                 :Vestimenta
               )
 ] .
-
 
 ###  Generated by the OWL API (version 4.5.29.2024-05-13T12:11:03Z) https://github.com/owlcs/owlapi`;
 
@@ -2227,11 +1997,7 @@ xsd:time rdf:type rdfs:Datatype .
                 const sidebar = document.getElementById('sidebar');
                 sidebar.classList.toggle('collapsed');
                 const icon = document.querySelector('.toggle-sidebar i');
-                if (sidebar.classList.contains('collapsed')) {
-                    icon.className = 'fas fa-chevron-right';
-                } else {
-                    icon.className = 'fas fa-chevron-left';
-                }
+                icon.className = sidebar.classList.contains('collapsed') ? 'fas fa-chevron-right' : 'fas fa-chevron-left';
                 setTimeout(() => {
                     if (network) network.redraw();
                     if (map) map.invalidateSize();
@@ -2246,28 +2012,23 @@ xsd:time rdf:type rdfs:Datatype .
                 document.getElementById('map-view').classList.remove('active');
                 document.getElementById(vista + '-view').classList.add('active');
                 
-                if (vista === 'mapa' && map) {
-                    setTimeout(() => map.invalidateSize(), 100);
-                }
+                if (vista === 'mapa' && map) setTimeout(() => map.invalidateSize(), 100);
             };
             
             // ====================================================================
-            // CARGAR TTL (DESDE DATOS EMBEBIDOS)
+            // CARGAR TTL
             // ====================================================================
             
             async function cargarTTL() {
                 try {
                     document.getElementById('loading').style.display = 'flex';
                     
-                    // Usar los datos embebidos
-                    const ttlText = TTL_DATA;
-                    
-                    if (!ttlText || ttlText.length < 500) {
-                        throw new Error('Los datos TTL están vacíos o son muy cortos. ¿Copiaste el contenido completo?');
+                    if (!TTL_DATA || TTL_DATA.length < 1000) {
+                        throw new Error('Los datos TTL están vacíos o son muy cortos');
                     }
                     
                     const baseURI = 'http://example.org/festividades#';
-                    $rdf.parse(ttlText, store, baseURI, 'text/turtle');
+                    $rdf.parse(TTL_DATA, store, baseURI, 'text/turtle');
                     
                     procesarGrafo();
                     inicializarVisualizacion();
@@ -2276,15 +2037,11 @@ xsd:time rdf:type rdfs:Datatype .
                     document.getElementById('loading').style.display = 'none';
                     
                 } catch (error) {
-                    console.error('Error cargando TTL:', error);
+                    console.error('Error:', error);
                     document.getElementById('loading').innerHTML = `
                         <div style="color:#e53e3e">
                             <i class="fas fa-exclamation-triangle"></i>
-                            Error: ${error.message}<br>
-                            <small style="display:block; margin-top:1rem;">
-                                Asegúrate de haber copiado TODO el contenido del archivo TTL<br>
-                                (debe empezar con @prefix y tener varias miles de líneas)
-                            </small>
+                            Error: ${error.message}
                         </div>
                     `;
                 }
@@ -2302,10 +2059,7 @@ xsd:time rdf:type rdfs:Datatype .
                 
                 const sujetos = new Set();
                 store.statements.forEach(st => {
-                    const sujetoURI = st.subject.value;
-                    if (sujetoURI.includes('festividades#')) {
-                        sujetos.add(sujetoURI);
-                    }
+                    if (st.subject.value.includes('festividades#')) sujetos.add(st.subject.value);
                 });
                 
                 sujetos.forEach(sujetoURI => {
@@ -2315,58 +2069,41 @@ xsd:time rdf:type rdfs:Datatype .
                     const subject = $rdf.sym(sujetoURI);
                     
                     const labels = store.each(subject, RDFS('label'), null);
-                    const label = labels.length > 0 ? labels[0].value : id;
+                    const label = labels[0]?.value || id;
                     
                     const comments = store.each(subject, RDFS('comment'), null);
-                    const comment = comments.length > 0 ? comments[0].value : '';
+                    const comment = comments[0]?.value || '';
                     
                     const tipos = store.each(subject, RDF('type'), null)
                         .map(t => t.value.split('#')[1])
                         .filter(t => t && t !== 'NamedIndividual');
                     
-                    const importanciaStatements = store.each(subject, FEST('tieneImportancia'), null);
-                    const tieneImportancia = importanciaStatements.length > 0 ? importanciaStatements[0].value : null;
+                    const importancia = store.each(subject, FEST('tieneImportancia'), null)[0]?.value || null;
                     
-                    const latStatements = store.each(subject, GEO('lat'), null);
-                    const longStatements = store.each(subject, GEO('long'), null);
-                    let lat = null, lon = null;
-                    if (latStatements.length > 0 && longStatements.length > 0) {
-                        lat = parseFloat(latStatements[0].value);
-                        lon = parseFloat(longStatements[0].value);
-                    }
+                    const lat = store.each(subject, GEO('lat'), null)[0]?.value;
+                    const lon = store.each(subject, GEO('long'), null)[0]?.value;
                     
                     const relaciones = [];
                     store.statements.forEach(st => {
                         if (st.subject.value === sujetoURI && st.predicate.value.includes('festividades#')) {
                             const pred = st.predicate.value.split('#')[1];
-                            const obj = st.object.value;
-                            if (obj.includes('festividades#')) {
-                                relaciones.push({
-                                    predicado: pred,
-                                    objeto: obj.split('#')[1]
-                                });
-                            }
+                            const obj = st.object.value.split('#')[1];
+                            if (obj) relaciones.push({ predicado: pred, objeto: obj });
                         }
                     });
                     
                     entidades.set(id, {
-                        id,
-                        label,
-                        comment,
-                        tipos,
-                        tieneImportancia,
-                        lat,
-                        lon,
+                        id, label, comment, tipos,
+                        tieneImportancia: importancia,
+                        lat: lat ? parseFloat(lat) : null,
+                        lon: lon ? parseFloat(lon) : null,
                         relaciones
                     });
                     
                     if (lat && lon) {
-                        lugaresConCoordenadas.push({ id, label, lat, lon, tipos, comment });
+                        lugaresConCoordenadas.push({ id, label, lat: parseFloat(lat), lon: parseFloat(lon), tipos, comment });
                     }
                 });
-                
-                console.log(`Procesadas ${entidades.size} entidades`);
-                console.log(`${lugaresConCoordenadas.length} lugares con coordenadas`);
                 
                 document.getElementById('place-count').textContent = lugaresConCoordenadas.length;
             }
@@ -2379,35 +2116,21 @@ xsd:time rdf:type rdfs:Datatype .
                 if (lugaresConCoordenadas.length === 0) return;
                 
                 map = L.map('map').setView([-13.5, -71.5], 9);
-                
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '© OpenStreetMap contributors'
+                    attribution: '© OpenStreetMap'
                 }).addTo(map);
                 
                 lugaresConCoordenadas.forEach(lugar => {
                     const icono = L.divIcon({
-                        html: `<i class="fas ${ICONOS_TIPOS[lugar.tipos[0]] || 'fa-map-marker-alt'}" style="color: ${COLORES_TIPOS[lugar.tipos[0]] || '#718096'}; font-size: 20px; text-shadow: 0 0 5px white;"></i>`,
-                        className: 'marcador-personalizado',
+                        html: `<i class="fas ${ICONOS_TIPOS[lugar.tipos[0]] || 'fa-map-marker-alt'}" style="color: ${COLORES_TIPOS[lugar.tipos[0]] || '#718096'}; font-size: 20px;"></i>`,
+                        className: 'marcador',
                         iconSize: [25, 25],
-                        iconAnchor: [12, 12],
-                        popupAnchor: [0, -12]
+                        iconAnchor: [12, 12]
                     });
                     
                     const marker = L.marker([lugar.lat, lugar.lon], { icon: icono }).addTo(map);
-                    
-                    marker.bindPopup(`
-                        <strong>${lugar.label}</strong><br>
-                        ${lugar.tipos.join(', ')}<br>
-                        <small><i>Haz clic para más información</i></small>
-                    `);
-                    
-                    marker.on('click', () => {
-                        mostrarInfoNodo(lugar.id);
-                        if (network && document.getElementById('graph-view').classList.contains('active')) {
-                            network.selectNodes([lugar.id]);
-                        }
-                    });
-                    
+                    marker.bindPopup(`<strong>${lugar.label}</strong><br>${lugar.tipos.join(', ')}`);
+                    marker.on('click', () => window.mostrarInfoNodo(lugar.id));
                     markers.push({ id: lugar.id, marker });
                 });
                 
@@ -2415,22 +2138,15 @@ xsd:time rdf:type rdfs:Datatype .
             }
             
             // ====================================================================
-            // CREAR NODOS Y ARISTAS
+            // INICIALIZAR VISUALIZACIÓN
             // ====================================================================
             
             function inicializarVisualizacion() {
-                allNodes = [];
-                allEdges = [];
-                
                 entidades.forEach((ent, id) => {
-                    const tipoPrincipal = ent.tipos[0] || 'default';
-                    const color = COLORES_TIPOS[tipoPrincipal] || COLORES_TIPOS['default'];
-                    
                     allNodes.push({
-                        id: id,
-                        label: ent.label,
+                        id, label: ent.label,
                         title: ent.comment || ent.label,
-                        color: color,
+                        color: COLORES_TIPOS[ent.tipos[0]] || COLORES_TIPOS.default,
                         tipos: ent.tipos,
                         importancia: ent.tieneImportancia,
                         data: ent
@@ -2441,12 +2157,10 @@ xsd:time rdf:type rdfs:Datatype .
                     ent.relaciones.forEach(rel => {
                         if (entidades.has(rel.objeto)) {
                             allEdges.push({
-                                from: id,
-                                to: rel.objeto,
+                                from: id, to: rel.objeto,
                                 label: rel.predicado,
                                 arrows: 'to',
-                                font: { size: 10, color: '#64748b' },
-                                color: { color: '#cbd5e1' }
+                                font: { size: 10 }
                             });
                         }
                     });
@@ -2465,153 +2179,48 @@ xsd:time rdf:type rdfs:Datatype .
                 crearRed();
             }
             
-            // ====================================================================
-            // CREAR RED
-            // ====================================================================
-            
             function crearRed() {
-                const container = document.getElementById('network');
-                const data = {
+                network = new vis.Network(document.getElementById('network'), {
                     nodes: nodesDataset,
                     edges: edgesDataset
-                };
-                
-                const options = {
-                    nodes: {
-                        shape: 'dot',
-                        size: 20,
-                        font: {
-                            size: 12,
-                            color: '#1e293b',
-                            face: 'Segoe UI'
-                        },
-                        borderWidth: 2,
-                        borderWidthSelected: 3,
-                        shadow: true
-                    },
-                    edges: {
-                        width: 1.5,
-                        color: { color: '#cbd5e1', highlight: '#0f3b5e' },
-                        smooth: { type: 'continuous' },
-                        font: { background: 'white' }
-                    },
-                    physics: {
-                        forceAtlas2Based: {
-                            gravitationalConstant: -30,
-                            centralGravity: 0.01,
-                            springLength: 120,
-                            springConstant: 0.08
-                        },
-                        solver: 'forceAtlas2Based',
-                        stabilization: { iterations: 100 }
-                    },
-                    interaction: {
-                        hover: true,
-                        tooltipDelay: 200,
-                        navigationButtons: true,
-                        keyboard: true
-                    }
-                };
-                
-                network = new vis.Network(container, data, options);
-                
-                network.on('click', function(params) {
-                    if (params.nodes.length > 0) {
-                        mostrarInfoNodo(params.nodes[0]);
-                    } else {
-                        mostrarInfoNodo(null);
-                    }
+                }, {
+                    nodes: { shape: 'dot', size: 20, font: { size: 12 } },
+                    edges: { width: 1.5, color: '#cbd5e1' },
+                    physics: { stabilization: true }
                 });
                 
-                network.on('hoverNode', function() {
-                    document.getElementById('network').style.cursor = 'pointer';
-                });
-                
-                network.on('blurNode', function() {
-                    document.getElementById('network').style.cursor = 'default';
+                network.on('click', params => {
+                    if (params.nodes.length) window.mostrarInfoNodo(params.nodes[0]);
+                    else window.mostrarInfoNodo(null);
                 });
             }
             
             // ====================================================================
-            // MOSTRAR INFO EN SIDEBAR
+            // MOSTRAR INFO
             // ====================================================================
             
             window.mostrarInfoNodo = function(nodeId) {
                 const content = document.getElementById('info-content');
                 
                 if (!nodeId || !entidades.has(nodeId)) {
-                    content.innerHTML = `
-                        <div class="no-selection">
-                            <i class="fas fa-hand-pointer"></i>
-                            <p>Haz clic en cualquier nodo o marcador<br>para ver su información</p>
-                        </div>
-                    `;
+                    content.innerHTML = '<div class="no-selection"><i class="fas fa-hand-pointer"></i><p>Haz clic en cualquier nodo o marcador</p></div>';
                     return;
                 }
                 
                 const ent = entidades.get(nodeId);
                 
-                let importanceHTML = '';
-                if (ent.tieneImportancia) {
-                    let importanceClass = '';
-                    if (ent.tieneImportancia.includes('central')) importanceClass = 'importance-central';
-                    else if (ent.tieneImportancia.includes('secundaria')) importanceClass = 'importance-secundaria';
-                    else if (ent.tieneImportancia.includes('menor')) importanceClass = 'importance-menor';
-                    
-                    importanceHTML = `<div class="importance-badge ${importanceClass}">${ent.tieneImportancia}</div>`;
-                }
-                
-                const tiposHTML = ent.tipos.map(t => 
-                    `<span class="type-badge"><i class="fas ${ICONOS_TIPOS[t] || 'fa-tag'}"></i> ${t}</span>`
-                ).join('');
-                
-                let coordsHTML = '';
-                if (ent.lat && ent.lon) {
-                    coordsHTML = `
-                        <div class="coordinates">
-                            <i class="fas fa-map-pin"></i>
-                            ${ent.lat.toFixed(4)}, ${ent.lon.toFixed(4)}
-                        </div>
-                    `;
-                }
-                
-                let relacionesHTML = '';
-                if (ent.relaciones.length > 0) {
-                    relacionesHTML = `
-                        <div class="relations-section">
-                            <h4><i class="fas fa-link"></i> Relaciones (${ent.relaciones.length})</h4>
-                            <div class="relation-list">
-                                ${ent.relaciones.slice(0, 15).map(rel => {
-                                    const objEnt = entidades.get(rel.objeto);
-                                    const objLabel = objEnt ? objEnt.label : rel.objeto;
-                                    return `
-                                        <div class="relation-item" onclick="mostrarInfoNodo('${rel.objeto}')">
-                                            <strong>${rel.predicado}</strong>
-                                            ${objLabel}
-                                        </div>
-                                    `;
-                                }).join('')}
-                                ${ent.relaciones.length > 15 ? `<div style="font-size:0.8rem; color:#64748b; margin-top:0.5rem;">... y ${ent.relaciones.length - 15} más</div>` : ''}
-                            </div>
-                        </div>
-                    `;
-                }
+                let importanceClass = '';
+                if (ent.tieneImportancia?.includes('central')) importanceClass = 'importance-central';
+                else if (ent.tieneImportancia?.includes('secundaria')) importanceClass = 'importance-secundaria';
+                else if (ent.tieneImportancia?.includes('menor')) importanceClass = 'importance-menor';
                 
                 content.innerHTML = `
                     <div class="entity-card">
-                        <div class="entity-title">
-                            <i class="fas ${ICONOS_TIPOS[ent.tipos[0]] || 'fa-tag'}" style="color: ${COLORES_TIPOS[ent.tipos[0]] || '#718096'}"></i>
-                            ${ent.label}
-                        </div>
-                        <div class="entity-types">
-                            ${tiposHTML}
-                        </div>
-                        ${importanceHTML}
-                        ${coordsHTML}
-                        <div class="entity-description">
-                            ${ent.comment || 'Sin descripción disponible'}
-                        </div>
-                        ${relacionesHTML}
+                        <div class="entity-title"><i class="fas ${ICONOS_TIPOS[ent.tipos[0]] || 'fa-tag'}"></i> ${ent.label}</div>
+                        <div class="entity-types">${ent.tipos.map(t => `<span class="type-badge">${t}</span>`).join('')}</div>
+                        ${ent.tieneImportancia ? `<div class="importance-badge ${importanceClass}">${ent.tieneImportancia}</div>` : ''}
+                        ${ent.lat ? `<div class="coordinates"><i class="fas fa-map-pin"></i> ${ent.lat.toFixed(4)}, ${ent.lon.toFixed(4)}</div>` : ''}
+                        <div class="entity-description">${ent.comment || 'Sin descripción'}</div>
                     </div>
                 `;
             };
@@ -2621,45 +2230,30 @@ xsd:time rdf:type rdfs:Datatype .
             // ====================================================================
             
             function aplicarFiltros() {
-                const tipoSeleccionado = document.getElementById('filter-type').value;
-                const importanciaSeleccionada = document.getElementById('filter-importance').value;
+                const tipo = document.getElementById('filter-type').value;
+                const importancia = document.getElementById('filter-importance').value;
                 const busqueda = document.getElementById('search-box').value.toLowerCase();
                 
-                let filteredNodes = allNodes.filter(node => {
-                    if (tipoSeleccionado !== 'all' && !node.tipos.includes(tipoSeleccionado)) return false;
-                    if (importanciaSeleccionada !== 'all') {
-                        const nodeImportancia = node.importancia || '';
-                        if (!nodeImportancia.includes(importanciaSeleccionada)) return false;
-                    }
-                    if (busqueda) {
-                        const labelMatch = node.label.toLowerCase().includes(busqueda);
-                        const idMatch = node.id.toLowerCase().includes(busqueda);
-                        const tiposMatch = node.tipos.some(t => t.toLowerCase().includes(busqueda));
-                        if (!labelMatch && !idMatch && !tiposMatch) return false;
-                    }
+                const filtrados = allNodes.filter(n => {
+                    if (tipo !== 'all' && !n.tipos.includes(tipo)) return false;
+                    if (importancia !== 'all' && !n.importancia?.includes(importancia)) return false;
+                    if (busqueda && !n.label.toLowerCase().includes(busqueda) && !n.id.toLowerCase().includes(busqueda)) return false;
                     return true;
                 });
                 
-                const filteredNodeIds = new Set(filteredNodes.map(n => n.id));
-                const filteredEdges = allEdges.filter(e => 
-                    filteredNodeIds.has(e.from) && filteredNodeIds.has(e.to)
-                );
-                
+                const ids = new Set(filtrados.map(n => n.id));
                 nodesDataset.clear();
                 edgesDataset.clear();
-                nodesDataset.add(filteredNodes);
-                edgesDataset.add(filteredEdges);
+                nodesDataset.add(filtrados);
+                edgesDataset.add(allEdges.filter(e => ids.has(e.from) && ids.has(e.to)));
                 
-                document.getElementById('node-count').textContent = filteredNodes.length;
-                document.getElementById('edge-count').textContent = filteredEdges.length;
+                document.getElementById('node-count').textContent = filtrados.length;
+                document.getElementById('edge-count').textContent = allEdges.filter(e => ids.has(e.from) && ids.has(e.to)).length;
                 
                 if (map) {
                     markers.forEach(m => {
-                        if (filteredNodeIds.has(m.id)) {
-                            map.addLayer(m.marker);
-                        } else {
-                            map.removeLayer(m.marker);
-                        }
+                        if (ids.has(m.id)) map.addLayer(m.marker);
+                        else map.removeLayer(m.marker);
                     });
                 }
             }
@@ -2668,14 +2262,14 @@ xsd:time rdf:type rdfs:Datatype .
             document.getElementById('filter-importance').addEventListener('change', aplicarFiltros);
             document.getElementById('search-box').addEventListener('input', aplicarFiltros);
             
-            document.getElementById('reset-btn').addEventListener('click', function() {
+            document.getElementById('reset-btn').addEventListener('click', () => {
                 document.getElementById('filter-type').value = 'all';
                 document.getElementById('filter-importance').value = 'all';
                 document.getElementById('search-box').value = '';
                 aplicarFiltros();
                 if (network) network.fit();
                 if (map) map.setView([-13.5, -71.5], 9);
-                mostrarInfoNodo(null);
+                window.mostrarInfoNodo(null);
             });
             
             // ====================================================================
@@ -2683,8 +2277,7 @@ xsd:time rdf:type rdfs:Datatype .
             // ====================================================================
             
             cargarTTL();
-            
-        }); // Fin de DOMContentLoaded
+        });
     </script>
 </body>
 </html>
