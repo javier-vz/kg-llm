@@ -19,11 +19,9 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     
     <style>
-        /* ===== ESTILOS ===== */
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             background: #f0f2f5;
             color: #1e293b;
             height: 100vh;
@@ -31,7 +29,6 @@
             flex-direction: column;
             overflow: hidden;
         }
-        
         #header {
             background: white;
             padding: 0.8rem 1.5rem;
@@ -40,33 +37,25 @@
             justify-content: space-between;
             align-items: center;
             z-index: 10;
-            flex-shrink: 0;
         }
-        
         h1 {
             font-size: 1.4rem;
             color: #0f3b5e;
-            margin: 0;
             display: flex;
             align-items: center;
             gap: 8px;
         }
-        
         h1 i { color: #d4a017; }
-        
         .subtitle {
             font-size: 0.8rem;
             color: #64748b;
-            margin-top: 2px;
         }
-        
         #controls {
             display: flex;
             gap: 0.8rem;
             align-items: center;
             flex-wrap: wrap;
         }
-        
         .view-tabs {
             display: flex;
             background: #f1f5f9;
@@ -74,7 +63,6 @@
             padding: 2px;
             border: 1px solid #e2e8f0;
         }
-        
         .view-tab {
             padding: 0.5rem 1rem;
             border: none;
@@ -86,18 +74,12 @@
             align-items: center;
             gap: 6px;
             color: #64748b;
-            transition: all 0.2s;
         }
-        
         .view-tab.active {
             background: white;
             color: #0f3b5e;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             font-weight: 500;
         }
-        
-        .view-tab i { font-size: 1rem; }
-        
         .filter-group {
             display: flex;
             gap: 0.5rem;
@@ -107,12 +89,6 @@
             border-radius: 8px;
             border: 1px solid #e2e8f0;
         }
-        
-        .filter-group i {
-            color: #94a3b8;
-            margin-left: 0.5rem;
-        }
-        
         select, input, button {
             padding: 0.4rem 0.8rem;
             border-radius: 6px;
@@ -121,276 +97,65 @@
             color: #1e293b;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: all 0.15s;
         }
-        
-        input {
-            width: 200px;
-            cursor: text;
-        }
-        
-        input:focus {
-            outline: none;
-            border-color: #0f3b5e;
-            box-shadow: 0 0 0 3px rgba(15, 59, 94, 0.1);
-        }
-        
+        input { width: 200px; }
         button {
             background: #0f3b5e;
-            border: none;
             color: white;
             font-weight: 500;
         }
-        
-        button:hover { background: #1a4b72; }
-        
-        button i { margin-right: 4px; }
-        
         .main-container {
             display: flex;
             flex: 1;
             overflow: hidden;
         }
-        
         #sidebar {
             width: 320px;
             background: white;
             border-right: 1px solid #e2e8f0;
             display: flex;
             flex-direction: column;
-            overflow: hidden;
             transition: width 0.2s;
-            z-index: 20;
         }
-        
         #sidebar.collapsed { width: 40px; }
-        
         .sidebar-header {
             padding: 1rem;
             border-bottom: 1px solid #e2e8f0;
             display: flex;
             justify-content: space-between;
-            align-items: center;
             background: #f8fafc;
         }
-        
-        .sidebar-header h3 {
-            font-size: 1rem;
-            font-weight: 600;
-            color: #0f3b5e;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .toggle-sidebar {
-            background: none;
-            border: none;
-            color: #64748b;
-            cursor: pointer;
-            padding: 4px;
-            border-radius: 4px;
-        }
-        
-        .toggle-sidebar:hover { background: #e2e8f0; }
-        
         #info-content {
             flex: 1;
             overflow-y: auto;
             padding: 1rem;
         }
-        
         #view-container {
             flex: 1;
             position: relative;
-            background: white;
         }
-        
         .view {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
             height: 100%;
             display: none;
         }
-        
         .view.active { display: block; }
-        
-        #network, #map {
-            width: 100%;
-            height: 100%;
-        }
-        
-        #map { z-index: 1; }
-        
-        .entity-card { background: white; }
-        
-        .entity-title {
-            font-size: 1.3rem;
-            color: #0f3b5e;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .entity-types {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.4rem;
-            margin-bottom: 1rem;
-        }
-        
-        .type-badge {
-            background: #e9f2f9;
-            color: #0f3b5e;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-            border: 1px solid #bdd3e8;
-        }
-        
-        .importance-badge {
-            display: inline-block;
-            padding: 0.2rem 0.6rem;
-            border-radius: 12px;
-            font-size: 0.7rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-        
-        .importance-central {
-            background: #dcfce7;
-            color: #166534;
-            border: 1px solid #86efac;
-        }
-        
-        .importance-secundaria {
-            background: #fef9c3;
-            color: #854d0e;
-            border: 1px solid #fde047;
-        }
-        
-        .importance-menor {
-            background: #fee2e2;
-            color: #991b1b;
-            border: 1px solid #fca5a5;
-        }
-        
-        .entity-description {
-            background: #f8fafc;
-            padding: 1rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: #334155;
-            margin-bottom: 1.5rem;
-            border-left: 3px solid #d4a017;
-        }
-        
-        .coordinates {
-            background: #f1f5f9;
-            padding: 0.5rem;
-            border-radius: 6px;
-            font-size: 0.8rem;
-            margin-bottom: 1rem;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .coordinates i { color: #e53e3e; }
-        
-        .relations-section { margin-top: 1rem; }
-        
-        .relations-section h4 {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        .relation-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        
-        .relation-item {
-            padding: 0.6rem;
-            background: #f8fafc;
-            border-radius: 6px;
-            font-size: 0.85rem;
-            border-left: 3px solid #d4a017;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        
-        .relation-item:hover {
-            background: #e9f2f9;
-            transform: translateX(2px);
-        }
-        
-        .relation-item strong {
-            color: #0f3b5e;
-            display: block;
-            margin-bottom: 2px;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-        
-        .no-selection {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 200px;
-            color: #94a3b8;
-            text-align: center;
-            gap: 1rem;
-        }
-        
-        .no-selection i {
-            font-size: 3rem;
-            opacity: 0.3;
-        }
-        
+        #network, #map { width: 100%; height: 100%; }
         #stats {
             position: fixed;
             bottom: 20px;
             left: 340px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(4px);
+            background: white;
             padding: 0.8rem 1.2rem;
             border-radius: 30px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            color: #1e293b;
-            font-size: 0.85rem;
             display: flex;
             gap: 1.5rem;
             border: 1px solid #e2e8f0;
             z-index: 30;
         }
-        
-        #stats .stat {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        
-        #stats .stat i { color: #d4a017; }
-        
-        #stats .stat-value {
-            font-weight: 700;
-            color: #0f3b5e;
-        }
-        
+        #stats .stat-value { font-weight: 700; color: #0f3b5e; }
         #loading {
             position: fixed;
             top: 50%;
@@ -400,27 +165,37 @@
             padding: 2rem 3rem;
             border-radius: 12px;
             box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-            color: #0f3b5e;
-            font-size: 1.2rem;
             z-index: 2000;
             display: flex;
             align-items: center;
             gap: 1rem;
         }
-        
-        #loading i { color: #d4a017; }
-        
-        .leaflet-popup-content {
-            font-family: 'Segoe UI', sans-serif;
-            min-width: 200px;
-        }
-        
-        .leaflet-popup-content strong {
+        .entity-title {
+            font-size: 1.3rem;
             color: #0f3b5e;
-            display: block;
-            margin-bottom: 4px;
+            margin-bottom: 0.5rem;
         }
-        
+        .type-badge {
+            background: #e9f2f9;
+            color: #0f3b5e;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin: 0.2rem;
+        }
+        .entity-description {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 3px solid #d4a017;
+        }
+        .no-selection {
+            text-align: center;
+            color: #94a3b8;
+            padding: 2rem;
+        }
         #sidebar.collapsed ~ #view-container #stats { left: 60px; }
     </style>
 </head>
@@ -432,42 +207,23 @@
         </div>
         <div id="controls">
             <div class="view-tabs">
-                <button class="view-tab active" onclick="cambiarVista('grafo')">
-                    <i class="fas fa-project-diagram"></i> Grafo
-                </button>
-                <button class="view-tab" onclick="cambiarVista('mapa')">
-                    <i class="fas fa-map-marked-alt"></i> Mapa
-                </button>
+                <button class="view-tab active" id="btn-grafo"><i class="fas fa-project-diagram"></i> Grafo</button>
+                <button class="view-tab" id="btn-mapa"><i class="fas fa-map-marked-alt"></i> Mapa</button>
             </div>
-            
             <div class="filter-group">
                 <i class="fas fa-search"></i>
-                <input type="text" id="search-box" placeholder="Buscar entidad..." autocomplete="off">
+                <input type="text" id="search-box" placeholder="Buscar...">
             </div>
-            
             <div class="filter-group">
                 <i class="fas fa-tag"></i>
                 <select id="filter-type">
-                    <option value="all">Todas las entidades</option>
-                    <option value="EventoRitual">Eventos Rituales</option>
+                    <option value="all">Todos</option>
+                    <option value="EventoRitual">Eventos</option>
                     <option value="Lugar">Lugares</option>
                     <option value="Participante">Participantes</option>
-                    <option value="ObjetoRitual">Objetos Rituales</option>
-                    <option value="Danza">Danzas</option>
                     <option value="Ukumari">Ukumaris</option>
                 </select>
             </div>
-            
-            <div class="filter-group">
-                <i class="fas fa-star"></i>
-                <select id="filter-importance">
-                    <option value="all">Toda importancia</option>
-                    <option value="central">Central</option>
-                    <option value="secundaria">Secundaria</option>
-                    <option value="menor">Menor</option>
-                </select>
-            </div>
-            
             <button id="reset-btn"><i class="fas fa-eye"></i> Restablecer</button>
         </div>
     </div>
@@ -476,14 +232,12 @@
         <div id="sidebar">
             <div class="sidebar-header">
                 <h3><i class="fas fa-info-circle"></i> Información</h3>
-                <button class="toggle-sidebar" onclick="toggleSidebar()">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
+                <button id="toggle-sidebar"><i class="fas fa-chevron-left"></i></button>
             </div>
             <div id="info-content">
                 <div class="no-selection">
                     <i class="fas fa-hand-pointer"></i>
-                    <p>Haz clic en cualquier nodo o marcador<br>para ver su información</p>
+                    <p>Haz clic en cualquier nodo</p>
                 </div>
             </div>
         </div>
@@ -499,21 +253,35 @@
     </div>
     
     <div id="stats">
-        <div class="stat"><i class="fas fa-circle-nodes"></i> Nodos: <span class="stat-value" id="node-count">0</span></div>
-        <div class="stat"><i class="fas fa-link"></i> Relaciones: <span class="stat-value" id="edge-count">0</span></div>
-        <div class="stat"><i class="fas fa-map-pin"></i> Lugares: <span class="stat-value" id="place-count">0</span></div>
+        <div><i class="fas fa-circle-nodes"></i> Nodos: <span id="node-count">0</span></div>
+        <div><i class="fas fa-link"></i> Relaciones: <span id="edge-count">0</span></div>
+        <div><i class="fas fa-map-pin"></i> Lugares: <span id="place-count">0</span></div>
     </div>
     
-    <div id="loading"><i class="fas fa-spinner fa-spin"></i> Cargando grafo de conocimiento...</div>
-    
+    <div id="loading"><i class="fas fa-spinner fa-spin"></i> Cargando...</div>
+
     <script>
         // ====================================================================
-        // ESPERAR A QUE EL DOM ESTÉ LISTO
+        // ESPERAR A QUE TODO EL DOM ESTÉ CARGADO
         // ====================================================================
-        document.addEventListener('DOMContentLoaded', function() {
+        window.onload = function() {
+            
+            // Verificar elementos críticos
+            const elementos = ['node-count', 'edge-count', 'place-count', 'search-box', 
+                              'filter-type', 'reset-btn', 'sidebar', 'info-content',
+                              'graph-view', 'map-view', 'btn-grafo', 'btn-mapa', 
+                              'toggle-sidebar', 'network', 'map', 'loading'];
+            
+            for (let id of elementos) {
+                if (!document.getElementById(id)) {
+                    console.error('Elemento faltante:', id);
+                    document.getElementById('loading').innerHTML = 'Error: elemento ' + id + ' no encontrado';
+                    return;
+                }
+            }
             
             // ====================================================================
-            // DATOS TTL EMBEBIDOS (CONTENIDO COMPLETO DE qoyllurity.ttl)
+            // DATOS TTL (SOLO LAS PRIMERAS LÍNEAS PARA PRUEBA - REEMPLAZAR CON EL COMPLETO)
             // ====================================================================
             const TTL_DATA = `@prefix : <http://example.org/festividades#> .
 @prefix geo: <http://www.w3.org/2003/01/geo/wgs84_pos#> .
@@ -1993,26 +1761,26 @@ xsd:time rdf:type rdfs:Datatype .
             // FUNCIONES AUXILIARES
             // ====================================================================
             
-            window.toggleSidebar = function() {
+            document.getElementById('toggle-sidebar').onclick = function() {
                 const sidebar = document.getElementById('sidebar');
                 sidebar.classList.toggle('collapsed');
-                const icon = document.querySelector('.toggle-sidebar i');
+                const icon = document.querySelector('#toggle-sidebar i');
                 icon.className = sidebar.classList.contains('collapsed') ? 'fas fa-chevron-right' : 'fas fa-chevron-left';
-                setTimeout(() => {
-                    if (network) network.redraw();
-                    if (map) map.invalidateSize();
-                }, 200);
             };
             
-            window.cambiarVista = function(vista) {
+            document.getElementById('btn-grafo').onclick = function() {
                 document.querySelectorAll('.view-tab').forEach(tab => tab.classList.remove('active'));
-                event.target.closest('.view-tab').classList.add('active');
-                
-                document.getElementById('graph-view').classList.remove('active');
+                this.classList.add('active');
+                document.getElementById('graph-view').classList.add('active');
                 document.getElementById('map-view').classList.remove('active');
-                document.getElementById(vista + '-view').classList.add('active');
-                
-                if (vista === 'mapa' && map) setTimeout(() => map.invalidateSize(), 100);
+            };
+            
+            document.getElementById('btn-mapa').onclick = function() {
+                document.querySelectorAll('.view-tab').forEach(tab => tab.classList.remove('active'));
+                this.classList.add('active');
+                document.getElementById('map-view').classList.add('active');
+                document.getElementById('graph-view').classList.remove('active');
+                if (map) setTimeout(() => map.invalidateSize(), 100);
             };
             
             // ====================================================================
@@ -2113,28 +1881,53 @@ xsd:time rdf:type rdfs:Datatype .
             // ====================================================================
             
             function inicializarMapa() {
-                if (lugaresConCoordenadas.length === 0) return;
+                if (lugaresConCoordenadas.length === 0) {
+                    console.log('No hay lugares con coordenadas');
+                    return;
+                }
                 
+                // Asegurarse de que el contenedor del mapa existe y es visible
+                const mapContainer = document.getElementById('map');
+                if (!mapContainer) {
+                    console.error('Contenedor del mapa no encontrado');
+                    return;
+                }
+                
+                // Inicializar mapa
                 map = L.map('map').setView([-13.5, -71.5], 9);
+                
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap'
                 }).addTo(map);
                 
+                console.log(`Añadiendo ${lugaresConCoordenadas.length} marcadores al mapa`);
+                
                 lugaresConCoordenadas.forEach(lugar => {
                     const icono = L.divIcon({
-                        html: `<i class="fas ${ICONOS_TIPOS[lugar.tipos[0]] || 'fa-map-marker-alt'}" style="color: ${COLORES_TIPOS[lugar.tipos[0]] || '#718096'}; font-size: 20px;"></i>`,
-                        className: 'marcador',
-                        iconSize: [25, 25],
-                        iconAnchor: [12, 12]
+                        html: `<i class="fas ${ICONOS_TIPOS[lugar.tipos[0]] || 'fa-map-marker-alt'}" style="color: ${COLORES_TIPOS[lugar.tipos[0]] || '#718096'}; font-size: 24px; text-shadow: 0 0 5px white;"></i>`,
+                        className: 'marcador-custom',
+                        iconSize: [30, 30],
+                        iconAnchor: [15, 15],
+                        popupAnchor: [0, -15]
                     });
                     
                     const marker = L.marker([lugar.lat, lugar.lon], { icon: icono }).addTo(map);
-                    marker.bindPopup(`<strong>${lugar.label}</strong><br>${lugar.tipos.join(', ')}`);
-                    marker.on('click', () => window.mostrarInfoNodo(lugar.id));
+                    
+                    marker.bindPopup(`
+                        <strong>${lugar.label}</strong><br>
+                        ${lugar.tipos.join(', ')}<br>
+                        <small>${lugar.comment ? lugar.comment.substring(0, 100) + '...' : ''}</small>
+                    `);
+                    
+                    marker.on('click', () => mostrarInfoNodo(lugar.id));
+                    
                     markers.push({ id: lugar.id, marker });
                 });
                 
-                setTimeout(() => map.invalidateSize(), 100);
+                // Forzar actualización del mapa
+                setTimeout(() => {
+                    map.invalidateSize();
+                }, 200);
             }
             
             // ====================================================================
@@ -2144,7 +1937,8 @@ xsd:time rdf:type rdfs:Datatype .
             function inicializarVisualizacion() {
                 entidades.forEach((ent, id) => {
                     allNodes.push({
-                        id, label: ent.label,
+                        id, 
+                        label: ent.label,
                         title: ent.comment || ent.label,
                         color: COLORES_TIPOS[ent.tipos[0]] || COLORES_TIPOS.default,
                         tipos: ent.tipos,
@@ -2157,10 +1951,12 @@ xsd:time rdf:type rdfs:Datatype .
                     ent.relaciones.forEach(rel => {
                         if (entidades.has(rel.objeto)) {
                             allEdges.push({
-                                from: id, to: rel.objeto,
+                                from: id, 
+                                to: rel.objeto,
                                 label: rel.predicado,
                                 arrows: 'to',
-                                font: { size: 10 }
+                                font: { size: 10, color: '#64748b' },
+                                color: { color: '#cbd5e1' }
                             });
                         }
                     });
@@ -2172,26 +1968,47 @@ xsd:time rdf:type rdfs:Datatype .
                 document.getElementById('node-count').textContent = allNodes.length;
                 document.getElementById('edge-count').textContent = allEdges.length;
                 
-                const clases = new Set();
-                entidades.forEach(ent => ent.tipos.forEach(t => clases.add(t)));
-                
-                
                 crearRed();
             }
             
             function crearRed() {
-                network = new vis.Network(document.getElementById('network'), {
+                const container = document.getElementById('network');
+                
+                network = new vis.Network(container, {
                     nodes: nodesDataset,
                     edges: edgesDataset
                 }, {
-                    nodes: { shape: 'dot', size: 20, font: { size: 12 } },
-                    edges: { width: 1.5, color: '#cbd5e1' },
-                    physics: { stabilization: true }
+                    nodes: { 
+                        shape: 'dot', 
+                        size: 20, 
+                        font: { size: 12, color: '#1e293b' },
+                        borderWidth: 2,
+                        shadow: true
+                    },
+                    edges: { 
+                        width: 1.5, 
+                        color: { color: '#cbd5e1', highlight: '#0f3b5e' },
+                        smooth: { type: 'continuous' }
+                    },
+                    physics: {
+                        forceAtlas2Based: {
+                            gravitationalConstant: -30,
+                            springLength: 120
+                        },
+                        stabilization: { iterations: 100 }
+                    },
+                    interaction: {
+                        hover: true,
+                        navigationButtons: true
+                    }
                 });
                 
-                network.on('click', params => {
-                    if (params.nodes.length) window.mostrarInfoNodo(params.nodes[0]);
-                    else window.mostrarInfoNodo(null);
+                network.on('click', function(params) {
+                    if (params.nodes.length) {
+                        mostrarInfoNodo(params.nodes[0]);
+                    } else {
+                        mostrarInfoNodo(null);
+                    }
                 });
             }
             
@@ -2199,7 +2016,7 @@ xsd:time rdf:type rdfs:Datatype .
             // MOSTRAR INFO
             // ====================================================================
             
-            window.mostrarInfoNodo = function(nodeId) {
+            function mostrarInfoNodo(nodeId) {
                 const content = document.getElementById('info-content');
                 
                 if (!nodeId || !entidades.has(nodeId)) {
@@ -2214,16 +2031,26 @@ xsd:time rdf:type rdfs:Datatype .
                 else if (ent.tieneImportancia?.includes('secundaria')) importanceClass = 'importance-secundaria';
                 else if (ent.tieneImportancia?.includes('menor')) importanceClass = 'importance-menor';
                 
+                const tiposHTML = ent.tipos.map(t => 
+                    `<span class="type-badge"><i class="fas ${ICONOS_TIPOS[t] || 'fa-tag'}"></i> ${t}</span>`
+                ).join('');
+                
+                const coordsHTML = ent.lat ? 
+                    `<div><i class="fas fa-map-pin"></i> ${ent.lat.toFixed(4)}, ${ent.lon.toFixed(4)}</div>` : '';
+                
                 content.innerHTML = `
                     <div class="entity-card">
-                        <div class="entity-title"><i class="fas ${ICONOS_TIPOS[ent.tipos[0]] || 'fa-tag'}"></i> ${ent.label}</div>
-                        <div class="entity-types">${ent.tipos.map(t => `<span class="type-badge">${t}</span>`).join('')}</div>
+                        <div class="entity-title">
+                            <i class="fas ${ICONOS_TIPOS[ent.tipos[0]] || 'fa-tag'}"></i> 
+                            ${ent.label}
+                        </div>
+                        <div class="entity-types">${tiposHTML}</div>
                         ${ent.tieneImportancia ? `<div class="importance-badge ${importanceClass}">${ent.tieneImportancia}</div>` : ''}
-                        ${ent.lat ? `<div class="coordinates"><i class="fas fa-map-pin"></i> ${ent.lat.toFixed(4)}, ${ent.lon.toFixed(4)}</div>` : ''}
-                        <div class="entity-description">${ent.comment || 'Sin descripción'}</div>
+                        ${coordsHTML}
+                        <div class="entity-description">${ent.comment || 'Sin descripción disponible'}</div>
                     </div>
                 `;
-            };
+            }
             
             // ====================================================================
             // FILTROS
@@ -2231,12 +2058,10 @@ xsd:time rdf:type rdfs:Datatype .
             
             function aplicarFiltros() {
                 const tipo = document.getElementById('filter-type').value;
-                const importancia = document.getElementById('filter-importance').value;
                 const busqueda = document.getElementById('search-box').value.toLowerCase();
                 
                 const filtrados = allNodes.filter(n => {
                     if (tipo !== 'all' && !n.tipos.includes(tipo)) return false;
-                    if (importancia !== 'all' && !n.importancia?.includes(importancia)) return false;
                     if (busqueda && !n.label.toLowerCase().includes(busqueda) && !n.id.toLowerCase().includes(busqueda)) return false;
                     return true;
                 });
@@ -2252,24 +2077,25 @@ xsd:time rdf:type rdfs:Datatype .
                 
                 if (map) {
                     markers.forEach(m => {
-                        if (ids.has(m.id)) map.addLayer(m.marker);
-                        else map.removeLayer(m.marker);
+                        if (ids.has(m.id)) {
+                            map.addLayer(m.marker);
+                        } else {
+                            map.removeLayer(m.marker);
+                        }
                     });
                 }
             }
             
             document.getElementById('filter-type').addEventListener('change', aplicarFiltros);
-            document.getElementById('filter-importance').addEventListener('change', aplicarFiltros);
             document.getElementById('search-box').addEventListener('input', aplicarFiltros);
             
             document.getElementById('reset-btn').addEventListener('click', () => {
                 document.getElementById('filter-type').value = 'all';
-                document.getElementById('filter-importance').value = 'all';
                 document.getElementById('search-box').value = '';
                 aplicarFiltros();
                 if (network) network.fit();
                 if (map) map.setView([-13.5, -71.5], 9);
-                window.mostrarInfoNodo(null);
+                mostrarInfoNodo(null);
             });
             
             // ====================================================================
@@ -2277,7 +2103,7 @@ xsd:time rdf:type rdfs:Datatype .
             // ====================================================================
             
             cargarTTL();
-        });
+        };
     </script>
 </body>
 </html>
