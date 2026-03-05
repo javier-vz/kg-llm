@@ -31,7 +31,7 @@ html,body{height:100%;height:100dvh;background:var(--bg);color:var(--text);
 .srch input::placeholder{color:var(--muted)}
 select.hsel{background:var(--surface2);border:1px solid var(--border);border-radius:6px;
   color:var(--text);font-size:.8rem;padding:.35rem .55rem;cursor:pointer;outline:none}
-.ibtn{width:30px;height:30px;border-radius:6px;border:1px solid var(--border);
+.ibtn{width:32px;height:32px;border-radius:6px;border:1px solid var(--border);
   background:var(--surface2);color:var(--muted);display:flex;align-items:center;
   justify-content:center;cursor:pointer;font-size:.82rem;flex-shrink:0;
   -webkit-tap-highlight-color:transparent;transition:color .15s,background .15s}
@@ -259,12 +259,65 @@ select.hsel{background:var(--surface2);border:1px solid var(--border);border-rad
 .tf-note a{color:var(--accent);text-decoration:none;}
 .tf-note a:hover{text-decoration:underline;}
 
+
+/* ── TIMELINE ── */
+#tl-wrap{display:none;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  padding:1.25rem 1rem 5rem;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+#tl-wrap.show{display:block}
+#tl-wrap::-webkit-scrollbar{width:4px}
+#tl-wrap::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+
+.tl-day{display:flex;align-items:center;gap:.6rem;margin:1.5rem 0 .85rem}
+.tl-day:first-child{margin-top:0}
+.tl-day-badge{background:var(--accent);color:#000;font-size:.68rem;font-weight:700;
+  padding:.22rem .65rem;border-radius:20px;white-space:nowrap;flex-shrink:0}
+.tl-day-sub{font-size:.72rem;color:var(--muted);flex-shrink:0}
+.tl-day-line{flex:1;height:1px;background:var(--border)}
+.tl-day-date{font-size:.68rem;color:var(--muted);white-space:nowrap;flex-shrink:0}
+
+.tl-track{position:relative;padding-left:1.75rem}
+.tl-track::before{content:'';position:absolute;left:6px;top:0;bottom:0;width:2px;
+  background:linear-gradient(to bottom,var(--accent),var(--border));border-radius:1px}
+
+.tl-ev{position:relative;background:var(--surface);border:1px solid var(--border);
+  border-radius:10px;padding:.8rem .9rem;margin-bottom:.6rem;cursor:pointer;
+  transition:border-color .18s,transform .12s;-webkit-tap-highlight-color:transparent}
+.tl-ev:hover{border-color:rgba(212,160,23,.5);transform:translateX(3px)}
+.tl-ev.central{border-left:3px solid var(--accent)}
+.tl-ev.secundaria{border-left:3px solid #388bfd}
+.tl-ev::before{content:'';position:absolute;left:-1.42rem;top:50%;transform:translateY(-50%);
+  width:9px;height:9px;border-radius:50%;background:var(--surface2);border:2px solid var(--border);
+  transition:background .18s,border-color .18s}
+.tl-ev.central::before{background:var(--accent);border-color:var(--accent)}
+.tl-ev.secundaria::before{background:#388bfd;border-color:#388bfd}
+
+.tl-name{font-size:.88rem;font-weight:600;color:var(--text);line-height:1.3}
+.tl-meta{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem}
+.tl-chip{font-size:.67rem;padding:.14rem .42rem;border-radius:4px;background:var(--surface2);
+  border:1px solid var(--border);color:var(--muted);display:flex;align-items:center;gap:3px}
+.tl-chip i{font-size:.58rem}
+.tl-chip.gold{background:rgba(212,160,23,.12);border-color:rgba(212,160,23,.4);color:var(--accent)}
+.tl-detail{display:none;margin-top:.65rem;padding-top:.65rem;border-top:1px solid var(--border)}
+.tl-detail.open{display:block}
+.tl-detail p{font-size:.82rem;color:#adbac7;line-height:1.65;margin:0 0 .45rem}
+.tl-rels{display:flex;flex-direction:column;gap:.22rem;margin-top:.4rem}
+.tl-rel{display:flex;align-items:center;gap:.35rem;font-size:.78rem}
+.tl-rel-lnk{color:#388bfd;font-weight:500;cursor:pointer}
+.tl-rel-lnk:hover{text-decoration:underline}
+
+.tl-filters{display:flex;gap:.45rem;margin-bottom:1rem;flex-wrap:wrap}
+.tl-fbtn{font-size:.72rem;padding:.28rem .7rem;border-radius:20px;border:1px solid var(--border);
+  background:var(--surface2);color:var(--muted);cursor:pointer;
+  -webkit-tap-highlight-color:transparent;transition:all .15s}
+.tl-fbtn.on{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600}
+
+@media(max-width:640px){#tl-wrap{padding-bottom:70px}}
 </style>
 </head>
 <body>
 
 <div id="hdr">
-  <h1><i class="fas fa-mountain"></i> Qoyllur Rit'i</h1>
+  <h1 id="hdr-title" style="cursor:pointer" title="Volver al grafo"><i class="fas fa-mountain"></i> Qoyllur Rit'i</h1>
   <div class="sep"></div>
   <div class="srch">
     <i class="fas fa-search"></i>
@@ -286,6 +339,8 @@ select.hsel{background:var(--surface2);border:1px solid var(--border);border-rad
   </div>
   <div id="hdr-spacer"></div>
   <button class="ibtn" id="btn-fit" title="Centrar"><i class="fas fa-compress-arrows-alt"></i></button>
+  <div style="width:1px;height:18px;background:var(--border);margin:0 2px"></div>
+  <button class="ibtn" id="btn-tl" title="Timeline"><i class="fas fa-stream"></i></button>
   <button class="ibtn" id="btn-ptoggle" title="Panel"><i class="fas fa-columns"></i></button>
 </div>
 
@@ -397,6 +452,15 @@ select.hsel{background:var(--surface2);border:1px solid var(--border);border-rad
       <div class="lgrid" id="lgrid"></div>
     </div>
   </div>
+  <!-- TIMELINE -->
+  <div id="tl-wrap">
+    <div class="tl-filters">
+      <button class="tl-fbtn on" data-f="all">Todos</button>
+      <button class="tl-fbtn" data-f="central">Centrales</button>
+      <button class="tl-fbtn" data-f="secundaria">Secundarios</button>
+    </div>
+    <div id="tl-body"></div>
+  </div>
 </div>
 
 <nav id="bnav">
@@ -404,6 +468,7 @@ select.hsel{background:var(--surface2);border:1px solid var(--border);border-rad
     <button class="bnb on" id="bn-grafo"><i class="fas fa-project-diagram"></i><span>Grafo</span></button>
     <button class="bnb" id="bn-info"><i class="fas fa-info-circle"></i><span>Info</span></button>
     <button class="bnb" id="bn-fit"><i class="fas fa-compress-arrows-alt"></i><span>Centrar</span></button>
+    <button class="bnb" id="bn-tl"><i class="fas fa-stream"></i><span>Timeline</span></button>
     <button class="bnb" id="bn-search"><i class="fas fa-search"></i><span>Buscar</span></button>
   </div>
 </nav>
@@ -2152,6 +2217,7 @@ document.getElementById('bn-grafo').onclick=function(){
   closePanel();
   document.querySelectorAll('.bnb').forEach(function(b){b.classList.remove('on');});
   this.classList.add('on');
+  showView('grafo');
 };
 document.getElementById('bn-info').onclick=function(){
   openPanel();
@@ -2194,6 +2260,147 @@ window.switchTab = function(tab){
     tdet.classList.remove('on');
     tabt.classList.add('on');
   }
+};
+
+
+
+// ── TIMELINE ────────────────────────────────────────────────────────────────
+var TL_DATA = [{"id": "Dia1_SabadoPreparacion", "label": "Día 1: Sábado de preparación", "fecha": "2025-06-14", "dayOrd": 1, "events": [{"id": "EventoPrevioPeregrinaje_Paucartambo_2025_06_14", "label": "Evento previo al peregrinaje (2025)", "orden": 1, "imp": "", "comment": "Preparativos, gelación y ensayos en Paucartambo."}]}, {"id": "Dia2_DomingoPartida", "label": "Día 2: Domingo de partida y viaje", "fecha": "2025-06-15", "dayOrd": 2, "events": [{"id": "MisaInicial_Paucartambo_2025", "label": "Misa inicial en Paucartambo (2025)", "orden": 1, "imp": "secundaria", "comment": "Misa de envío a las 7:00 AM en la Iglesia de Paucartambo antes de la partida de la peregrinación."}, {"id": "RomeriaPaucartambo_2025_06_15", "label": "Romería en Paucartambo (2025)", "orden": 2, "imp": "menor", "comment": "Romería y anuncio público antes de la partida"}, {"id": "RitualVestimentaDanzantes_2025", "label": "Ritual de vestimenta de danzantes (2025)", "orden": 3, "imp": "secundaria", "comment": "Acto público donde los danzantes se visten con sus trajes ceremoniales en la plaza de Paucartambo, anunciando la partida de la Nación."}, {"id": "ParadaHuancarani_2025", "label": "Parada en Huancarani (2025)", "orden": 4, "imp": "menor", "comment": "Reunión y espera de todos los danzantes de la Nación Paucartambo en el cruce vial de Huancarani."}, {"id": "ComidaCcatcca_2025", "label": "Comida comunitaria en Ccatcca (2025)", "orden": 6, "imp": "menor", "comment": "Descanso y comida (asado con mote) en la plaza de Ccatcca para reponer fuerzas antes de continuar el viaje."}, {"id": "PasoCasaPrioste", "label": "Paso por la casa del prioste (2025)", "orden": 7, "imp": "", "comment": "Visita y ritual en la casa del prioste durante el camino entre Paucartambo y Mahuayani."}, {"id": "ViajeVehicular_Paucartambo_Mahuayani_2025", "label": "Viaje vehicular a Mahuayani (2025)", "orden": 8, "imp": "", "comment": "Dualidad evento-lugar: viaje ritual en vehículo desde Paucartambo hasta Mahuayani que sigue una ruta física específica con paradas rituales."}]}, {"id": "NocheLunesMartes_Glaciar", "label": "Noche del lunes al martes (en el glaciar)", "fecha": "2025-06-16", "dayOrd": 4, "events": [{"id": "SubidaColquePunku_2025", "label": "Subida al Colque Punku (2025)", "orden": 1, "imp": "central", "comment": "Ascenso nocturno al glaciar Colque Punku"}]}, {"id": "Dia3_LunesAscenso", "label": "Día 3: Lunes de ascenso al santuario", "fecha": "lunes", "dayOrd": 3, "events": [{"id": "Caminata_Mahuayani_Santuario_2025", "label": "Caminata Mahuayani-Santuario (2025)", "orden": 1, "imp": "central", "comment": "Ascenso desde Mahuayani hasta el santuario del Señor de Qoyllu Rit’i."}, {"id": "MisaUkukus_2025", "label": "Misa de Ukukus (2025)", "orden": 2, "imp": "secundaria", "comment": "Misa especial para los ukukus"}, {"id": "Pachakunapata", "label": "P’achakunapata", "orden": 3, "imp": "", "comment": "Dualidad evento-lugar: ritual de espera ceremonial y entrada unificada de la Nación al santuario que ocurre en la entrada ceremonial homónima."}, {"id": "CeremoniaVeneracion_Templo_Qoylluriti_2025", "label": "Veneración en el templo del santuario (2025)", "orden": 4, "imp": "secundaria", "comment": "Actos de veneración al Señor de Qoyllur Rit’i dentro del templo principal del santuario."}, {"id": "ProcesionMamachapata_2025", "label": "Procesión a Mamachapata (2025)", "orden": 5, "imp": "", "comment": "Procesión con la imagen del Señor de Tayankani hacia el área de Mamachapata dentro del santuario. La Nación Paucartambo tiene el derecho histórico de ser los primeros en sacar esta imagen."}, {"id": "DescansoCeldaUkukus_2025", "label": "Descanso en celda de Ukukus (2025)", "orden": 6, "imp": "menor", "comment": "Descanso, comida y preparación en la celda de los Ukukus en el bofedal del santuario, antes de la subida nocturna al glaciar."}]}, {"id": "Dia4_MartesDescensoYLomada", "label": "Día 4: Martes de descenso e inicio de la lomada", "fecha": "2025-06-17", "dayOrd": 5, "events": [{"id": "BajadaColquePunku_2025", "label": "Bajada del Colque Punku (2025)", "orden": 1, "imp": "central", "comment": "Descenso desde el glaciar Colque Punku al santuario del Señor de Qoyllu Rit’i."}, {"id": "RitualMachuCruz_2025", "label": "Ritual en Machu Cruz (2025)", "orden": 2, "imp": "", "comment": "Pausa ritual a poco más de una hora del santuario para comer maíz y queso, en acto simbólico de despedida del espacio sagrado."}, {"id": "RitualDespedida_Yanaqocha_2025", "label": "Ritual de despedida en Yanaqocha (2025)", "orden": 3, "imp": "secundaria", "comment": "Rituales de despedida entre miembros de la Nación en la Laguna Yanaqocha, corriendo y abrazándose."}, {"id": "DescansoYanaqancha_2025", "label": "Descanso en Yanaqancha (2025)", "orden": 4, "imp": "secundaria", "comment": "Descanso prolongado de 4 horas en Yanaqancha. Aquí se deja la imagen del Señor de Tayankani y la Nación se viste nuevamente."}, {"id": "Lomada_2025", "label": "Lomada / Loman Pureq (2025)", "orden": 5, "imp": "central", "comment": "Dualidad evento-trayecto: caminata ritual de 24 horas que es el camino físico con hitos rituales. Como evento: acción ritual. Como lugar: ruta con puntos específicos (Machu Cruz, Yanaqocha, Q’espi Cruz, etc.)."}]}, {"id": "NocheMartesMiercoles_Lomada", "label": "Noche del martes al miércoles (durante la lomada)", "fecha": "2025-06-17", "dayOrd": 6, "events": [{"id": "CantoQespiCruz_2025", "label": "Canto en Q’espi Cruz (2025)", "orden": 1, "imp": "", "comment": "A medianoche, toda la Nación canta la ’Canción de Despedida de los Qapaq Qollas’ en Q’espi Cruz."}, {"id": "Escalerachayoq", "label": "Escalerachayoq", "orden": 2, "imp": "", "comment": "Dualidad evento-lugar: tramo de la Lomada que consiste en una bajada de piedras entre las 3 y 4 de la madrugada, antes de llegar al Inti Alabado."}, {"id": "Lomada_2025", "label": "Lomada / Loman Pureq (2025)", "orden": 5, "imp": "central", "comment": "Dualidad evento-trayecto: caminata ritual de 24 horas que es el camino físico con hitos rituales. Como evento: acción ritual. Como lugar: ruta con puntos específicos (Machu Cruz, Yanaqocha, Q’espi Cruz, etc.)."}]}, {"id": "Dia5_MiercolesAlba", "label": "Día 5: Miércoles del alba y finalización", "fecha": "2025-06-18", "dayOrd": 7, "events": [{"id": "IntiAlabado_2025", "label": "Inti Alabado (2025)", "orden": 1, "imp": "central", "comment": "Dualidad evento-lugar: ritual de saludo al sol al amanecer que se realiza en el lugar homónimo. Como evento: ceremonia solar. Como lugar: sitio en las alturas de Tayankani donde se espera la salida del sol."}, {"id": "RitualGrutaTayankani_2025", "label": "Ritual en gruta de Tayankani (2025)", "orden": 2, "imp": "", "comment": "Últimos rituales de los Ukukus en la gruta de Tayankani antes del ingreso procesional al pueblo."}, {"id": "DejaImagenEnCapillaTayancani_2025", "label": "Dejar imagen en capilla de Tayancani (2025)", "orden": 3, "imp": "", "comment": "Depósito de la imagen en la capilla de Tayancani"}, {"id": "TrasladoImagenSenorOcongate_Tayancani_2025", "label": "Traslado de la imagen a Ocongate (2025)", "orden": 4, "imp": "", "comment": "Procesión con la imagen desde Tayancani hacia Ocongate"}, {"id": "ProcesionEntradaOcongate_2025", "label": "Procesión de entrada a Ocongate (2025)", "orden": 5, "imp": "secundaria", "comment": "Procesión final en Ocongate que marca el término oficial de la festividad para la Nación Paucartambo."}]}];
+
+var tlBuilt = false;
+
+// Safe click delegation — avoids nested quote hell
+document.addEventListener('click', function(e){
+  var tl = e.target.closest('.tl-rel-lnk');
+  if(tl){ selNode(tl.dataset.nid); showView('grafo'); return; }
+  var te = e.target.closest('.tl-ev');
+  if(te){ tlToggle(te.dataset.eid); return; }
+});
+
+function ic(imp){ return (imp||'').replace(/@\w+/,''); }
+
+function buildTL(){
+  if(ents.size===0){ setTimeout(buildTL,400); return; }
+  tlBuilt = true;
+
+  var IMP_CLS = {central:'central', secundaria:'secundaria', menor:'menor'};
+  var DATE_LABELS = {
+    '2025-06-14':'14 jun','2025-06-15':'15 jun','2025-06-16':'16 jun',
+    '2025-06-17':'17 jun','2025-06-18':'18 jun','lunes':'16 jun'
+  };
+
+  function render(filter){
+    var h = '';
+    TL_DATA.forEach(function(day){
+      var evs = day.events.filter(function(e){
+        return filter==='all' || ic(e.imp)===filter;
+      });
+      if(!evs.length) return;
+
+      // Day header
+      var parts = day.label.split(':');
+      var badge = parts[0].trim();
+      var sub   = parts.slice(1).join(':').trim();
+      var date  = DATE_LABELS[day.fecha] || '';
+      h += '<div class="tl-day">';
+      h += '<div class="tl-day-badge">'+badge+'</div>';
+      if(sub) h += '<div class="tl-day-sub">'+sub+'</div>';
+      h += '<div class="tl-day-line"></div>';
+      if(date) h += '<div class="tl-day-date">'+date+'</div>';
+      h += '</div>';
+
+      h += '<div class="tl-track">';
+      evs.forEach(function(e){
+        var cls = IMP_CLS[ic(e.imp)] || '';
+        // Get live rels from ents map
+        var ent = ents.get(e.id);
+        var rels = ent ? ent.rels || [] : [];
+
+        var meta = '';
+        rels.forEach(function(r){
+          if(r.pred==='ocurreEnLugar'){
+            var le = ents.get(r.obj);
+            meta += '<span class="tl-chip"><i class="fas fa-map-marker-alt"></i>'+(le?le.label:r.obj.replace(/_/g,' '))+'</span>';
+          }
+          if(r.pred==='realizadoPor'){
+            var ae = ents.get(r.obj);
+            meta += '<span class="tl-chip"><i class="fas fa-users"></i>'+(ae?ae.label:r.obj.replace(/_/g,' '))+'</span>';
+          }
+        });
+        if(ic(e.imp)==='central') meta += '<span class="tl-chip gold"><i class="fas fa-star"></i>Central</span>';
+
+        var relLinks = '';
+        rels.filter(function(r){
+          return ents.has(r.obj) && r.pred!=='ocurreEnLugar' && r.pred!=='realizadoPor'
+              && r.pred!=='defineMarcoTemporal' && r.pred!=='esParteDeFestividad';
+        }).slice(0,4).forEach(function(r){
+          var re2 = ents.get(r.obj); if(!re2) return;
+          var rc = tc(re2.tipos);
+          relLinks += '<div class="tl-rel">'
+            +'<i class="fas '+rc.ico+'" style="color:'+rc.color+';font-size:.62rem;width:12px;flex-shrink:0"></i>'
+            +'<span class="tl-rel-lnk" data-nid="'+r.obj+'">'+re2.label+'</span>'
+            +'</div>';
+        });
+
+        h += '<div class="tl-ev '+cls+'" data-eid="'+e.id+'">';
+        h += '<div class="tl-name">'+e.label+'</div>';
+        if(meta) h += '<div class="tl-meta">'+meta+'</div>';
+        h += '<div class="tl-detail" id="tld-'+e.id+'">';
+        if(e.comment) h += '<p>'+e.comment+'</p>';
+        if(relLinks) h += '<div class="tl-rels">'+relLinks+'</div>';
+        h += '</div></div>';
+      });
+      h += '</div>'; // tl-track
+    });
+    return h;
+  }
+
+  document.getElementById('tl-body').innerHTML = render('all');
+
+  document.querySelectorAll('.tl-fbtn').forEach(function(btn){
+    btn.onclick = function(){
+      document.querySelectorAll('.tl-fbtn').forEach(function(b){ b.classList.remove('on'); });
+      this.classList.add('on');
+      document.getElementById('tl-body').innerHTML = render(this.dataset.f);
+    };
+  });
+}
+
+window.tlToggle = function(id){
+  var d = document.getElementById('tld-'+id); if(!d) return;
+  var open = d.classList.contains('open');
+  document.querySelectorAll('.tl-detail.open').forEach(function(x){ x.classList.remove('open'); });
+  if(!open) d.classList.add('open');
+};
+function tlToggle(id){ window.tlToggle(id); }
+
+function showView(v){
+  var nw = document.getElementById('net-wrap');
+  var tw = document.getElementById('tl-wrap');
+  nw.style.display = v==='grafo' ? 'flex' : 'none';
+  tw.classList.toggle('show', v==='timeline');
+  document.querySelectorAll('.bnb').forEach(function(b){ b.classList.remove('on'); });
+  if(v==='timeline'){
+    var b = document.getElementById('bn-tl'); if(b) b.classList.add('on');
+    var bt = document.getElementById('btn-tl'); if(bt) bt.classList.add('active');
+    if(!tlBuilt) buildTL();
+  } else {
+    var g = document.getElementById('bn-grafo'); if(g) g.classList.add('on');
+    var bt2 = document.getElementById('btn-tl'); if(bt2) bt2.classList.remove('active');
+  }
+}
+
+document.getElementById('bn-tl').onclick  = function(){ showView('timeline'); };
+document.getElementById('hdr-title').onclick = function(){ showView('grafo'); };
+document.getElementById('btn-tl').onclick = function(){
+  if(document.getElementById('btn-tl').classList.contains('active')) showView('grafo');
+  else showView('timeline');
+};
+document.getElementById('bn-grafo').onclick = function(){
+  closePanel();
+  document.querySelectorAll('.bnb').forEach(function(b){ b.classList.remove('on'); });
+  this.classList.add('on');
+  showView('grafo');
 };
 
 })();
