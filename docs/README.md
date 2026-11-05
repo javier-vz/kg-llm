@@ -1,28 +1,36 @@
-# Atlas Qoyllur Rit’i 2.0 — vista global (ES/EN/PT)
+# Atlas de Qoyllur Rit’i · v2.3 — componente conexa mayor / sobre el proyecto
 
-Esta revisión **restaura la vista completa del grafo** como pantalla inicial, usando una estética oscura de alto contraste inspirada en el visor original. Conserva la interfaz multilingüe, las fichas de entidades, la secuencia de 2025 y el pequeño archivo aéreo separado de 2026.
+Esta versión conserva la vista global oscura de la componente conexa mayor y agrega una sección «Acerca de» en español, inglés y portugués.
 
-## Abrir en GitHub Pages
+## Publicación en GitHub Pages
 
-Copiar el contenido de `docs/` a la carpeta `docs/` de `javier-vz/kg-llm`. Se mantiene la ruta `grafo_interactivo.html`. No sustituir ni modificar los datos de campo originales sin auditoría.
+Copiar **el contenido de la carpeta `docs/` del ZIP** a la carpeta `docs/` del repositorio `javier-vz/kg-llm`, conservando nombres y rutas. URL prevista una vez completado el despliegue:
 
-## Cambios importantes
+https://javier-vz.github.io/kg-llm/grafo_interactivo.html
 
-- La página abre con **todos los individuos y todas las relaciones individuales** del archivo de 2025. Incluye los nodos aislados.
-- Un clic destaca relaciones inmediatas sin abandonar la vista global. Los botones 1 y 2 aíslan entornos; **Vista global** los restaura.
-- Colores oscuros y contrastes altos recuperan la estética general del HTML original. Colores por grupo de entidades, no por valoración cultural.
-- Posiciones calculadas de manera reproducible desde las relaciones del grafo (semilla fija), sin modificar el TTL. La distancia entre nodos en pantalla no expresa distancia geográfica.
-- Las relaciones son dirigidas: 161 aserciones del archivo del proyecto. Las etiquetas RDF originales se conservan en los datos y se traducen solo en la vista.
-- Las fichas traducidas son resúmenes editoriales, no nuevas fuentes.
-- Cuatro fotografías de dron 2026 permanecen como archivo separado; su ubicación y fecha exacta no han sido verificadas.
+## Cambios de esta edición
 
-## Estructura
+- El bloque «Alcance de la exploración» (botones 1/2/Todo) se retiró del menú lateral y las fichas de entidad. La red se abre en su conjunto; seleccionar un nodo destaca sus relaciones, con un botón de regreso a la vista global.
+- Nueva pestaña **Acerca de / About / Sobre** accesible desde la barra principal y la navegación móvil.
+- Presentación de Qoyllur Rit’i y del proyecto de investigación, con una fotografía de contexto de 2026 y nota sobre la ubicación de captura no verificada.
+- Enlaces a la ficha de UNESCO, a dos artículos científicos publicados y al repositorio del proyecto.
+- Se conservan las leyendas cromáticas, las tres lenguas, las fichas, la línea de tiempo y el archivo fotográfico.
 
-- `grafo_interactivo.html`: interfaz
-- `data/grafo_2025.js`: proyección para el visor, derivada del TTL de 2025
-- `data/i18n_entities.js`: traducciones de presentación
-- `data/global_layout.js`: coordenadas de la distribución *visual* precalculada
-- `qoyllurity.ttl`: archivo fuente RDF original, no editado
-- `assets/`: cuatro miniaturas del archivo aéreo de 2026
+## Datos y cautelas
 
-No se ha hecho ningún cambio automático en GitHub.
+- TTL original sin modificaciones: 87 individuos, 161 relaciones entre individuos y 1.060 triples RDF.
+- Vista principal: 80 entidades, 161 relaciones dirigidas (componente conexa mayor calculada sin la dirección solo para conectividad).
+- Siete entidades aisladas no aparecen en la vista principal, pero sí en los datos fuente.
+- Las cuatro imágenes de dron de 2026 son material documental independiente y no están enlazadas sin validación al grafo de 2025.
+- Las traducciones de presentación son editoriales; no modifican las etiquetas ni descripciones originales del TTL.
+
+## Archivos
+
+- `docs/grafo_interactivo.html`: visor publicado por GitHub Pages.
+- `docs/qoyllurity.ttl`: RDF original.
+- `docs/data/grafo_2025.js`: 87 entidades y 161 relaciones originales.
+- `docs/data/i18n_entities.js`: traducciones del conjunto de entidades.
+- `docs/data/global_layout.js`: posiciones de la vista global.
+- `docs/assets/`: fotografías optimizadas para web.
+
+Para probar sin publicarlo, abrir el HTML autónomo distribuido junto a este ZIP.
